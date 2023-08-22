@@ -1,12 +1,11 @@
-// import Login from './components/Login'
-
+import Login from "../src/pages/Login";
 
 function App() {
-
   return (
-      // <Login />
-      <></>
-  )
+    <>
+      <Login />
+    </>
+  );
 }
 
-export default App
+export default App;
