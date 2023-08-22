@@ -1,11 +1,11 @@
+import Login from "../src/pages/Login";
 
 function App() {
-
   return (
-    <div className='h-screen flex justify-center items-center'>
-      <h4 className='text-red-500 text-9xl'>E-pension project</h4>
-    </div>
-  )
+    <>
+      <Login />
+    </>
+  );
 }
 
-export default App
+export default App;
