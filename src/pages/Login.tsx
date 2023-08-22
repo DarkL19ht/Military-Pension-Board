@@ -10,8 +10,7 @@ const Login = () => {
         <img
           src={BannerImage}
           alt="soldier_image"
-          width={"100%"}
-          height={"100%"}
+          className="h-full w-full"
         />
       </div>
       <div className="h-full relative w-2/3 bg-[#ffffff] font-latoRegular">

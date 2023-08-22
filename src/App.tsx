@@ -1,9 +1,8 @@
-import Login from "../src/pages/Login";
-
+import RouteRenderer from "./route/route-renderer";
 function App() {
   return (
     <>
-      <Login />
+      <RouteRenderer/>
     </>
   );
 }

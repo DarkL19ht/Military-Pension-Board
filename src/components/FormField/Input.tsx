@@ -1,4 +1,4 @@
-import { InputProps } from "../../../types/index";
+import { InputProps } from "../../types/index";
 
 const Input = ({ label, name, type, id, icon: Icon, iconSize }: InputProps) => {
   return (
