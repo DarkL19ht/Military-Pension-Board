@@ -1,11 +1,19 @@
 import Logo from "../assets/logo.png";
 import Input from "../components/FormField/Input";
 import { CiUser, CiLock } from "react-icons/ci";
+import BannerImage from "../assets/soldierimage.jpg";
 
 const Login = () => {
   return (
-    <div className="bg-[#ffffff] h-screen w-full flex items-start">
-      <div className="h-full relative w-1/3 bg-[#7ad7a4]"></div>
+    <div className="bg-[#ffffff] h-screen w-full flex items-start overflow-hidden">
+      <div className="h-full relative w-1/3">
+        <img
+          src={BannerImage}
+          alt="soldier_image"
+          width={"100%"}
+          height={"100%"}
+        />
+      </div>
       <div className="h-full relative w-2/3 bg-[#ffffff] font-latoRegular">
         <div className="flex items-center justify-between mt-[37px] mx-[21px] mb-[70px]">
           <img src={Logo} alt="logo_image" width={35} height={35} />
