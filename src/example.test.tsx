@@ -1,4 +1,4 @@
-/* eslint-disable import/no-extraneous-dependencies */
+import React from "react";
 import { render } from "@testing-library/react";
 // import { describe, it } from "vitest";
 import Login from "@/pages/login/Login";

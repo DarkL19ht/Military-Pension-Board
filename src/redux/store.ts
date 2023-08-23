@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { configureStore, ConfigureStoreOptions } from "@reduxjs/toolkit";
 import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
 import persistedReducer from "./reducers";

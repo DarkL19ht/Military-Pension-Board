@@ -1,8 +1,8 @@
-/* eslint-disable import/no-extraneous-dependencies */
+import React from "react";
 import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
 import { persistStore } from "redux-persist";
-import { store } from "@redux/store";
+import { store } from "@/redux/store";
 
 export const persistor = persistStore(store);
 
