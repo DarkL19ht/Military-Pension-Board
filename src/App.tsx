@@ -1,10 +1,12 @@
 import RouteRenderer from "./route/route-renderer";
-function App() {
-  return (
-    <>
-      <RouteRenderer/>
-    </>
-  );
-}
+import { ReactQueryProvider, ReactReduxProvider } from "./providers";
 
-export default App;
+export default function App() {
+    return (
+        <ReactReduxProvider>
+            <ReactQueryProvider>
+                <RouteRenderer />
+            </ReactQueryProvider>
+        </ReactReduxProvider>
+    );
+}
