@@ -49,7 +49,7 @@ Military Pensions Board – Admin Portal Management
 - [ ] component lazy loading
 - [ ] React Table setup
 - [ ] configure dark mode
-- [ ] lint-stage and husky setup
+- [X] lint-stage and husky setup
 - [ ] change the favicon
 
 - [X] ***Login form page UI design***
