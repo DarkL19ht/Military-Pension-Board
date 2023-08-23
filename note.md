@@ -40,3 +40,9 @@ Testing
 3. Expect
 
 ```
+
+```js
+command
+--------
+npx lint-staged
+```

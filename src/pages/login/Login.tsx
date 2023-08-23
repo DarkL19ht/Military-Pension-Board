@@ -5,16 +5,16 @@ import BannerImage from "@/assets/soldierimage.jpg";
 
 function Login() {
     return (
-        <div className="bg-[#ffffff] h-screen w-full flex items-start overflow-hidden">
-            <div className="h-full relative w-1/3">
+        <div className="flex h-screen w-full items-start overflow-hidden bg-[#ffffff]">
+            <div className="relative h-full w-1/3">
                 <img src={BannerImage} alt="soldier_image" className="h-full w-full" />
             </div>
-            <div className="h-full relative w-2/3 bg-[#ffffff] font-latoRegular">
-                <div className="flex items-center justify-between mt-[37px] mx-[21px] mb-[70px]">
+            <div className="relative h-full w-2/3 bg-[#ffffff] font-latoRegular">
+                <div className="mx-[21px] mb-[70px] mt-[37px] flex items-center justify-between">
                     <img src={Logo} alt="logo_image" width={35} height={35} />
                     <h1 className="font-latoRegular">Having troubles? Get help</h1>
                 </div>
-                <div className="text-center text-[25px] font-[600] font-latoRegular leading-normal text-[#000000]">
+                <div className="text-center font-latoRegular text-[25px] font-[600] leading-normal text-[#000000]">
                     Login to Military Pension Board
                 </div>
                 <div className="mx-[215px]">
@@ -29,8 +29,8 @@ function Login() {
                             iconSize={20}
                         />
                         <div className="flex items-center justify-between">
-                            <div className="cursor-pointer flex items-center gap-x-2">
-                                <input type="checkbox" name="" id="" className="w-[20px] h-[20px]" />
+                            <div className="flex cursor-pointer items-center gap-x-2">
+                                <input type="checkbox" name="" id="" className="h-[20px] w-[20px]" />
                                 <span className="text-[#00873D]">Remember me</span>
                             </div>
                             <div className="">
@@ -39,7 +39,7 @@ function Login() {
                         </div>
                         <button
                             type="button"
-                            className="bg-[#00873D] inline-flex items-center w-full justify-center px-10 py-6 rounded-lg h-[40px] mt-[50px] text-[#ffffff]"
+                            className="mt-[50px] inline-flex h-[40px] w-full items-center justify-center rounded-lg bg-[#00873D] px-10 py-6 text-[#ffffff]"
                         >
                             Login
                         </button>

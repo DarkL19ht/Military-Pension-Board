@@ -5,51 +5,51 @@
 @tailwind utilities;
 
 @layer base {
-  @font-face {
-    font-family: LatoBlack;
-    src: url("/public/fonts/lato-black-webfont.woff") format("woff2");
-    font-display: swap;
-    font-style: normal;
-  }
-  @font-face {
-    font-family: LatoBold;
-    src: url("/public/fonts/lato-bold-webfont.woff") format("woff2");
-    font-display: swap;
-    font-style: normal;
-  }
-  @font-face {
-    font-family: LatoLight;
-    src: url("/public/fonts/lato-light-webfont.woff") format("woff2");
-    font-display: swap;
-    font-style: normal;
-  }
-  @font-face {
-    font-family: LatoRegular;
-    src: url("/public/fonts/lato-regular-webfont.woff") format("woff2");
-    font-display: swap;
-    font-style: normal;
-  }
-  @font-face {
-    font-family: LatoThin;
-    src: url("/public/fonts/lato-thin-webfont.woff") format("woff2");
-    font-display: swap;
-    font-style: normal;
-  }
-   html {
-    @apply font-Montserrat;
-  }
-  body {
-    background: #f1f1f1;
-  }
-  h1 {
-    @apply text-xl font-medium capitalize;
-  }
+    @font-face {
+        font-family: LatoBlack;
+        src: url("/public/fonts/lato-black-webfont.woff") format("woff2");
+        font-display: swap;
+        font-style: normal;
+    }
+    @font-face {
+        font-family: LatoBold;
+        src: url("/public/fonts/lato-bold-webfont.woff") format("woff2");
+        font-display: swap;
+        font-style: normal;
+    }
+    @font-face {
+        font-family: LatoLight;
+        src: url("/public/fonts/lato-light-webfont.woff") format("woff2");
+        font-display: swap;
+        font-style: normal;
+    }
+    @font-face {
+        font-family: LatoRegular;
+        src: url("/public/fonts/lato-regular-webfont.woff") format("woff2");
+        font-display: swap;
+        font-style: normal;
+    }
+    @font-face {
+        font-family: LatoThin;
+        src: url("/public/fonts/lato-thin-webfont.woff") format("woff2");
+        font-display: swap;
+        font-style: normal;
+    }
+    html {
+        @apply font-Montserrat;
+    }
+    body {
+        background: #f1f1f1;
+    }
+    h1 {
+        @apply text-xl font-medium capitalize;
+    }
 }
 
 .link {
-  @apply p-2.5 flex rounded-md gap-6 items-center md:cursor-pointer cursor-default duration-300 font-medium;
+    @apply flex cursor-default items-center gap-6 rounded-md p-2.5 font-medium duration-300 md:cursor-pointer;
 }
 
 .active {
-  @apply bg-blue-100 text-blue-600;
+    @apply bg-blue-100 text-blue-600;
 }

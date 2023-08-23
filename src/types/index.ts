@@ -1,12 +1,12 @@
 interface IconProps {
-  size: number;
+    size: number;
 }
 
 export interface InputProps {
-  label: string;
-  name: string;
-  type: string;
-  id: string;
-  icon: React.ComponentType<IconProps>;
-  iconSize: number;
+    label: string;
+    name: string;
+    type: string;
+    id: string;
+    icon: React.ComponentType<IconProps>;
+    iconSize: number;
 }
