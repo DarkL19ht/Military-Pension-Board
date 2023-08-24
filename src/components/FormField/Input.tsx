@@ -1,4 +1,4 @@
-import { InputProps } from "../../../types/index";
+import { InputProps } from '../../../types/index';
 
 const Input = ({ label, name, type, id, icon: Icon, iconSize }: InputProps) => {
   return (
@@ -9,7 +9,6 @@ const Input = ({ label, name, type, id, icon: Icon, iconSize }: InputProps) => {
       </label>
       <div className="mt-[14px] flex items-center w-full rounded-[13px]  px-[19px] py-[20px] border-[#D8D7D7] border-2 border-solid text-[#3D3333] text-[16px] font-[600]">
         <span className="pr-[12px]">{Icon && <Icon size={iconSize} />}</span>
-
         <input
           type={type}
           name={name}
