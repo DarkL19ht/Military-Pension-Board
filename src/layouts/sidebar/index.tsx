@@ -50,6 +50,9 @@ function Sidebar() {
     const [open, setOpen] = useState(!isTabletMid);
     const { pathname } = useLocation();
 
+    /**
+     * pathname change -> close sidebar (only mobile view)
+     */
     useEffect(() => {
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         isTabletMid && setOpen(false);
@@ -108,6 +111,7 @@ function Sidebar() {
             />
             <motion.div
                 variants={sidebarAnimation}
+                initial={{ x: isTabletMid ? -250 : 0 }}
                 animate={open ? "open" : "closed"}
                 className="text-gray fixed z-[999] h-screen w-[12rem]  max-w-[16rem] 
                 overflow-hidden bg-white shadow-xl md:relative"

@@ -51,6 +51,7 @@ Military Pensions Board – Admin Portal Management
 - [ ] configure dark mode
 - [X] lint-stage and husky setup
 - [ ] change the favicon
+- [ ] restructure the dashboard layout, sidebar menu
 
 - [X] ***Login form page UI design***
 - [ ] ***Login implementation***
