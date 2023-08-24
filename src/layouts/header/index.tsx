@@ -1,8 +1,11 @@
 import { FiSearch, FiBell } from "react-icons/fi";
-import { FaEnvelope } from "react-icons/fa";
-import profileImage from "@/assets/ib.png";
+// import { FaEnvelope } from "react-icons/fa";
+import { HiOutlineSun, HiOutlineMoon } from "react-icons/hi2";
+import profileImage from "@/assets/images/ib.png";
+import { useTheme } from "@/providers/ThemeProvider";
 
 function Header() {
+    const { setTheme, theme } = useTheme();
     return (
         <div className="flex h-[70px] min-w-max items-center justify-between bg-green-100/75 px-[25px] shadow-lg">
             <div className="max-w-xs pl-3">
@@ -25,7 +28,21 @@ function Header() {
             <div className="relativ flex items-center gap-[15px]">
                 <div className="flex items-center gap-[25px] border-r pr-[25px]">
                     <FiBell />
-                    <FaEnvelope />
+                    <button
+                        type="button"
+                        className="text-lg"
+                        onClick={
+                            theme === "light"
+                                ? () => setTheme("dark")
+                                : () => setTheme("light")
+                        }
+                    >
+                        {theme === "dark" ? (
+                            <HiOutlineSun className="dark:text-light-heading mr-5" />
+                        ) : (
+                            <HiOutlineMoon className="text-blue-brand mr-5" />
+                        )}
+                    </button>
                 </div>
                 <div className="relative flex items-center gap-[15px] ">
                     <div className="relative flex h-[50px] w-[50px] cursor-pointer items-center justify-center rounded-full bg-green-700">

@@ -12,6 +12,7 @@ Military Pensions Board – Admin Portal Management
 - [TAILWIND CSS](https://tailwindcss.com/)
 - [TWIN MACRO](https://github.com/ben-rogerson/twin.macro#readme)
 - [HEADLESS UI COMPONENTS](https://headlessui.com/)
+- [SHADCN UI](https://ui.shadcn.com/docs)
 - [REDUX TOOLKIT](https://redux-toolkit.js.org/)
 - [REDUX PERSIST](https://github.com/rt2zz/redux-persist)
 - [REACT QUERY v4](https://tanstack.com/query/v4/docs/overview)
@@ -48,14 +49,18 @@ Military Pensions Board – Admin Portal Management
 - [ ] Theming customization & setup
 - [ ] component lazy loading
 - [ ] React Table setup
-- [ ] configure dark mode
+- [X] configure dark mode
 - [X] lint-stage and husky setup
 - [ ] change the favicon
 - [ ] restructure the dashboard layout, sidebar menu
-
+- [ ] Svgr setup for build svg icons
 - [X] ***Login form page UI design***
 - [ ] ***Login implementation***
 - [ ] ***`Dashboard Layout UI design`***
+
+## Future Task
+- [ ] Refactor dark mode implementation
+- [ ] Restructure the navigation (side & header) bar
 
 
 ## Credits

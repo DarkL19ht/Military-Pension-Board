@@ -1,7 +1,7 @@
 import { CiUser, CiLock } from "react-icons/ci";
-import Logo from "@/assets/logo.png";
+import Logo from "@/assets/images/logo.png";
 import Input from "@/components/FormField/Input";
-import BannerImage from "@/assets/soldierimage.jpg";
+import BannerImage from "@/assets/images/soldierimage.jpg";
 
 function Login() {
     return (
@@ -9,12 +9,12 @@ function Login() {
             <div className="relative h-full w-1/3">
                 <img src={BannerImage} alt="soldier_image" className="h-full w-full" />
             </div>
-            <div className="relative h-full w-2/3 bg-[#ffffff] font-latoRegular">
+            <div className="font-latoRegular relative h-full w-2/3 bg-[#ffffff]">
                 <div className="mx-[21px] mb-[70px] mt-[37px] flex items-center justify-between">
                     <img src={Logo} alt="logo_image" width={35} height={35} />
                     <h1 className="font-latoRegular">Having troubles? Get help</h1>
                 </div>
-                <div className="text-center font-latoRegular text-[25px] font-[600] leading-normal text-[#000000]">
+                <div className="font-latoRegular text-center text-[25px] font-[600] leading-normal text-[#000000]">
                     Login to Military Pension Board
                 </div>
                 <div className="mx-[215px]">
