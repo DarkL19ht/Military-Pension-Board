@@ -20,7 +20,7 @@ const Login = () => {
           <div className="font-latoRegular">Having troubles? Get help</div>
         </div>
         <div className="text-center text-[25px] font-[600] font-latoRegular leading-normal text-[#000000]">
-          Login to Military Pension Board
+          Military Pension Portal
         </div>
         <div className="mx-[215px]">
           <form className="mt-[40px]">

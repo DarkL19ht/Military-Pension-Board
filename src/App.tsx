@@ -1,9 +1,10 @@
-import Login from "../src/pages/Login";
-
+// import Login from "../src/pages/Login";
+import Table from "./components/Table/Table";
 function App() {
   return (
     <>
-      <Login />
+      {/* <Login /> */}
+      <Table />
     </>
   );
 }
