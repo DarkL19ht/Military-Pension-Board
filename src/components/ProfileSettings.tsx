@@ -192,8 +192,9 @@ const ProfileSettings = () => {
             </div>
           </div>
           <div className="flex justify-center">
-          <button
-              className={`bg-[#00873D] inline-flex items-center w-64 justify-center px-10 py-6 rounded-lg h-[40px] mt-[50px] text-[#ffffff]`}>
+            <button
+              className={`bg-[#00873D] inline-flex items-center w-64 justify-center px-10 py-6 rounded-lg h-[40px] mt-[50px] text-[#ffffff]`}
+            >
               Submit password
             </button>
           </div>
