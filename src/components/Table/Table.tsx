@@ -55,7 +55,7 @@ const Table = () => {
                   01
                 </td>
                 <td className="whitespace-nowrap px-4 py-2 text-[10px]">
-                  <div className="d-flex align-items-center">
+                  <div className="flex items-center justify-center">
                     <img
                       src="https://mdbootstrap.com/img/new/avatars/8.jpg"
                       alt=""
@@ -102,7 +102,7 @@ const Table = () => {
                   01
                 </td>
                 <td className="whitespace-nowrap px-4 py-2 text-[10px]">
-                  <div className="d-flex align-items-center">
+                  <div className="flex items-center justify-center">
                     <img
                       src="https://mdbootstrap.com/img/new/avatars/8.jpg"
                       alt=""
@@ -149,7 +149,7 @@ const Table = () => {
                   01
                 </td>
                 <td className="whitespace-nowrap px-4 py-2 text-[10px]">
-                  <div className="d-flex align-items-center">
+                  <div className="flex items-center justify-center">
                     <img
                       src="https://mdbootstrap.com/img/new/avatars/8.jpg"
                       alt=""
@@ -196,7 +196,7 @@ const Table = () => {
                   01
                 </td>
                 <td className="whitespace-nowrap px-4 py-2 text-[10px]">
-                  <div className="d-flex align-items-center">
+                  <div className="flex items-center justify-center">
                     <img
                       src="https://mdbootstrap.com/img/new/avatars/8.jpg"
                       alt=""
@@ -243,7 +243,7 @@ const Table = () => {
                   01
                 </td>
                 <td className="whitespace-nowrap px-4 py-2 text-[10px]">
-                  <div className="d-flex align-items-center">
+                  <div className="flex items-center justify-center">
                     <img
                       src="https://mdbootstrap.com/img/new/avatars/8.jpg"
                       alt=""
@@ -290,7 +290,7 @@ const Table = () => {
                   01
                 </td>
                 <td className="whitespace-nowrap px-4 py-2 text-[10px]">
-                  <div className="d-flex align-items-center">
+                  <div className="flex items-center justify-center">
                     <img
                       src="https://mdbootstrap.com/img/new/avatars/8.jpg"
                       alt=""
@@ -337,7 +337,7 @@ const Table = () => {
                   01
                 </td>
                 <td className="whitespace-nowrap px-4 py-2 text-[10px]">
-                  <div className="d-flex align-items-center">
+                  <div className="flex items-center justify-center">
                     <img
                       src="https://mdbootstrap.com/img/new/avatars/8.jpg"
                       alt=""
@@ -384,7 +384,7 @@ const Table = () => {
                   01
                 </td>
                 <td className="whitespace-nowrap px-4 py-2 text-[10px]">
-                  <div className="d-flex align-items-center">
+                  <div className="flex items-center justify-center">
                     <img
                       src="https://mdbootstrap.com/img/new/avatars/8.jpg"
                       alt=""
@@ -431,7 +431,7 @@ const Table = () => {
                   01
                 </td>
                 <td className="whitespace-nowrap px-4 py-2 text-[10px]">
-                  <div className="d-flex align-items-center">
+                  <div className="flex items-center justify-center">
                     <img
                       src="https://mdbootstrap.com/img/new/avatars/8.jpg"
                       alt=""
@@ -478,7 +478,7 @@ const Table = () => {
                   01
                 </td>
                 <td className="whitespace-nowrap px-4 py-2 text-[10px]">
-                  <div className="d-flex align-items-center">
+                  <div className="flex items-center justify-center">
                     <img
                       src="https://mdbootstrap.com/img/new/avatars/8.jpg"
                       alt=""
