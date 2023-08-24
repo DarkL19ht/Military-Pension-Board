@@ -8,12 +8,10 @@ export default function Dashboard() {
                 <h1>Hello, Olayinka 👋</h1>
                 <Button title="Add Pensioners" variant="default" size="sm" />
             </div>
-            <div className="h-full">
+            <div>
                 <div className="grid grid-cols-4 gap-3 ">
                     <div className="flex gap-2 rounded-emd bg-card p-4">
-                        <div className="mt-1 text-red-400">
-                            <FaLaptop size={25} />
-                        </div>
+                        <FaLaptop size={25} className="text-red-400" />
                         <div className="flex flex-col gap-y-2">
                             <h4>Completed Verification</h4>
                             <h1 className="text-2xl font-bold">967</h1>
@@ -48,6 +46,7 @@ export default function Dashboard() {
                     </div>
                 </div>
             </div>
+            {/*  */}
         </div>
     );
 }

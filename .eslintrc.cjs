@@ -36,6 +36,7 @@ module.exports = {
         "no-console": "error",
         "import/extensions": 0,
         "react/jsx-props-no-spreading": 0,
+        "func-names": 0,
         // "react/prop-types": 0,
         // "react/no-unused-prop-types": 0,
         // "react/no-unused-prop-types": 0,
