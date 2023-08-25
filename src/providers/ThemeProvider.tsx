@@ -1,5 +1,5 @@
 /* eslint-disable react/require-default-props */
-import { createContext, useContext, useEffect, useState, useMemo } from "react";
+import React, { createContext, useContext, useEffect, useState, useMemo } from "react";
 
 type ThemeProviderProps = {
     children: React.ReactNode;

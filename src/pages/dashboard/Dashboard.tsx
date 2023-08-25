@@ -1,3 +1,4 @@
+import React from "react";
 import { FaLaptop } from "react-icons/fa";
 import { MbpButton } from "@/components/ui/MpbButton";
 
