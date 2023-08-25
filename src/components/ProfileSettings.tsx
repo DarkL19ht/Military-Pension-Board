@@ -1,207 +1,208 @@
-import ProfilePics from '../assets/profilepics.png';
-import { PiPencilSimpleLine } from 'react-icons/pi';
+import { PiPencilSimpleLine } from "react-icons/pi";
+import ProfilePics from "../assets/profilepics.png";
 
-const ProfileSettings = () => {
-  return (
-    <div className="p-[4.81rem]">
-      <h4 className="text-[#00873D] text-2xl font-bold">Profile Settings</h4>
-      <div className="mt-6">
-        <img
-          src={ProfilePics}
-          alt="profile_picture"
-          className="border-4 border-[#006C31] rounded-full"
-        />
-      </div>
-      <div className="mt-[3rem] mb-[2.3rem] flex">
-        <p className="text-[#239F5B] text-base font-semibold pr-[1.25rem] underline">
-          Profile Information
-        </p>
-        <p className="flex cursor-pointer">
-          Edit{' '}
-          <span>
-            <PiPencilSimpleLine className="mt-[0.3rem]" />
-          </span>
-        </p>
-      </div>
-      <div>
-        <form className="w-full max-w-2xl">
-          <div className="flex flex-wrap -mx-3 mb-3">
-            <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-              <label
-                className="block tracking-wide before:content-['*'] before:ml-0.5 before:text-red-500 text-sm font-medium text-slate-700 pb-2"
-                htmlFor="first-name"
-              >
-                First name
-              </label>
-              <input
-                className="appearance-none block w-full bg-white text-[#3D3333] border border-[#D8D7D7] rounded-[0.8125rem] py-4 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 placeholder-[#3D3333]"
-                id="first-name"
-                type="text"
-                placeholder="Jane"
-              />
+function ProfileSettings() {
+    return (
+        <div className="p-[4.81rem]">
+            <h4 className="text-2xl font-bold text-[#00873D]">Profile Settings</h4>
+            <div className="mt-6">
+                <img
+                    src={ProfilePics}
+                    alt="profile_picture"
+                    className="rounded-full border-4 border-[#006C31]"
+                />
             </div>
-            <div className="w-full md:w-1/2 px-3">
-              <label
-                className="block tracking-wide before:content-['*'] before:ml-0.5 before:text-red-500 text-sm font-medium text-slate-700 pb-2"
-                htmlFor="last-name"
-              >
-                Last name
-              </label>
-              <input
-                className="appearance-none block w-full bg-white text-[#3D3333] border border-[#D8D7D7] rounded-[0.8125rem] py-4 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 placeholder-[#3D3333]"
-                id="last-name"
-                type="text"
-                placeholder="Joseph"
-              />
+            <div className="mb-[2.3rem] mt-[3rem] flex">
+                <p className="pr-[1.25rem] text-base font-semibold text-[#239F5B] underline">
+                    Profile Information
+                </p>
+                <p className="flex cursor-pointer">
+                    Edit{" "}
+                    <span>
+                        <PiPencilSimpleLine className="mt-[0.3rem]" />
+                    </span>
+                </p>
             </div>
-          </div>
-          <div className="flex flex-wrap -mx-3 mb-3">
-            <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-              <label
-                className="block tracking-wide before:content-['*'] before:ml-0.5 before:text-red-500 text-sm font-medium text-slate-700 pb-2"
-                htmlFor="rank"
-              >
-                Rank
-              </label>
-              <div className="relative">
-                <select
-                  className="block appearance-none w-full bg-white border border-[#D8D7D7] text-gray-700 py-4 px-4 pr-8 rounded-[0.8125rem] leading-tight focus:outline-none focus:bg-white focus:border-gray-500 placeholder-[#3D3333]"
-                  id="rank"
-                >
-                  <option>Colonel</option>
-                  <option>Colonel</option>
-                  <option>Colonel</option>
-                </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                  <svg
-                    className="fill-current h-4 w-4"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                  </svg>
-                </div>
-              </div>
+            <div>
+                <form className="w-full max-w-2xl">
+                    <div className="-mx-3 mb-3 flex flex-wrap">
+                        <div className="mb-6 w-full px-3 md:mb-0 md:w-1/2">
+                            <label
+                                className="block pb-2 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
+                                htmlFor="first-name"
+                            >
+                                First name
+                            </label>
+                            <input
+                                className="mb-3 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-4 py-4 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
+                                id="first-name"
+                                type="text"
+                                placeholder="Jane"
+                            />
+                        </div>
+                        <div className="w-full px-3 md:w-1/2">
+                            <label
+                                className="block pb-2 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
+                                htmlFor="last-name"
+                            >
+                                Last name
+                            </label>
+                            <input
+                                className="mb-3 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-4 py-4 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
+                                id="last-name"
+                                type="text"
+                                placeholder="Joseph"
+                            />
+                        </div>
+                    </div>
+                    <div className="-mx-3 mb-3 flex flex-wrap">
+                        <div className="mb-6 w-full px-3 md:mb-0 md:w-1/2">
+                            <label
+                                className="block pb-2 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
+                                htmlFor="rank"
+                            >
+                                Rank
+                            </label>
+                            <div className="relative">
+                                <select
+                                    className="block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-4 py-4 pr-8 leading-tight text-gray-700 placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
+                                    id="rank"
+                                >
+                                    <option>Colonel</option>
+                                    <option>Colonel</option>
+                                    <option>Colonel</option>
+                                </select>
+                                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                    <svg
+                                        className="h-4 w-4 fill-current"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 20 20"
+                                    >
+                                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="w-full px-3 md:w-1/2">
+                            <label
+                                className="block pb-2 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
+                                htmlFor="phone-number"
+                            >
+                                Phone number
+                            </label>
+                            <input
+                                className="mb-3 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-4 py-4 leading-tight text-white placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
+                                id="phone-number"
+                                type="text"
+                                placeholder="0905634289"
+                            />
+                        </div>
+                    </div>
+                    <div className="-mx-3 mb-3 flex flex-wrap">
+                        <div className="mb-6 w-full px-3 md:mb-0 md:w-1/2">
+                            <label
+                                className="block pb-2 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
+                                htmlFor="email-address"
+                            >
+                                Email address
+                            </label>
+                            <input
+                                className="mb-3 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-4 py-4 leading-tight text-white placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
+                                id="email-address"
+                                type="text"
+                                placeholder="Susanjoseph@nigerianarmy.com.ng"
+                            />
+                        </div>
+                        <div className="w-full px-3 md:w-1/2">
+                            <label
+                                className="block pb-2 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
+                                htmlFor="gender"
+                            >
+                                Gender
+                            </label>
+                            <input
+                                className="mb-3 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-4 py-4 leading-tight text-white placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
+                                id="gender"
+                                type="text"
+                                placeholder="Female"
+                            />
+                        </div>
+                    </div>
+                    <div className="-mx-3 mb-3 flex flex-wrap">
+                        <div className="w-full px-3">
+                            <label
+                                className="block pb-2 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
+                                htmlFor="address"
+                            >
+                                Address
+                            </label>
+                            <input
+                                className="mb-3 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-4 py-4 leading-tight text-white placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
+                                id="address"
+                                type="password"
+                                placeholder="Military barracks Ikeja cantoment"
+                            />
+                        </div>
+                    </div>
+                    <p className="mb-3 mt-[2.7rem] pr-[1.25rem] text-base font-semibold text-[#239F5B] underline">
+                        Change password
+                    </p>
+                    <div className="mb-6 w-full md:mb-0 md:w-1/2">
+                        <label
+                            className="block pb-2 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
+                            htmlFor="old-password"
+                        >
+                            Old password
+                        </label>
+                        <input
+                            className="mb-3 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-4 py-4 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
+                            id="old password"
+                            type="password"
+                            placeholder="*********************"
+                        />
+                    </div>
+                    <div className="-mx-3 mb-3 flex flex-wrap">
+                        <div className="mb-6 w-full px-3 md:mb-0 md:w-1/2">
+                            <label
+                                className="block pb-2 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
+                                htmlFor="new password"
+                            >
+                                New password
+                            </label>
+                            <input
+                                className="mb-3 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-4 py-4 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
+                                id="new-password"
+                                type="password"
+                                placeholder="*****************"
+                            />
+                        </div>
+                        <div className="w-full px-3 md:w-1/2">
+                            <label
+                                className="block pb-2 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
+                                htmlFor="confirm-password"
+                            >
+                                Confirm password
+                            </label>
+                            <input
+                                className="mb-3 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-4 py-4 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
+                                id="confirm-password"
+                                type="password"
+                                placeholder="*****************"
+                            />
+                        </div>
+                    </div>
+                    <div className="flex justify-center">
+                        <button
+                            type="button"
+                            className="mt-[50px] inline-flex h-[40px] w-64 items-center justify-center rounded-lg bg-[#00873D] px-10 py-6 text-[#ffffff]"
+                        >
+                            Submit password
+                        </button>
+                    </div>
+                </form>
             </div>
-            <div className="w-full md:w-1/2 px-3">
-              <label
-                className="block tracking-wide before:content-['*'] before:ml-0.5 before:text-red-500 text-sm font-medium text-slate-700 pb-2"
-                htmlFor="phone-number"
-              >
-                Phone number
-              </label>
-              <input
-                className="appearance-none block w-full bg-white text-white border border-[#D8D7D7] rounded-[0.8125rem] py-4 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 placeholder-[#3D3333]"
-                id="phone-number"
-                type="text"
-                placeholder="0905634289"
-              />
-            </div>
-          </div>
-          <div className="flex flex-wrap -mx-3 mb-3">
-            <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-              <label
-                className="block tracking-wide before:content-['*'] before:ml-0.5 before:text-red-500 text-sm font-medium text-slate-700 pb-2"
-                htmlFor="email-address"
-              >
-                Email address
-              </label>
-              <input
-                className="appearance-none block w-full bg-white text-white border border-[#D8D7D7] rounded-[0.8125rem] py-4 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 placeholder-[#3D3333]"
-                id="email-address"
-                type="text"
-                placeholder="Susanjoseph@nigerianarmy.com.ng"
-              />
-            </div>
-            <div className="w-full md:w-1/2 px-3">
-              <label
-                className="block tracking-wide before:content-['*'] before:ml-0.5 before:text-red-500 text-sm font-medium text-slate-700 pb-2"
-                htmlFor="gender"
-              >
-                Gender
-              </label>
-              <input
-                className="appearance-none block w-full bg-white text-white border border-[#D8D7D7] rounded-[0.8125rem] py-4 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 placeholder-[#3D3333]"
-                id="gender"
-                type="text"
-                placeholder="Female"
-              />
-            </div>
-          </div>
-          <div className="flex flex-wrap -mx-3 mb-3">
-            <div className="w-full px-3">
-              <label
-                className="block tracking-wide before:content-['*'] before:ml-0.5 before:text-red-500 text-sm font-medium text-slate-700 pb-2"
-                htmlFor="address"
-              >
-                Address
-              </label>
-              <input
-                className="appearance-none block w-full bg-white text-white border border-[#D8D7D7] rounded-[0.8125rem] py-4 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 placeholder-[#3D3333]"
-                id="address"
-                type="password"
-                placeholder="Military barracks Ikeja cantoment"
-              />
-            </div>
-          </div>
-          <p className="text-[#239F5B] text-base font-semibold pr-[1.25rem] underline mt-[2.7rem] mb-3">
-            Change password
-          </p>
-          <div className="w-full md:w-1/2 mb-6 md:mb-0">
-            <label
-              className="block tracking-wide before:content-['*'] before:ml-0.5 before:text-red-500 text-sm font-medium text-slate-700 pb-2"
-              htmlFor="old-password"
-            >
-              Old password
-            </label>
-            <input
-              className="appearance-none block w-full bg-white text-[#3D3333] border border-[#D8D7D7] rounded-[0.8125rem] py-4 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 placeholder-[#3D3333]"
-              id="old password"
-              type="password"
-              placeholder="*********************"
-            />
-          </div>
-          <div className="flex flex-wrap -mx-3 mb-3">
-            <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-              <label
-                className="block tracking-wide before:content-['*'] before:ml-0.5 before:text-red-500 text-sm font-medium text-slate-700 pb-2"
-                htmlFor="new password"
-              >
-                New password
-              </label>
-              <input
-                className="appearance-none block w-full bg-white text-[#3D3333] border border-[#D8D7D7] rounded-[0.8125rem] py-4 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 placeholder-[#3D3333]"
-                id="new-password"
-                type="password"
-                placeholder="*****************"
-              />
-            </div>
-            <div className="w-full md:w-1/2 px-3">
-              <label
-                className="block tracking-wide before:content-['*'] before:ml-0.5 before:text-red-500 text-sm font-medium text-slate-700 pb-2"
-                htmlFor="confirm-password"
-              >
-                Confirm password
-              </label>
-              <input
-                className="appearance-none block w-full bg-white text-[#3D3333] border border-[#D8D7D7] rounded-[0.8125rem] py-4 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 placeholder-[#3D3333]"
-                id="confirm-password"
-                type="password"
-                placeholder="*****************"
-              />
-            </div>
-          </div>
-          <div className="flex justify-center">
-            <button
-              className={`bg-[#00873D] inline-flex items-center w-64 justify-center px-10 py-6 rounded-lg h-[40px] mt-[50px] text-[#ffffff]`}
-            >
-              Submit password
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  );
-};
+        </div>
+    );
+}
 
 export default ProfileSettings;

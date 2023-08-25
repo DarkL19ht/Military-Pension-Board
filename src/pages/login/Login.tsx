@@ -19,7 +19,14 @@ function Login() {
                 </div>
                 <div className="mx-[215px]">
                     <form className="mt-[40px]">
-                        <Input label="Username" name="username" type="text" id="username" icon={CiUser} iconSize={20} />
+                        <Input
+                            label="Username"
+                            name="username"
+                            type="text"
+                            id="username"
+                            icon={CiUser}
+                            iconSize={20}
+                        />
                         <Input
                             label="Password"
                             name="password"
@@ -30,11 +37,17 @@ function Login() {
                         />
                         <div className="flex items-center justify-between">
                             <div className="flex cursor-pointer items-center gap-x-2">
-                                <input type="checkbox" name="" id="" className="h-[20px] w-[20px]" />
+                                <input
+                                    type="checkbox"
+                                    name=""
+                                    id=""
+                                    className="h-[20px] w-[20px]"
+                                />
                                 <span className="text-[#00873D]">Remember me</span>
                             </div>
                             <div className="">
-                                Forgot password? <span className="text-[#00873D]">Reset here</span>
+                                Forgot password?{" "}
+                                <span className="text-[#00873D]">Reset here</span>
                             </div>
                         </div>
                         <button
