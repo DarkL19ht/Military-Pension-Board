@@ -1,9 +1,8 @@
-
-const config = {
-  trailingComma: "es5",
-  tabWidth: 2,
-  semi: true,
-  singlQuote: true,
-};
-
-module.exports = config;
+module.exports = {
+    plugins: ["prettier-plugin-tailwindcss"],
+    trailingComma: "es5",
+    tabWidth: 4,
+    printWidth: 90,
+    semi: true,
+    singleQuote: false,
+}

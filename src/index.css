@@ -1,3 +1,85 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    @font-face {
+        font-family: LatoBlack;
+        src: url("/public/fonts/lato-black-webfont.woff") format("woff2");
+        font-display: swap;
+        font-style: normal;
+    }
+    @font-face {
+        font-family: LatoBold;
+        src: url("/public/fonts/lato-bold-webfont.woff") format("woff2");
+        font-display: swap;
+        font-style: normal;
+    }
+    @font-face {
+        font-family: LatoLight;
+        src: url("/public/fonts/lato-light-webfont.woff") format("woff2");
+        font-display: swap;
+        font-style: normal;
+    }
+    @font-face {
+        font-family: LatoRegular;
+        src: url("/public/fonts/lato-regular-webfont.woff") format("woff2");
+        font-display: swap;
+        font-style: normal;
+    }
+    @font-face {
+        font-family: LatoThin;
+        src: url("/public/fonts/lato-thin-webfont.woff") format("woff2");
+        font-display: swap;
+        font-style: normal;
+    }
+    html {
+        @apply font-Montserrat;
+    }
+    body {
+        @apply bg-foreground;
+    }
+
+    h1 {
+        @apply text-xl font-medium capitalize;
+    }
+
+    .link {
+        @apply flex items-center gap-6 rounded-md p-2.5 font-medium duration-300 md:cursor-pointer;
+    }
+
+    .active {
+        @apply bg-blue-100 text-blue-600;
+    }
+
+    [type="text"],
+    [type="email"],
+    [type="password"],
+    [type="number"],
+    [type="date"],
+    [type="tel"],
+    textarea,
+    select {
+        @apply block w-full rounded-md border-gray-300
+        pl-10 shadow-sm outline-none 
+        focus:border focus:border-green-400
+        focus:ring-0 focus:ring-green-200
+        disabled:cursor-not-allowed 
+        disabled:bg-gray-50 
+        disabled:text-gray-500;
+    }
+
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* input[type="checkbox"] {
+        @apply h-6 w-6 rounded focus:ring-0 hover:cursor-pointer;
+    } */
+
+    .input-label {
+        @apply mb-1 flex font-latoRegular text-base;
+    }
+}
