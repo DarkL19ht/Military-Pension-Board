@@ -22,11 +22,20 @@
         "baseUrl": "./",
         "paths": {
             "@/*": ["src/*"],
+            "@api/*": ["src/api/*"],
+            "@components/*": ["src/components/*"],
             "@pages/*": ["src/pages/*"],
             "@redux/*": ["src/redux/*"]
         },
         "types": ["node", "vitest/globals"]
     },
-    "include": ["src", ".eslintrc.cjs", "vite.config.ts", "tailwind.config.js","setupTests.ts"],
+    "include": [
+        "src",
+        ".eslintrc.cjs",
+        "vite.config.ts",
+        "tailwind.config.ts",
+        "tailwindcss-animate.d.ts",
+        "setupTests.ts",
+    ],
     "references": [{ "path": "./tsconfig.node.json" }]
 }

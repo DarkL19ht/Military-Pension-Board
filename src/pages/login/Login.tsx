@@ -1,9 +1,38 @@
 import { CiUser, CiLock } from "react-icons/ci";
-import Logo from "@/assets/logo.png";
-import Input from "@/components/FormField/Input";
-import BannerImage from "@/assets/soldierimage.jpg";
+import { useForm } from "react-hook-form";
+import useAuthentication from "@api/user-controller/useAuthentication";
+import Logo from "@/assets/images/logo.png";
+import MpbTextField from "@/components/@form/MpbTextField";
+import BannerImage from "@/assets/images/soldierimage.jpg";
+
+type FormValues = {
+    username: string;
+    password: string;
+};
 
 function Login() {
+    const {
+        control,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm<FormValues>({
+        mode: "all",
+        defaultValues: {
+            username: "",
+            password: "",
+        },
+    });
+
+    const { LoginUser } = useAuthentication({
+        onSuccess: () => {},
+        onError: () => {},
+    });
+
+    const handleAuthentication = (values: FormValues) => {
+        LoginUser(values);
+    };
+
     return (
         <div className="flex h-screen w-full items-start overflow-hidden bg-[#ffffff]">
             <div className="relative h-full w-1/3">
@@ -18,23 +47,40 @@ function Login() {
                     Login to Military Pension Board
                 </div>
                 <div className="mx-[215px]">
+                    {/* TODO: remove line below */}
+                    <pre className="hidden">{JSON.stringify(watch(), null, 2)}</pre>
+                    <pre className="hidden">{JSON.stringify(errors, null, 2)}</pre>
                     <form className="mt-[40px]">
-                        <Input
-                            label="Username"
-                            name="username"
-                            type="text"
-                            id="username"
-                            icon={CiUser}
-                            iconSize={20}
-                        />
-                        <Input
-                            label="Password"
-                            name="password"
-                            type="password"
-                            id="password"
-                            icon={CiLock}
-                            iconSize={20}
-                        />
+                        <div className="mb-5">
+                            <MpbTextField
+                                label="Username"
+                                name="username"
+                                type="text"
+                                icon={<CiUser size={20} />}
+                                control={control}
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: "Username is required",
+                                    },
+                                }}
+                            />
+                        </div>
+                        <div className="mb-5">
+                            <MpbTextField
+                                label="Password"
+                                name="password"
+                                type="text"
+                                icon={<CiLock size={20} />}
+                                control={control}
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: "Password is required",
+                                    },
+                                }}
+                            />
+                        </div>
                         <div className="flex items-center justify-between">
                             <div className="flex cursor-pointer items-center gap-x-2">
                                 <input
@@ -52,7 +98,9 @@ function Login() {
                         </div>
                         <button
                             type="button"
-                            className="mt-[50px] inline-flex h-[40px] w-full items-center justify-center rounded-lg bg-[#00873D] px-10 py-6 text-[#ffffff]"
+                            className="mt-[50px] inline-flex h-[40px] w-full items-center 
+                            justify-center rounded-lg bg-[#00873D] px-10 py-6 text-[#ffffff]"
+                            onClick={handleSubmit(handleAuthentication)}
                         >
                             Login
                         </button>
