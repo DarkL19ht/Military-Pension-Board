@@ -37,6 +37,9 @@ module.exports = {
         "import/extensions": 0,
         "prettier/prettier": 0,
         "react/button-has-type": 0,
+        "react/jsx-props-no-spreading": 0,
+        "func-names": 0,
+        "@typescript-eslint/no-explicit-any": 0, // TODO: remove this after fixing issue with "any"
         // "react/prop-types": 0,
         // "react/no-unused-prop-types": 0,
         // "react/no-unused-prop-types": 0,

@@ -22,11 +22,19 @@
         "baseUrl": "./",
         "paths": {
             "@/*": ["src/*"],
+            "@api/*": ["src/api/*"],
+            "@components/*": ["src/components/*"],
             "@pages/*": ["src/pages/*"],
             "@redux/*": ["src/redux/*"]
         },
         "types": ["node", "vitest/globals"]
     },
-    "include": ["src", ".eslintrc.cjs", "vite.config.ts", "tailwind.config.js"],
+    "include": [
+        "src",
+        ".eslintrc.cjs",
+        "vite.config.ts",
+        "tailwind.config.ts",
+        "tailwindcss-animate.d.ts"
+    ],
     "references": [{ "path": "./tsconfig.node.json" }]
 }

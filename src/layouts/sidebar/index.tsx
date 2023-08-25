@@ -14,7 +14,7 @@ import { SlSettings } from "react-icons/sl";
 import { TbReportAnalytics } from "react-icons/tb";
 import { RiBuilding3Line } from "react-icons/ri";
 import { MdMenu } from "react-icons/md";
-import Logo from "@/assets/logo.png";
+import Logo from "@/assets/images/logo.png";
 import SubMenu from "./SubMenu";
 
 const subMenusList = [
@@ -50,6 +50,9 @@ function Sidebar() {
     const [open, setOpen] = useState(!isTabletMid);
     const { pathname } = useLocation();
 
+    /**
+     * pathname change -> close sidebar (only mobile view)
+     */
     useEffect(() => {
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         isTabletMid && setOpen(false);
@@ -108,6 +111,7 @@ function Sidebar() {
             />
             <motion.div
                 variants={sidebarAnimation}
+                initial={{ x: isTabletMid ? -250 : 0 }}
                 animate={open ? "open" : "closed"}
                 className="text-gray fixed z-[999] h-screen w-[12rem]  max-w-[16rem] 
                 overflow-hidden bg-white shadow-xl md:relative"
@@ -131,7 +135,7 @@ function Sidebar() {
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to="k" className="link">
+                            <NavLink to="transactions" className="link">
                                 <TbReportAnalytics size={20} className="min-w-max" />
                                 <span>Transactions</span>
                             </NavLink>
