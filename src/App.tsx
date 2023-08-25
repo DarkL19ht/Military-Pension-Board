@@ -1,12 +1,12 @@
-// import Login from "../src/pages/Login";
-import Table from "./components/Table/Table";
-function App() {
-  return (
-    <>
-      {/* <Login /> */}
-      <Table />
-    </>
-  );
-}
+import RouteRenderer from "./route/route-renderer";
+import { ReactQueryProvider, ReactReduxProvider } from "./providers";
 
-export default App;
+export default function App() {
+    return (
+        <ReactReduxProvider>
+            <ReactQueryProvider>
+                <RouteRenderer />
+            </ReactQueryProvider>
+        </ReactReduxProvider>
+    );
+}
