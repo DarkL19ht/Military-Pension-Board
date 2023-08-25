@@ -26,7 +26,8 @@ Military Pensions Board – Admin Portal Management
 ## How to start on local
 
 ## Web URL
-- [Swagger URL]()
+- [Swagger URL demo]()
+- [Swagger URL staging](https://mpb-admin-api.azurewebsites.net/swagger-ui/index.html)
 - [Figma design](https://www.figma.com/file/5fBxAJe5cqnrq1o2KOEjja/e-Pension-Web-Portal(MPB)?type=design&node-id=2-2&mode=design)
 
 ## API baseURL
@@ -40,12 +41,12 @@ Military Pensions Board – Admin Portal Management
 - [X] Vitest setup
 - [X] ***axios instance and interceptor***
 - [X] `***React router setup***`
-- [ ] Proteced route
+- [X] Proteced route
 - [ ] ***`React Hook Form Setup`***
 - [ ] ***building UI components***
 - [X] ***Absolute import***
 - [X] Multi-environment setup
-- [ ] Twin.macro setup
+- [ ] Twin.macro setup  nb n nm ,    
 - [ ] Theming customization & setup
 - [ ] component lazy loading
 - [ ] React Table setup

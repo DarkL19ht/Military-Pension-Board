@@ -1,20 +1,12 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable import/prefer-default-export */
 import type { Config } from "tailwindcss";
+import tailwindDebugScreen from "tailwindcss-debug-screens";
+import tailwindForm from "@tailwindcss/forms";
+import tailwindScrollbar from "tailwind-scrollbar";
 import { mpbPlugin } from "./mpb-plugin";
 
 export const mbpPreset = {
     content: [],
-    theme: {
-        extend: {
-            fontFamily: {
-                latoBlack: "LatoBlack, sans-serif",
-                latoBold: "LatoBold, sans-serif",
-                latoLight: "LatoLight, sans-serif",
-                latoRegular: "LatoRegular, sans-serif",
-                latoThin: "LatoThin, sans-serif",
-                Montserrat: "Montserrat",
-            },
-        },
-    },
-    plugins: [mpbPlugin],
+    plugins: [mpbPlugin, tailwindDebugScreen, tailwindForm, tailwindScrollbar],
 } satisfies Config;

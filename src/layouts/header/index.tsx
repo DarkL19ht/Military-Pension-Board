@@ -7,7 +7,7 @@ import { useTheme } from "@/providers/ThemeProvider";
 function Header() {
     const { setTheme, theme } = useTheme();
     return (
-        <div className="flex h-[70px] min-w-max items-center justify-between bg-green-100/75 px-[25px] shadow-lg">
+        <div className="flex h-[70px] min-w-max items-center justify-between bg-header  px-[25px] shadow-lg">
             <div className="max-w-xs pl-3">
                 <div>
                     <div className="group relative">

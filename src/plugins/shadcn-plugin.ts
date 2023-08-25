@@ -26,7 +26,6 @@ export const shadcnPlugin = plugin(
                 "--border": "220 13% 91%",
                 "--input": "220 13% 91%",
                 "--ring": "224 71.4% 4.1%",
-                "--header-background": "147, 100%, 85%",
                 "--radius": "0.5rem",
             },
             ".dark": {
@@ -110,9 +109,9 @@ export const shadcnPlugin = plugin(
                     },
                 },
                 borderRadius: {
-                    elg: "var(--radius)",
-                    emd: "calc(var(--radius) - 2px)",
-                    esm: "calc(var(--radius) - 4px)",
+                    slg: "var(--radius)",
+                    smd: "calc(var(--radius) - 2px)",
+                    ssm: "calc(var(--radius) - 4px)",
                 },
                 keyframes: {
                     "accordion-down": {

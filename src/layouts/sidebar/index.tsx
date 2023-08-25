@@ -124,9 +124,9 @@ function Sidebar() {
                 {/* Menus */}
                 <div className="flex h-full flex-col">
                     <ul
-                        className="scrollbar-thin scrollbar-track-white scrollbar-thumb-slate-100 flex h-[70%] 
-                        flex-col gap-4 overflow-x-hidden 
-                        whitespace-pre px-2.5 py-5 text-[0.9rem]  font-medium md:h-[80%]"
+                        className="flex h-[70%] flex-col gap-4 overflow-x-hidden 
+                        whitespace-pre px-2.5 py-5 
+                        text-[0.9rem] font-medium scrollbar-thin scrollbar-track-white  scrollbar-thumb-slate-100 md:h-[80%]"
                     >
                         <li>
                             <NavLink to="." className="link active">
