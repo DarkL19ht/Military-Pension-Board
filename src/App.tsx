@@ -1,16 +1,12 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Login from '../src/pages/Login';
-import ProfileSettings from './components/ProfileSettings';
+import RouteRenderer from "./route/route-renderer";
+import { ReactQueryProvider, ReactReduxProvider } from "./providers";
 
-function App() {
-  return (
-    <BrowserRouter>     
-      <Routes>
-        <Route path="/" element={<Login />}/>
-        <Route path='/profileSettings' element={<ProfileSettings />} />
-      </Routes>
-    </BrowserRouter>
-  );
+export default function App() {
+    return (
+        <ReactReduxProvider>
+            <ReactQueryProvider>
+                <RouteRenderer />
+            </ReactQueryProvider>
+        </ReactReduxProvider>
+    );
 }
-
-export default App;
