@@ -33,8 +33,18 @@ module.exports = {
     rules: {
         "react/react-in-jsx-scope": 0,
         "no-param-reassign": 0,
+        "prettier/prettier": 0,
         "no-console": "error",
         "import/extensions": 0,
+        "jsx-a11y/label-has-associated-control": [
+            2,
+            {
+                labelComponents: ["CustomInputLabel"],
+                labelAttributes: ["label"],
+                controlComponents: ["CustomInput"],
+                depth: 3,
+            },
+        ],
         "react/jsx-props-no-spreading": 0,
         "func-names": 0,
         "@typescript-eslint/no-explicit-any": 0, // TODO: remove this after fixing issue with "any"
