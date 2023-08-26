@@ -77,4 +77,9 @@
     .active {
         @apply bg-blue-100 text-blue-600;
     }
+
+    .container-snap {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
 }

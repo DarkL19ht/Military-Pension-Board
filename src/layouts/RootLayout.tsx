@@ -7,7 +7,7 @@ function RootLayout() {
         <div className="flex">
             <Sidebar />
             <main className="w-full flex-1">
-                {/* header goes her */}
+                {/* header goes here */}
                 <Header />
                 <Outlet />
             </main>

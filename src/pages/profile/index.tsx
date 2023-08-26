@@ -4,7 +4,7 @@ import ProfilePics from "@/assets/images/profilepics.png";
 function ProfileSettings() {
     return (
         <div className="h-[90vh] overflow-hidden">
-            <div className="h-full  overflow-y-scroll py-5 pl-[3.81rem] pt-[2rem]">
+            <div className="h-full overflow-y-scroll py-5 pl-[3.81rem] pt-[2rem]">
                 <h4 className="text-xl font-bold text-[#00873D]">Profile Settings</h4>
                 <div className="mt-1">
                     <img
