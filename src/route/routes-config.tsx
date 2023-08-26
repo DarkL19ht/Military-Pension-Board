@@ -1,5 +1,5 @@
-import React from "react";
-import Login from "@/pages/login/Login";
+// import React from "react";
+import Login from "@/pages/login";
 import Dashboard from "@/pages/dashboard/Dashboard";
 import RootLayout from "@/layouts/RootLayout";
 
