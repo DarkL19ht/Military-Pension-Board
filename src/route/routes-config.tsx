@@ -10,11 +10,11 @@ const routeConfig = [
         element: <Login />,
     },
     {
-        path: "/dashboard",
+        path: "",
         element: <RootLayout />,
         children: [
-            { path: "", index: true, element: <Dashboard /> },
-            { path: "", index: true, element: <ProfileSettings /> },
+            { path: "/", index: true, element: <Dashboard /> },
+            { path: "/profile", element: <ProfileSettings /> },
         ],
     },
 ];
