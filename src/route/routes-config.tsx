@@ -12,12 +12,10 @@ const routeConfig = [
     {
         path: "/dashboard",
         element: <RootLayout />,
-        children: [{ path: "", index: true, element: <Dashboard /> }],
-    },
-    {
-        path: "/profileSettings",
-        element: <RootLayout />,
-        children: [{ path: "", index: true, element: <ProfileSettings /> }],
+        children: [
+            { path: "", index: true, element: <Dashboard /> },
+            { path: "", index: true, element: <ProfileSettings /> },
+        ],
     },
 ];
 
