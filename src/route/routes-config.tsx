@@ -1,6 +1,7 @@
 // import React from "react";
 import Login from "@/pages/login";
 import Dashboard from "@/pages/dashboard/Dashboard";
+import ProfileSettings from "@/pages/profileSettings/ProfileSettings";
 import RootLayout from "@/layouts/RootLayout";
 
 const routeConfig = [
@@ -9,9 +10,12 @@ const routeConfig = [
         element: <Login />,
     },
     {
-        path: "/dashboard",
+        path: "",
         element: <RootLayout />,
-        children: [{ path: "", index: true, element: <Dashboard /> }],
+        children: [
+            { path: "/", index: true, element: <Dashboard /> },
+            { path: "/profile", element: <ProfileSettings /> },
+        ],
     },
 ];
 
