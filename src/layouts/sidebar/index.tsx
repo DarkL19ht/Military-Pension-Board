@@ -28,21 +28,6 @@ const subMenusList = [
         icon: RiBuilding3Line,
         menus: ["auth", "app settings", "stroage", "hosting"],
     },
-    {
-        name: "build",
-        icon: RiBuilding3Line,
-        menus: ["auth", "app settings", "stroage", "hosting"],
-    },
-    {
-        name: "build",
-        icon: RiBuilding3Line,
-        menus: ["auth", "app settings", "stroage", "hosting"],
-    },
-    {
-        name: "build",
-        icon: RiBuilding3Line,
-        menus: ["auth", "app settings", "stroage", "hosting"],
-    },
 ];
 
 function Sidebar() {
