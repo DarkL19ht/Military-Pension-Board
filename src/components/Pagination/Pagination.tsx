@@ -10,7 +10,7 @@ function Pagination() {
                         <span className="px-[5px] text-[14px] font-[600] text-[#000000]">
                             Show
                         </span>
-                        <div className="cursor-pointer rounded-[4px] border-2 border-[#C9C9C9]">
+                        <div className="cursor-pointer rounded-[4px] border-2 border-[#C9C9C9] ">
                             <select className="border-0 focus:outline-0">
                                 <option>10</option>
                                 <option>20</option>

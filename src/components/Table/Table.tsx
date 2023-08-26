@@ -3,8 +3,8 @@ import Pagination from "../Pagination/Pagination";
 
 function Table() {
     return (
-        <div className="overflow-hidden">
-            <div className="h-full w-full bg-[#000000] ">
+        <div className="h-[90vh] overflow-hidden">
+            <div className="m-[24px] h-full w-full overflow-y-scroll bg-[#ffffff] px-[20px] py-[20px]">
                 <table className="w-full text-left font-light">
                     <thead className="border-b bg-[#F2FAF5] font-medium">
                         <tr className="text-[#00873D]">
