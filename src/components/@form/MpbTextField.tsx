@@ -13,6 +13,14 @@ import { cn } from "@/lib";
 //     control: any;
 // }
 
+// type ValidationRules = {
+//     required: string;
+//     pattern: {
+//         value: string;
+//         message: string;
+//     };
+// };
+
 interface InputProps<
     TFieldValues extends FieldValues = FieldValues,
     TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
@@ -24,19 +32,25 @@ interface InputProps<
     asterik: boolean;
     icon: IconType;
     className?: string;
-    rule?: any;
+    rule?: object;
     control: Control<TFieldValues>;
 }
 
 export default function MpbTextField(props: UseControllerProps<InputProps>) {
     const {
         field: { onChange, onBlur, value },
-        // fieldState,
+        fieldState: { isTouched },
+        formState: { errors },
     } = useController(props);
 
     const { type, name, label, asterik = true, icon, className, ...others } = props;
 
-    const baseClass = cn(`input-control`, className);
+    const baseClass = cn(`input-control`, className, {
+        "ring-1 ring-red-500 border-none focus:ring-1 focus:ring-red-500":
+            isTouched && !!errors[name]?.message,
+        "ring-1 ring-red-600 border-none focus:ring-1 focus:ring-red-500":
+            !!errors[name]?.message,
+    });
 
     return (
         <>
@@ -60,6 +74,11 @@ export default function MpbTextField(props: UseControllerProps<InputProps>) {
                     {...others}
                 />
             </div>
+            {errors[name] && (
+                <p className="mt-1 text-sm text-red-500">
+                    {errors[name] && errors[name].message}
+                </p>
+            )}
         </>
     );
 }

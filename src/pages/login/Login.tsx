@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import useAuthentication from "@api/user-controller/useAuthentication";
 import Logo from "@/assets/images/logo.png";
 import MpbTextField from "@/components/@form/MpbTextField";
+import { MbpButton } from "@/components/ui/MpbButton";
 import BannerImage from "@/assets/images/soldierimage.jpg";
 
 type FormValues = {
@@ -15,6 +16,7 @@ function Login() {
         control,
         handleSubmit,
         watch,
+        // formState: { errors, isValid, isDirty },
         formState: { errors },
     } = useForm<FormValues>({
         mode: "all",
@@ -24,7 +26,7 @@ function Login() {
         },
     });
 
-    const { LoginUser } = useAuthentication({
+    const { LoginUser, isLoginUser } = useAuthentication({
         onSuccess: () => {},
         onError: () => {},
     });
@@ -96,14 +98,19 @@ function Login() {
                                 <span className="text-[#00873D]">Reset here</span>
                             </div>
                         </div>
-                        <button
-                            type="button"
-                            className="mt-[50px] inline-flex h-[40px] w-full items-center 
-                            justify-center rounded-lg bg-[#00873D] px-10 py-6 text-[#ffffff]"
-                            onClick={handleSubmit(handleAuthentication)}
-                        >
-                            Login
-                        </button>
+                        <div className="mt-8">
+                            <MbpButton
+                                type="submit"
+                                title="Login"
+                                isLoading={isLoginUser}
+                                variant="default"
+                                size="sm"
+                                fullWidth
+                                onClick={handleSubmit(handleAuthentication)}
+                                // disabled={!isDirty || !isValid}
+                                disabled={isLoginUser}
+                            />
+                        </div>
                     </form>
                 </div>
             </div>

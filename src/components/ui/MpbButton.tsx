@@ -1,7 +1,10 @@
+/* eslint-disable react/require-default-props */
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
+import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib";
+import LoadingSpinner from "@/assets/icons/LoadingSpinner";
 
 const buttonVariants = cva(
     `inline-flex items-center justify-center rounded-md text-sm 
@@ -14,7 +17,7 @@ const buttonVariants = cva(
     {
         variants: {
             variant: {
-                default: "bg-primary text-primary-foreground hover:bg-primary/90",
+                default: "bg-primary text-primary-foreground ", // add hover:
                 destructive:
                     "bg-destructive text-destructive-foreground hover:bg-destructive/90",
                 outline:
@@ -29,6 +32,12 @@ const buttonVariants = cva(
                 lg: "h-11 rounded-md px-8",
                 icon: "h-10 w-10",
             },
+            fullWidth: {
+                true: "w-full",
+            },
+            disabled: {
+                true: "disabled:cursor-not-allowed disabled:bg-gray-300",
+            },
         },
         defaultVariants: {
             variant: "default",
@@ -38,23 +47,55 @@ const buttonVariants = cva(
 );
 
 export interface ButtonProps
-    extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "disabled">,
         VariantProps<typeof buttonVariants> {
-    // eslint-disable-next-line react/require-default-props
     asChild?: boolean;
     title: string;
+    isLoading?: boolean;
+    loadingText?: string;
+    disabled?: boolean;
 }
 
 const MbpButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
-    ({ title, className, variant, size, asChild = false, ...props }, ref) => {
+    (
+        {
+            title,
+            className,
+            variant,
+            size,
+            fullWidth,
+            disabled,
+            isLoading = false,
+            loadingText = "Please wait",
+            asChild = false,
+            ...props
+        },
+        ref
+    ) => {
         const Comp = asChild ? Slot : "button";
         return (
             <Comp
-                className={cn(buttonVariants({ variant, size, className }))}
+                className={cn(
+                    buttonVariants({ variant, size, disabled, fullWidth, className })
+                )}
                 ref={ref}
+                disabled={disabled}
                 {...props}
             >
-                {title}
+                {isLoading ? (
+                    <div className="flex items-center gap-2">
+                        <LoadingSpinner className="!text-blue-brand" />
+                        <div className="flex items-center">
+                            <span className="capitalize">{loadingText}</span>
+                            <HiOutlineDotsHorizontal
+                                fontSize={25}
+                                className="animate-pulse"
+                            />
+                        </div>
+                    </div>
+                ) : (
+                    <span>{title}</span>
+                )}
             </Comp>
         );
     }
