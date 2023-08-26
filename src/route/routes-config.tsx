@@ -1,20 +1,20 @@
 // import React from "react";
 import Login from "@/pages/login";
-import Dashboard from "@/pages/dashboard/Dashboard";
-import ProfileSettings from "@/pages/profileSettings/ProfileSettings";
+import Dashboard from "@/pages/dashboard";
+import Profile from "@/pages/profile";
 import RootLayout from "@/layouts/RootLayout";
 
 const routeConfig = [
     {
-        path: "/",
+        path: "/login",
         element: <Login />,
     },
     {
         path: "",
         element: <RootLayout />,
         children: [
-            { path: "/", index: true, element: <Dashboard /> },
-            { path: "/profile", element: <ProfileSettings /> },
+            { path: "/dashboard", index: true, element: <Dashboard /> },
+            { path: "/profile", element: <Profile /> },
         ],
     },
 ];
