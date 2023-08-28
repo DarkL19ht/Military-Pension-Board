@@ -66,7 +66,7 @@ function Sidebar() {
         : {
               // system view
               open: {
-                  width: "12rem",
+                  width: "13rem",
                   transition: {
                       damping: 40,
                   },
@@ -140,6 +140,12 @@ function Sidebar() {
                             <NavLink to="admin-users" className="link">
                                 <TbReportAnalytics size={20} className="min-w-max" />
                                 <span>Manage Admin</span>
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="create-admin-users" className="link">
+                                <TbReportAnalytics size={20} className="min-w-max" />
+                                <span>Create Admin User</span>
                             </NavLink>
                         </li>
 
