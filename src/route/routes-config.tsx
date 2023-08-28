@@ -4,7 +4,7 @@ import Dashboard from "@/pages/dashboard";
 import Profile from "@/pages/profile";
 import RootLayout from "@/layouts/RootLayout";
 import AdminUsersTable from "@/pages/admin-user/admin-users-table";
-import AddAdminUser from "@/pages/create-admin-user";
+import AddAdminUser from "@/pages/admin-user/create-admin-user";
 import PensionerTable from "@/pages/pensioner/pensioners-table";
 import AddPensioners from "@/pages/pensioner/onboard-pensioner";
 
