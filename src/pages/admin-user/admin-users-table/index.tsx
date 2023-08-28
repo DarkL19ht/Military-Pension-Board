@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { CgMoreVertical } from "react-icons/cg";
 import { Link } from "react-router-dom";
 import Pagination from "@components/pagination";
@@ -7,12 +8,15 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    // DropdownMenuLabel,
-    // DropdownMenuSeparator,
+    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+// import MpbModal from "@/components/ui/MpbModal";
+import MpbSweetAlert from "@/components/ui/MpbSweetAlert";
 
 export default function AdminUsersTable() {
+    const [open, setOpen] = useState(false);
+
     return (
         <div className="mx-auto w-4/5">
             <div className="mb-2 flex w-full items-center justify-between py-3">
@@ -42,6 +46,7 @@ export default function AdminUsersTable() {
                     <button
                         type="button"
                         className="rounded-md bg-green-700 px-4 py-2.5 text-xs text-white"
+                        onClick={() => setOpen(true)}
                     >
                         Add new users
                     </button>
@@ -97,29 +102,31 @@ export default function AdminUsersTable() {
                                             <DropdownMenuTrigger>
                                                 <CgMoreVertical />
                                             </DropdownMenuTrigger>
-                                            <DropdownMenuContent className="flex w-full flex-col gap-2 text-gray-500">
-                                                <DropdownMenuItem>
-                                                    <button
-                                                        type="button"
-                                                        className="flex w-full items-center gap-3 p-2 "
-                                                    >
-                                                        <MdLockReset />
-                                                        <span>Reset Password</span>
-                                                    </button>
-                                                </DropdownMenuItem>
+                                            <DropdownMenuContent className="flex w-full flex-col text-gray-500">
                                                 <DropdownMenuItem>
                                                     <button
                                                         type="button"
                                                         className="flex w-full items-center gap-3 p-2"
                                                     >
                                                         <MdLockReset />
-                                                        <span>Change Role</span>
+                                                        <span>Reset Password</span>
                                                     </button>
                                                 </DropdownMenuItem>
+                                                <DropdownMenuSeparator />
                                                 <DropdownMenuItem>
                                                     <button
                                                         type="button"
-                                                        className="group flex w-full items-center gap-3 p-2 hover:text-red-400"
+                                                        className="flex w-full items-center gap-x-3  py-2"
+                                                    >
+                                                        <MdLockReset />
+                                                        <span>Change Role</span>
+                                                    </button>
+                                                </DropdownMenuItem>
+                                                <DropdownMenuSeparator />
+                                                <DropdownMenuItem>
+                                                    <button
+                                                        type="button"
+                                                        className="group flex w-full items-center gap-x-3 py-2 hover:text-red-400"
                                                     >
                                                         <MdLockReset
                                                             size={20}
@@ -142,6 +149,27 @@ export default function AdminUsersTable() {
                     <Pagination />
                 </div>
             </div>
+            {/* create modal goes here */}
+            {/* <MpbModal
+                size="3xl"
+                title="example"
+                isOpen={open}
+                closeModal={() => setOpen(false)}
+            >
+                <div className="p-5">
+                    <h4>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima
+                        doloremque totam ipsam et magnam facere sit maiores ab earum
+                        optio.
+                    </h4>
+                </div>
+            </MpbModal> */}
+            <MpbSweetAlert
+                onConfirm={() => undefined}
+                isOpen={open}
+                closeModal={() => setOpen(false)}
+                message="Registration Success"
+            />
         </div>
     );
 }

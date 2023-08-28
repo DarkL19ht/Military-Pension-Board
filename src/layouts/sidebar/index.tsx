@@ -139,10 +139,9 @@ function Sidebar() {
                         <li>
                             <NavLink to="admin-users" className="link">
                                 <TbReportAnalytics size={20} className="min-w-max" />
-                                <span>Manage Admin</span>
+                                <span>Manage admin</span>
                             </NavLink>
                         </li>
-
                         {/* Menu with submenu */}
                         {open && (
                             <div>

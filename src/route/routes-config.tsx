@@ -3,7 +3,7 @@ import Login from "@/pages/login";
 import Dashboard from "@/pages/dashboard";
 import Profile from "@/pages/profile";
 import RootLayout from "@/layouts/RootLayout";
-import Pensioner from "@/pages/pensioner";
+import Pensioner from "@/pages/pensioner/pensioners-table";
 import AdminUsersTable from "@/pages/admin-user/admin-users-table";
 
 const routeConfig = [

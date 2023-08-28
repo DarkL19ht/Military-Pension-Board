@@ -1,7 +1,6 @@
-/* eslint-disable react/prop-types */
 import { cn } from "@/lib";
 
-export default function LoadingSpinner({ className }) {
+export default function LoadingSpinner({ className }: { className: string }) {
     const baseClass = cn("w-4 h-4 text-white animate-spin", className);
     return (
         <svg
