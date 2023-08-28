@@ -12,12 +12,13 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import ResetPasswordModal from "./ResetPasswordModal";
-import { MpbSweetAlert } from "@/components";
+import ChangeRoleModal from "./ChangeRoleModal";
+import { MpbSweetAlert, buttonVariants } from "@/components";
 import { reducer, initialState } from "./reducer";
 
 export default function AdminUsersTable() {
     const [state, runDispatch] = useReducer(reducer, initialState);
-    const { isResetPassword, isDisableUser } = state;
+    const { isResetPassword, isDisableUser, isChangeRole } = state;
 
     return (
         <div className="w-4/5 pl-10">
@@ -45,12 +46,12 @@ export default function AdminUsersTable() {
                     </ol>
                 </nav>
                 <div className="flex">
-                    <button
-                        type="button"
-                        className="rounded-md bg-green-700 px-4 py-2.5 text-xs text-white"
+                    <Link
+                        to="/manage-admin/add-admin-users"
+                        className={buttonVariants({ variant: "default" })}
                     >
                         Add new users
-                    </button>
+                    </Link>
                 </div>
             </div>
             {/* Card layout */}
@@ -123,6 +124,11 @@ export default function AdminUsersTable() {
                                                     <button
                                                         type="button"
                                                         className="flex w-full items-center gap-x-3  py-2"
+                                                        onClick={() =>
+                                                            runDispatch({
+                                                                type: "openChangeRoleModal",
+                                                            })
+                                                        }
                                                     >
                                                         <MdLockReset />
                                                         <span>Change Role</span>
@@ -173,7 +179,13 @@ export default function AdminUsersTable() {
                 bgTitle="primary"
                 title="Admin user"
                 showCloseButton
+                showCancelButton
                 className="bg-red-500"
+                backdrop={false}
+            />
+            <ChangeRoleModal
+                isOpen={isChangeRole}
+                closeModal={() => runDispatch({ type: "closeChangeRoleModal" })}
             />
         </div>
     );

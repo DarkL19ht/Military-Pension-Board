@@ -43,7 +43,7 @@ export default function MpbSweetAlert({
     description = "",
     showCloseButton = false,
     showConfirmButton = true,
-    showCancelButton = true,
+    showCancelButton = false,
     bgTitle = "default",
     confirmText = "Disable Admin",
     title = "",
