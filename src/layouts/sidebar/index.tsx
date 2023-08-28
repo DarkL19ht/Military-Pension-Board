@@ -140,6 +140,18 @@ function Sidebar() {
                                 <span>Transactions</span>
                             </NavLink>
                         </li>
+                        <li>
+                            <NavLink to="/pensioners" className="link">
+                                <TbReportAnalytics size={20} className="min-w-max" />
+                                <span>Pensioners</span>
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/roles" className="link">
+                                <TbReportAnalytics size={20} className="min-w-max" />
+                                <span>Admin Roles</span>
+                            </NavLink>
+                        </li>
 
                         {/* Menu with submenu */}
                         {open && (
