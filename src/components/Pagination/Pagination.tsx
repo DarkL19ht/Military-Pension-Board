@@ -2,11 +2,11 @@ import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 
 function Pagination() {
     return (
-        <div className="mx-[25px] flex  flex-row items-center justify-between py-[16px] font-latoRegular ">
+        <div className="flex flex-col flex-wrap items-center justify-between gap-y-4 py-[16px] font-latoRegular lg:flex-row lg:gap-y-0  ">
             <div className="text-[14px] font-[400] text-[#919EAB]">10 Results</div>
             <div className="">
                 <div className="flex items-center">
-                    <div className="mx-[31px] flex items-center">
+                    <div className="mx-[31px] flex flex-col items-center  lg:flex-row">
                         <span className="px-[5px] text-[14px] font-[600] text-[#000000]">
                             Show
                         </span>
@@ -19,7 +19,7 @@ function Pagination() {
                         </div>
                     </div>
                     <nav className="isolate flex gap-[8px] -space-x-px rounded-md shadow-sm">
-                        <div className="relative mx-[8px] inline-flex cursor-pointer items-center px-2 py-2">
+                        <div className="relative mx-[8px] inline-flex cursor-pointer flex-wrap items-center px-2 py-2">
                             <MdKeyboardArrowLeft className="h-5 w-5 text-[#C4CDD5]" />
                         </div>
 

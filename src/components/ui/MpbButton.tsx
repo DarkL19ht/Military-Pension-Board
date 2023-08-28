@@ -56,7 +56,7 @@ export interface ButtonProps
     disabled?: boolean;
 }
 
-const MbpButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
+const MpbButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
     (
         {
             title,
@@ -100,6 +100,6 @@ const MbpButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
         );
     }
 );
-MbpButton.displayName = "Button";
+MpbButton.displayName = "Button";
 
-export { MbpButton, buttonVariants };
+export { MpbButton, buttonVariants };

@@ -4,12 +4,21 @@ import Header from "./header";
 
 function RootLayout() {
     return (
-        <div className="flex">
-            <Sidebar />
-            <main className="w-full flex-1">
+        // <div className="flex h-screen w-screen overflow-x-hidden">
+        <div className="flex h-screen w-screen">
+            <div>
+                <Sidebar />
+            </div>
+            {/* TODO: fix the scroll issues */}
+            {/* <main className="mx-auto overflow-y-scroll">  */}
+            <main className="h-[100vh] w-full flex-1 overflow-y-scroll">
                 {/* header goes here */}
-                <Header />
-                <Outlet />
+                <div className="w-full shadow-lg">
+                    <Header />
+                </div>
+                <div className="pt-3">
+                    <Outlet />
+                </div>
             </main>
         </div>
     );
