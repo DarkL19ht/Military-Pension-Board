@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 // import { pensionersData } from "@/lib/fakers";
+import { useState } from "react";
+import MpbSweetAlert from "@/components/ui/MpbSweetAlert";
 
 export default function Pensioner() {
+    const [open, setOpen] = useState(false);
     return (
         <div className="mx-auto w-[95%] md:w-[90%]">
             <div className="mb-2 flex w-full items-center justify-between py-3">
@@ -220,7 +223,9 @@ export default function Pensioner() {
                         <div className="flex justify-center">
                             <button
                                 type="button"
-                                className="mt-[50px] inline-flex h-[40px] w-[70%] items-center justify-center rounded-lg border-2 border-[#00873D] bg-[#ffffff] px-8 py-5 text-[#00873D]"
+                                className="mt-[50px] inline-flex h-[40px] w-[70%] items-center justify-center 
+                                rounded-lg border-2 border-[#00873D] bg-[#ffffff] px-8 py-5 text-[#00873D]"
+                                onClick={() => setOpen(true)}
                             >
                                 Submit
                             </button>
@@ -228,6 +233,13 @@ export default function Pensioner() {
                     </form>
                 </div>
             </div>
+            {/* success modal */}
+            <MpbSweetAlert
+                onConfirm={() => undefined}
+                isOpen={open}
+                closeModal={() => setOpen(false)}
+                message="Registration Success"
+            />
         </div>
     );
 }

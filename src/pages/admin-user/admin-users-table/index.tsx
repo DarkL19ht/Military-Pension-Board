@@ -12,7 +12,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 // import MpbModal from "@/components/ui/MpbModal";
-import MpbSweetAlert from "@/components/ui/MpbSweetAlert";
+import ResetPasswordModal from "./ResetPasswordModal";
 
 export default function AdminUsersTable() {
     const [open, setOpen] = useState(false);
@@ -46,7 +46,6 @@ export default function AdminUsersTable() {
                     <button
                         type="button"
                         className="rounded-md bg-green-700 px-4 py-2.5 text-xs text-white"
-                        onClick={() => setOpen(true)}
                     >
                         Add new users
                     </button>
@@ -107,6 +106,7 @@ export default function AdminUsersTable() {
                                                     <button
                                                         type="button"
                                                         className="flex w-full items-center gap-x-3 py-2"
+                                                        onClick={() => setOpen(true)}
                                                     >
                                                         <MdLockReset />
                                                         <span>Reset Password</span>
@@ -164,12 +164,7 @@ export default function AdminUsersTable() {
                     </h4>
                 </div>
             </MpbModal> */}
-            <MpbSweetAlert
-                onConfirm={() => undefined}
-                isOpen={open}
-                closeModal={() => setOpen(false)}
-                message="Registration Success"
-            />
+            <ResetPasswordModal isOpen={open} closeModal={() => setOpen(false)} />
         </div>
     );
 }
