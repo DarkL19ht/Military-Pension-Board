@@ -1,21 +1,31 @@
 /* eslint-disable react/require-default-props */
 import MpbModal from "./MpbModal";
-import { ICON_LIST } from "@/lib";
+import { ICON_LIST, cn } from "@/lib";
 import type { IProps as IModal } from "./MpbModal";
 
 // this contain props for only modal
 type ModalType = Pick<
     IModal,
-    "isOpen" | "size" | "closeModal" | "backdrop" | "showCloseButton"
+    | "isOpen"
+    | "size"
+    | "closeModal"
+    | "backdrop"
+    | "showCloseButton"
+    | "bgTitle"
+    | "title"
 >;
 
 // This contain props for only sweetalert
 interface ISweetAlert {
     onConfirm: () => void;
-    animation?: boolean;
-    icon?: "success_icon" | "success_lock_icon";
     message: string;
+    animation?: boolean;
+    icon?: "success_icon" | "success_lock_icon" | "";
     description?: string;
+    confirmText?: string;
+    showConfirmButton?: boolean;
+    showCancelButton?: boolean;
+    className?: string;
 }
 
 // this contain props for both modal and sweetalert
@@ -28,14 +38,22 @@ export default function MpbSweetAlert({
     message,
     size = "md",
     animation = false,
-    icon = "success_icon",
+    icon = "",
     backdrop = true,
     description = "",
     showCloseButton = false,
+    showConfirmButton = true,
+    showCancelButton = true,
+    bgTitle = "default",
+    confirmText = "Disable Admin",
+    title = "",
+    className = "",
 }: IProps) {
     return (
         <MpbModal
             showCloseButton={showCloseButton}
+            bgTitle={bgTitle}
+            title={title}
             backdrop={backdrop}
             isOpen={isOpen}
             size={size}
@@ -48,22 +66,34 @@ export default function MpbSweetAlert({
                     </div>
                 )}
                 {message && (
-                    <h4 className="text-lg font-medium text-green-600">
-                        Registration Successfull
+                    <h4 className="mb-5 text-base font-medium text-green-500">
+                        {message}
                     </h4>
                 )}
-                {description && (
-                    <p className="text-gray-500">
-                        Your registration has been sent to the super admin
-                    </p>
-                )}
-                <button
-                    type="button"
-                    className="mb-5 rounded-md bg-green-600 px-10 py-2 text-white"
-                    onClick={onConfirm}
-                >
-                    Done
-                </button>
+                {description && <p className="text-gray-500">{description}</p>}
+                <div className="flex gap-5">
+                    {showCancelButton && (
+                        <button
+                            type="button"
+                            className="mb-5 rounded-md border border-green-500 px-10 py-2 text-green-500"
+                            onClick={closeModal}
+                        >
+                            cancel
+                        </button>
+                    )}
+                    {showConfirmButton && (
+                        <button
+                            type="button"
+                            className={cn(
+                                "mb-5 rounded-md bg-green-600 px-10 py-2 text-white",
+                                className
+                            )}
+                            onClick={onConfirm}
+                        >
+                            {confirmText}
+                        </button>
+                    )}
+                </div>
             </div>
         </MpbModal>
     );

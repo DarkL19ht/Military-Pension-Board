@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useReducer } from "react";
 import { CgMoreVertical } from "react-icons/cg";
 import { Link } from "react-router-dom";
 import { MdLockReset } from "react-icons/md";
@@ -11,11 +11,13 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-// import MpbModal from "@/components/ui/MpbModal";
 import ResetPasswordModal from "./ResetPasswordModal";
+import { MpbSweetAlert } from "@/components";
+import { reducer, initialState } from "./reducer";
 
 export default function AdminUsersTable() {
-    const [open, setOpen] = useState(false);
+    const [state, runDispatch] = useReducer(reducer, initialState);
+    const { isResetPassword, isDisableUser } = state;
 
     return (
         <div className="w-4/5 pl-10">
@@ -106,7 +108,11 @@ export default function AdminUsersTable() {
                                                     <button
                                                         type="button"
                                                         className="flex w-full items-center gap-x-3 py-2"
-                                                        onClick={() => setOpen(true)}
+                                                        onClick={() =>
+                                                            runDispatch({
+                                                                type: "openResetModal",
+                                                            })
+                                                        }
                                                     >
                                                         <MdLockReset />
                                                         <span>Reset Password</span>
@@ -127,13 +133,18 @@ export default function AdminUsersTable() {
                                                     <button
                                                         type="button"
                                                         className="group flex w-full items-center gap-x-3 py-2 hover:text-red-400"
+                                                        onClick={() =>
+                                                            runDispatch({
+                                                                type: "openDisableModal",
+                                                            })
+                                                        }
                                                     >
                                                         <MdLockReset
                                                             size={20}
                                                             className="group-hover:text-red-400"
                                                         />
                                                         <span className="group-hover:text-red-500">
-                                                            Remove User
+                                                            Disable User
                                                         </span>
                                                     </button>
                                                 </DropdownMenuItem>
@@ -150,21 +161,20 @@ export default function AdminUsersTable() {
                 </div>
             </div>
             {/* create modal goes here */}
-            {/* <MpbModal
-                size="3xl"
-                title="example"
-                isOpen={open}
-                closeModal={() => setOpen(false)}
-            >
-                <div className="p-5">
-                    <h4>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima
-                        doloremque totam ipsam et magnam facere sit maiores ab earum
-                        optio.
-                    </h4>
-                </div>
-            </MpbModal> */}
-            <ResetPasswordModal isOpen={open} closeModal={() => setOpen(false)} />
+            <ResetPasswordModal
+                isOpen={isResetPassword}
+                closeModal={() => runDispatch({ type: "closeResetModal" })}
+            />
+            <MpbSweetAlert
+                isOpen={isDisableUser}
+                closeModal={() => runDispatch({ type: "closeDisableModal" })}
+                message="Are you you want to disable this user"
+                onConfirm={() => undefined}
+                bgTitle="primary"
+                title="Admin user"
+                showCloseButton
+                className="bg-red-500"
+            />
         </div>
     );
 }

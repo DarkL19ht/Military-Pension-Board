@@ -31,7 +31,7 @@ export default function ResetPasswordModal({ isOpen, closeModal }: IProps) {
         <MpbModal title="Reset Password" isOpen={isOpen} closeModal={closeModal}>
             <div className="p-5">
                 <form action="">
-                    <div className="mb-10 w-full">
+                    <div className="mb-5 w-full">
                         <MpbTextField
                             label="New Password"
                             name="password"
