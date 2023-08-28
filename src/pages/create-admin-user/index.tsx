@@ -30,9 +30,9 @@ export default function CreateAdminUser() {
             <p className="mb-9 mt-3 text-center text-lg font-semibold">
                 Create Admin User
             </p>
-            <div className="mx-auto mb-20 w-[75%] overflow-auto rounded-md border border-red-100  p-5 shadow-md">
+            <div className="mx-auto mb-20 w-full overflow-auto rounded-md border border-red-100 p-5  shadow-md sm:w-[75%]">
                 <form className="w-full">
-                    <div className="mx-3 mb-1 mt-20 flex flex-wrap">
+                    <div className="mx-3 mb-1 mt-3 flex flex-wrap sm:mt-20">
                         <div className="mb-1 w-full px-3 md:mb-0 md:w-1/2">
                             <label
                                 className="block pb-3 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
