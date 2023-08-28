@@ -182,6 +182,7 @@ export default function AdminUsersTable() {
                 showCancelButton
                 className="bg-red-500"
                 backdrop={false}
+                confirmText="Disable admin"
             />
             <ChangeRoleModal
                 isOpen={isChangeRole}

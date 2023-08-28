@@ -13,6 +13,7 @@ type ModalType = Pick<
     | "showCloseButton"
     | "bgTitle"
     | "title"
+    | "showDivider"
 >;
 
 // This contain props for only sweetalert
@@ -44,14 +45,16 @@ export default function MpbSweetAlert({
     showCloseButton = false,
     showConfirmButton = true,
     showCancelButton = false,
+    showDivider = true,
     bgTitle = "default",
-    confirmText = "Disable Admin",
+    confirmText = "",
     title = "",
     className = "",
 }: IProps) {
     return (
         <MpbModal
             showCloseButton={showCloseButton}
+            showDivider={showDivider}
             bgTitle={bgTitle}
             title={title}
             backdrop={backdrop}
@@ -59,14 +62,14 @@ export default function MpbSweetAlert({
             size={size}
             closeModal={closeModal}
         >
-            <div className="flex flex-col items-center justify-center gap-4 pt-10">
+            <div className="flex flex-col items-center justify-center gap-5 pt-10">
                 {icon && (
                     <div className={`${animation && "animate-bounce"}`}>
                         {ICON_LIST[icon]}
                     </div>
                 )}
                 {message && (
-                    <h4 className="mb-5 text-base font-medium text-green-500">
+                    <h4 className="mb-2 text-base font-medium text-green-500">
                         {message}
                     </h4>
                 )}

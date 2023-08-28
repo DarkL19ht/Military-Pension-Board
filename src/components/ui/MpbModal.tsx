@@ -47,6 +47,7 @@ interface IModal {
     backdrop?: boolean;
     hasBackArrow?: boolean;
     showCloseButton?: boolean;
+    showDivider?: boolean;
 }
 
 export interface IProps
@@ -61,6 +62,7 @@ export default function MpbModal({
     size,
     backdrop = false,
     hasBackArrow = false,
+    showDivider = true,
     bgTitle,
     isOpen,
     closeModal,
@@ -143,7 +145,7 @@ export default function MpbModal({
                                             </span>
                                         )}
                                     </Dialog.Title>
-                                    {showCloseButton && <hr />}
+                                    {showDivider && <hr />}
                                 </>
                                 <div>{children}</div>
                             </Dialog.Panel>

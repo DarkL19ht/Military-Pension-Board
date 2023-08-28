@@ -1,10 +1,13 @@
 import { Link } from "react-router-dom";
-// import { pensionersData } from "@/lib/fakers";
-import { useState } from "react";
+import { useReducer } from "react";
 import MpbSweetAlert from "@/components/ui/MpbSweetAlert";
+import UploadCsvFileModal from "./UploadCsvFileModal";
+import { reducer, initialState } from "./reducer";
 
 export default function Pensioner() {
-    const [open, setOpen] = useState(false);
+    const [state, runDispatch] = useReducer(reducer, initialState);
+    const { isRegSuccess, isUploadCsv } = state;
+
     return (
         <div className="mx-auto w-[95%] md:w-[90%]">
             <div className="mb-2 flex w-full items-center justify-between py-3">
@@ -38,6 +41,7 @@ export default function Pensioner() {
                 <button
                     type="button"
                     className="rounded-md bg-green-700 px-4 py-1.5 text-xs text-white"
+                    onClick={() => runDispatch({ type: "openUploadCsvModal" })}
                 >
                     Upload csv files
                 </button>
@@ -225,7 +229,9 @@ export default function Pensioner() {
                                 type="button"
                                 className="mt-[50px] inline-flex h-[40px] w-[70%] items-center justify-center 
                                 rounded-lg border-2 border-[#00873D] bg-[#ffffff] px-8 py-5 text-[#00873D]"
-                                onClick={() => setOpen(true)}
+                                onClick={() =>
+                                    runDispatch({ type: "openRegSuccessModal" })
+                                }
                             >
                                 Submit
                             </button>
@@ -236,9 +242,17 @@ export default function Pensioner() {
             {/* success modal */}
             <MpbSweetAlert
                 onConfirm={() => undefined}
-                isOpen={open}
-                closeModal={() => setOpen(false)}
-                message="Registration Success"
+                isOpen={isRegSuccess}
+                closeModal={() => runDispatch({ type: "closeRegSuccessModal" })}
+                message="Registration Successful"
+                description="Your registration has been sent to the super admin"
+                icon="success_icon"
+                confirmText="Done"
+                showDivider={false}
+            />
+            <UploadCsvFileModal
+                isOpen={isUploadCsv}
+                closeModal={() => runDispatch({ type: "closeUploadCsvModal" })}
             />
         </div>
     );
