@@ -18,7 +18,7 @@ export default function AdminUsersTable() {
     const [open, setOpen] = useState(false);
 
     return (
-        <div className="mx-auto w-4/5">
+        <div className="w-4/5 pl-10">
             <div className="mb-2 flex w-full items-center justify-between py-3">
                 {/* Breacrumb */}
                 <nav aria-label="breadcrumb" className="text-base text-gray-500">
@@ -53,7 +53,7 @@ export default function AdminUsersTable() {
                 </div>
             </div>
             {/* Card layout */}
-            <div className="mb-20 overflow-auto rounded-md border border-red-100  p-5 shadow-md">
+            <div className="mb-20 overflow-auto rounded-md border border-gray-100  p-5 shadow-md">
                 {/* Table UI */}
                 <table className="w-full border border-gray-300 text-left font-light">
                     <thead className="t border-b bg-[#F2FAF5] font-medium">
@@ -106,7 +106,7 @@ export default function AdminUsersTable() {
                                                 <DropdownMenuItem>
                                                     <button
                                                         type="button"
-                                                        className="flex w-full items-center gap-3 p-2"
+                                                        className="flex w-full items-center gap-x-3 py-2"
                                                     >
                                                         <MdLockReset />
                                                         <span>Reset Password</span>

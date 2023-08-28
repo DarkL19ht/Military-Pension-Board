@@ -5,11 +5,17 @@ import { motion } from "framer-motion";
 import { IoIosArrowDown } from "react-icons/io";
 import { NavLink, useLocation } from "react-router-dom";
 import { IconType } from "react-icons";
+import _ from "lodash";
+
+interface ISubMenu {
+    name: string;
+    path: string;
+}
 
 type TMenu = {
     name: string;
     icon: IconType;
-    menus: string[];
+    menus: ISubMenu[];
 };
 
 interface IData {
@@ -41,16 +47,16 @@ export default function SubMenu({ data }: IData) {
                               height: 0,
                           }
                 }
-                className="flex h-0 flex-col overflow-hidden pl-10 text-[0.8rem] font-normal"
+                className="flex h-0 flex-col overflow-hidden pl-16 text-[0.8rem] font-normal"
             >
                 {data.menus?.map((menu) => (
-                    <li key={menu}>
+                    <li key={menu.name}>
                         {/* className="hover:text-blue-600 hover:font-medium" */}
                         <NavLink
-                            to={`/${data.name}/${menu}`}
+                            to={`/${_.kebabCase(data?.name)}/${_.kebabCase(menu?.name)}`}
                             className="link !bg-transparent capitalize"
                         >
-                            {menu}
+                            {menu.name}
                         </NavLink>
                     </li>
                 ))}

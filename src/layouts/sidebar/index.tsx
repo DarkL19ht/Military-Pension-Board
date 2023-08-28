@@ -11,22 +11,26 @@ import { SlSettings } from "react-icons/sl";
 // import { AiOutlineAppstore } from "react-icons/ai";
 // import { BsPerson } from "react-icons/bs";
 // import { HiOutlineDatabase } from "react-icons/hi";
+// import { RiBuilding3Line } from "react-icons/ri";
 import { TbReportAnalytics } from "react-icons/tb";
-import { RiBuilding3Line } from "react-icons/ri";
 import { MdMenu } from "react-icons/md";
 import Logo from "@/assets/images/logo.png";
 import SubMenu from "./SubMenu";
 
 const subMenusList = [
     {
-        name: "Reports",
+        name: "Manage Pensioners",
         icon: TbReportAnalytics,
-        menus: ["dashboard", "realtime", "events"],
-    },
-    {
-        name: "build",
-        icon: RiBuilding3Line,
-        menus: ["auth", "app settings", "stroage", "hosting"],
+        menus: [
+            {
+                name: "Add Pensioners",
+                path: "",
+            },
+            {
+                name: "View Pensioners",
+                path: "",
+            },
+        ],
     },
 ];
 
@@ -66,7 +70,7 @@ function Sidebar() {
         : {
               // system view
               open: {
-                  width: "12rem",
+                  width: "16rem",
                   transition: {
                       damping: 40,
                   },
@@ -125,24 +129,6 @@ function Sidebar() {
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to="profile" className="link">
-                                <TbReportAnalytics size={20} className="min-w-max" />
-                                <span>Profile</span>
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="pensioners" className="link">
-                                <TbReportAnalytics size={20} className="min-w-max" />
-                                <span>Pensioners</span>
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="onboard-pensioners" className="link">
-                                <TbReportAnalytics size={20} className="min-w-max" />
-                                <span>Onboard Pensions</span>
-                            </NavLink>
-                        </li>
-                        <li>
                             <NavLink to="admin-users" className="link">
                                 <TbReportAnalytics size={20} className="min-w-max" />
                                 <span>Manage admin</span>
@@ -168,7 +154,7 @@ function Sidebar() {
                         </li>
                     </ul>
                     {/* second  */}
-                    {(open || isTabletMid) && (
+                    {/* {(open || isTabletMid) && (
                         <div className="z-50 my-auto max-h-48  w-full flex-1 whitespace-pre text-sm font-medium ">
                             <div className="flex items-center justify-between border-y border-slate-300 p-4">
                                 <div>
@@ -180,7 +166,7 @@ function Sidebar() {
                                 </p>
                             </div>
                         </div>
-                    )}
+                    )} */}
                 </div>
 
                 {/* control button */}

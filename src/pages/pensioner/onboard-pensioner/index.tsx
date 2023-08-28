@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function Pensioner() {
     return (
-        <div className="mx-auto w-[95%] md:w-[100%] xl:w-[95%]">
+        <div className="mx-auto w-[95%] md:w-[90%]">
             <div className="mb-2 flex w-full items-center justify-between py-3">
                 {/* Breacrumb */}
                 <nav aria-label="breadcrumb">
@@ -39,7 +39,7 @@ export default function Pensioner() {
                     Upload csv files
                 </button>
             </div>
-            <div className="mb-20 w-full overflow-auto rounded-md border border-red-100 p-5 shadow-md">
+            <div className="mb-20 w-full overflow-auto rounded-md border border-gray-100 p-5 shadow-md">
                 <div className="py-6 text-base text-[#006C31]">
                     You can manually fill only 3 forms
                 </div>
