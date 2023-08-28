@@ -45,7 +45,7 @@ export default function Pensioner() {
                 </div>
             </div>
             {/* Card layout */}
-            <div className="mb-20 w-full overflow-auto rounded-md border border-red-100 p-5 shadow-md">
+            <div className="mb-20 w-full overflow-auto rounded-md border border-gray-100 p-5 shadow-md">
                 {/* Table UI */}
                 <table className="w-full table-auto border border-gray-300 text-left font-light">
                     <thead className="t border-b bg-[#F2FAF5] font-medium">
