@@ -137,6 +137,12 @@ function Sidebar() {
                             </NavLink>
                         </li>
                         <li>
+                            <NavLink to="onboard-pensioners" className="link">
+                                <TbReportAnalytics size={20} className="min-w-max" />
+                                <span>Onboard Pensions</span>
+                            </NavLink>
+                        </li>
+                        <li>
                             <NavLink to="admin-users" className="link">
                                 <TbReportAnalytics size={20} className="min-w-max" />
                                 <span>Manage Admin</span>
