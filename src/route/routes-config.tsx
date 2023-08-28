@@ -1,19 +1,20 @@
-import Login from "@/pages/login/Login";
-import Dashboard from "@/pages/dashboard/Dashboard";
+// import React from "react";
+import Login from "@/pages/login";
+import Dashboard from "@/pages/dashboard";
+import Profile from "@/pages/profile";
 import RootLayout from "@/layouts/RootLayout";
-import Table from "@/components/Table/Table";
 
 const routeConfig = [
     {
-        path: "/",
+        path: "/login",
         element: <Login />,
     },
     {
-        path: "/dashboard",
+        path: "",
         element: <RootLayout />,
         children: [
-            { path: "", index: true, element: <Dashboard /> },
-            { path: "table", index: true, element: <Table /> },
+            { path: "/dashboard", index: true, element: <Dashboard /> },
+            { path: "/profile", element: <Profile /> },
         ],
     },
 ];

@@ -1,3 +1,11 @@
-const queryKeys = {};
+const queryKeys = {
+    GET_PENSIONERS: "GET_PENSIONERS",
+    GET_BANKS: "GET_BANKS",
+    GET_PERMISSIONS: "GET_PERMISSIONS",
+    GET_RANKS: "GET_RANKS",
+    GET_REFERENCE_VERIFICATION: "GET_REFERENCE_VERIFICATION",
+    GET_ROLES: "GET_ROLES",
+    GET_USERS: "GET_USERS",
+};
 
 export default queryKeys;

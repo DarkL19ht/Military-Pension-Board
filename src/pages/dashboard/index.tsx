@@ -9,7 +9,7 @@ export default function Dashboard() {
                 <MbpButton title="Add Pensioners" variant="default" size="sm" />
             </div>
             <div>
-                <div className="grid grid-cols-4 gap-3 ">
+                <div className=" grid grid-cols-4 gap-3 ">
                     <div className="rounded-emd flex gap-2 bg-card p-4">
                         <FaLaptop size={25} className="text-red-400" />
                         <div className="flex flex-col gap-y-2">
