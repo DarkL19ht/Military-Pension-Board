@@ -32,6 +32,20 @@ const subMenusList = [
             },
         ],
     },
+    {
+        name: "Manage Admin",
+        icon: TbReportAnalytics,
+        menus: [
+            {
+                name: "Add Admin Users",
+                path: "",
+            },
+            {
+                name: "View Admin Users",
+                path: "",
+            },
+        ],
+    },
 ];
 
 function Sidebar() {
@@ -50,7 +64,7 @@ function Sidebar() {
 
     const sidebarAnimation = isTabletMid
         ? {
-              // mobile
+              // mobile view
               open: {
                   x: 0,
                   width: "12rem",
@@ -70,13 +84,13 @@ function Sidebar() {
         : {
               // system view
               open: {
-                  width: "16rem",
+                  width: "16rem", // controls the width of the sidebar when open
                   transition: {
                       damping: 40,
                   },
               },
               closed: {
-                  width: "4rem",
+                  width: "4rem", // controls the width of the sidebar when close
                   transition: {
                       damping: 40,
                   },
@@ -128,12 +142,12 @@ function Sidebar() {
                                 <span>Dashboard</span>
                             </NavLink>
                         </li>
-                        <li>
+                        {/* <li>
                             <NavLink to="admin-users" className="link">
                                 <TbReportAnalytics size={20} className="min-w-max" />
                                 <span>Manage admin</span>
                             </NavLink>
-                        </li>
+                        </li> */}
                         {/* Menu with submenu */}
                         {open && (
                             <div>

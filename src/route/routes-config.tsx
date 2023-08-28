@@ -3,8 +3,9 @@ import Login from "@/pages/login";
 import Dashboard from "@/pages/dashboard";
 import Profile from "@/pages/profile";
 import RootLayout from "@/layouts/RootLayout";
-import PensionerTable from "@/pages/pensioner/pensioners-table";
 import AdminUsersTable from "@/pages/admin-user/admin-users-table";
+import AddAdminUser from "@/pages/create-admin-user";
+import PensionerTable from "@/pages/pensioner/pensioners-table";
 import AddPensioners from "@/pages/pensioner/onboard-pensioner";
 
 const routeConfig = [
@@ -32,14 +33,15 @@ const routeConfig = [
                 ],
             },
             {
-                path: "admin-users",
-                element: <AdminUsersTable />,
+                path: "manage-admin",
                 children: [
                     {
-                        path: "view-admin-user",
+                        path: "view-admin-users",
+                        element: <AdminUsersTable />,
                     },
                     {
-                        path: "create-admin-user",
+                        path: "add-admin-users",
+                        element: <AddAdminUser />,
                     },
                 ],
             },

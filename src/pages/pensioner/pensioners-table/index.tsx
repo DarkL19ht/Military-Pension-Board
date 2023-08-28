@@ -1,6 +1,6 @@
 import { CgMoreVertical } from "react-icons/cg";
 import { Link } from "react-router-dom";
-import Pagination from "@components/pagination";
+import Pagination from "@/components/pagination";
 import { pensionersData } from "@/lib/fakers";
 
 export default function Pensioner() {

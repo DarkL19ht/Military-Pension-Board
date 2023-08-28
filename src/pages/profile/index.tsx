@@ -1,11 +1,11 @@
-import { PiPencilSimpleLine } from "react-icons/pi";
 import ProfilePics from "@/assets/images/profilepics.png";
 
-function ProfileSettings() {
+export default function Profile() {
     return (
-        <div className="h-[90vh] overflow-hidden">
-            <div className="h-full overflow-y-scroll py-5 pl-[3.81rem] pt-[2rem]">
-                <h4 className="text-xl font-bold text-[#00873D]">Profile Settings</h4>
+        // <div className="h-[90vh] overflow-hidden">
+        // h-full overflow-y-scroll
+        <div className="w-full overflow-auto ">
+            <div className="mb-20 ml-20 mt-9 w-full rounded-md border border-gray-100 px-[3.81rem] py-5 pt-[2rem] shadow-md sm:w-[60%]">
                 <div className="mt-1">
                     <img
                         src={ProfilePics}
@@ -13,15 +13,9 @@ function ProfileSettings() {
                         className="rounded-full border-4 border-[#006C31]"
                     />
                 </div>
-                <div className="mb-[1.3rem] mt-[1rem] flex">
-                    <p className="pr-[1.25rem] text-base font-semibold text-[#239F5B] underline">
+                <div className="mb-14 mt-8">
+                    <p className="pr-[1.25rem] text-3xl font-semibold text-[#239F5B]">
                         Profile Information
-                    </p>
-                    <p className="flex cursor-pointer">
-                        Edit{" "}
-                        <span>
-                            <PiPencilSimpleLine className="mt-[0.3rem]" />
-                        </span>
                     </p>
                 </div>
                 <div>
@@ -145,66 +139,77 @@ function ProfileSettings() {
                                 />
                             </div>
                         </div>
-                        <p className="mb-1 mt-[1.4rem] pr-[1.25rem] text-base font-semibold text-[#239F5B] underline">
-                            Change password
-                        </p>
-                        <div className="mb-3 w-full md:mb-0 md:w-1/2">
-                            <label
-                                className="block pb-2 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
-                                htmlFor="old-password"
-                            >
-                                Old password
-                            </label>
-                            <input
-                                className="mb-3 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
-                                id="old password"
-                                type="password"
-                                placeholder="*********************"
-                            />
-                        </div>
-                        <div className="-mx-3 mb-1 flex flex-wrap">
-                            <div className="mb-3 w-full px-3 md:mb-0 md:w-1/2">
-                                <label
-                                    className="block pb-2 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
-                                    htmlFor="new password"
-                                >
-                                    New password
-                                </label>
-                                <input
-                                    className="mb-3 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
-                                    id="new-password"
-                                    type="password"
-                                    placeholder="*****************"
-                                />
-                            </div>
-                            <div className="w-full px-3 md:w-1/2">
-                                <label
-                                    className="block pb-2 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
-                                    htmlFor="confirm-password"
-                                >
-                                    Confirm password
-                                </label>
-                                <input
-                                    className="mb-3 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
-                                    id="confirm-password"
-                                    type="password"
-                                    placeholder="*****************"
-                                />
-                            </div>
-                        </div>
                         <div className="flex justify-center">
                             <button
                                 type="button"
                                 className="mt-[50px] inline-flex h-[40px] w-64 items-center justify-center rounded-lg bg-[#00873D] px-10 py-6 text-[#ffffff]"
                             >
-                                Submit password
+                                Save changes
                             </button>
                         </div>
                     </form>
                 </div>
             </div>
+            <div className="mb-20 ml-20 mt-9 w-full rounded-md border border-gray-100 px-[3.81rem] py-5 pt-[2rem] shadow-md sm:w-[60%]">
+                <form className="w-full max-w-2xl">
+                    <p className="mb-10 mt-8 pr-[1.25rem] text-3xl font-semibold text-[#239F5B]">
+                        Change password
+                    </p>
+                    <div className="-mx-3 mb-3 w-full px-3 md:mb-0 md:w-1/2">
+                        <label
+                            className="block pb-1 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
+                            htmlFor="old-password"
+                        >
+                            Old password
+                        </label>
+                        <input
+                            className="mb-2 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
+                            id="old password"
+                            type="password"
+                            placeholder="*********************"
+                        />
+                    </div>
+                    <div className="-mx-3 mb-1 flex flex-wrap">
+                        <div className="mb-3 w-full px-3 md:mb-0 md:w-1/2">
+                            <label
+                                className="block pb-2 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
+                                htmlFor="new password"
+                            >
+                                New password
+                            </label>
+                            <input
+                                className="mb-3 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
+                                id="new-password"
+                                type="password"
+                                placeholder="*****************"
+                            />
+                        </div>
+                        <div className="w-full px-3 md:w-1/2">
+                            <label
+                                className="block pb-2 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
+                                htmlFor="confirm-password"
+                            >
+                                Confirm password
+                            </label>
+                            <input
+                                className="mb-3 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
+                                id="confirm-password"
+                                type="password"
+                                placeholder="*****************"
+                            />
+                        </div>
+                    </div>
+                    <div className="flex justify-center">
+                        <button
+                            type="button"
+                            className="mt-[50px] inline-flex h-[40px] w-64 items-center justify-center rounded-lg bg-[#00873D] px-10 py-6 text-[#ffffff]"
+                        >
+                            Save changes
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
+        // </div>
     );
 }
-
-export default ProfileSettings;

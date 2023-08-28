@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { CgMoreVertical } from "react-icons/cg";
 import { Link } from "react-router-dom";
-import Pagination from "@components/pagination";
 import { MdLockReset } from "react-icons/md";
+import Pagination from "@/components/pagination";
 import { adminData } from "@/lib/fakers";
 import {
     DropdownMenu,
