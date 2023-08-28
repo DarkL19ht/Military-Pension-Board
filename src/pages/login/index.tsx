@@ -2,7 +2,7 @@ import { CiUser, CiLock } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import useAuthentication from "@api/user-controller/useAuthentication";
-import { MbpButton } from "@/components/ui/MpbButton";
+import { MpbButton } from "@/components/ui/MpbButton";
 import MpbTextField from "@/components/@form/MpbTextField";
 import BannerImage from "@/assets/images/soldierimage.jpg";
 import Logo from "@/assets/images/logo.png";
@@ -111,7 +111,7 @@ export default function Login() {
                                 </Link>
                             </div>
                             <div className="mt-8">
-                                <MbpButton
+                                <MpbButton
                                     type="submit"
                                     title="Login"
                                     isLoading={isLoginUser}

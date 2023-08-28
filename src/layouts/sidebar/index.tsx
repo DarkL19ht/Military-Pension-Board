@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useState, useEffect } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
 // * React icons
@@ -28,27 +28,13 @@ const subMenusList = [
         icon: RiBuilding3Line,
         menus: ["auth", "app settings", "stroage", "hosting"],
     },
-    {
-        name: "build",
-        icon: RiBuilding3Line,
-        menus: ["auth", "app settings", "stroage", "hosting"],
-    },
-    {
-        name: "build",
-        icon: RiBuilding3Line,
-        menus: ["auth", "app settings", "stroage", "hosting"],
-    },
-    {
-        name: "build",
-        icon: RiBuilding3Line,
-        menus: ["auth", "app settings", "stroage", "hosting"],
-    },
 ];
 
 function Sidebar() {
     const isTabletMid: boolean = useMediaQuery({ query: "(max-width: 768px)" });
     const [open, setOpen] = useState(!isTabletMid);
     const { pathname } = useLocation();
+    // const sidebarRef = useRef();
 
     /**
      * pathname change -> close sidebar (only mobile view)
@@ -111,16 +97,20 @@ function Sidebar() {
             />
             <motion.div
                 variants={sidebarAnimation}
+                // ref={sidebarRef}
                 initial={{ x: isTabletMid ? -250 : 0 }}
                 animate={open ? "open" : "closed"}
                 className="text-gray fixed z-[999] h-screen w-[12rem]  max-w-[16rem] 
                 overflow-hidden bg-white shadow-xl md:relative"
             >
                 {/* logo */}
-                <div className="mx-3 mt-2 flex items-center justify-center gap-2.5 border-b border-slate-300 py-3 font-medium">
+                <Link
+                    to="/login"
+                    className="mx-3 mt-2 flex items-center justify-center gap-2.5 border-b border-slate-300 py-3 font-medium"
+                >
                     <img src={Logo} alt="mpb logo" width={30} />
                     {/* <span className="text-xl whitespace-pre">MPB</span> */}
-                </div>
+                </Link>
                 {/* Menus */}
                 <div className="flex h-full flex-col">
                     <ul
@@ -129,15 +119,27 @@ function Sidebar() {
                         text-[0.9rem] font-medium scrollbar-thin scrollbar-track-white  scrollbar-thumb-slate-100 md:h-[80%]"
                     >
                         <li>
-                            <NavLink to="." className="link active">
+                            <NavLink to="dashboard" className="link active">
                                 <HiOutlineHome size={20} className="min-w-max" />
                                 <span>Dashboard</span>
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to="transactions" className="link">
+                            <NavLink to="profile" className="link">
                                 <TbReportAnalytics size={20} className="min-w-max" />
-                                <span>Transactions</span>
+                                <span>Profile</span>
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="pensioners" className="link">
+                                <TbReportAnalytics size={20} className="min-w-max" />
+                                <span>Pensioners</span>
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="admin-users" className="link">
+                                <TbReportAnalytics size={20} className="min-w-max" />
+                                <span>Manage Admin</span>
                             </NavLink>
                         </li>
 
@@ -198,7 +200,7 @@ function Sidebar() {
                     tabIndex={0}
                     onClick={() => setOpen(!open)}
                     onKeyDown={handleKeyPress}
-                    className="absolute bottom-24 right-2 z-50 hidden h-fit w-fit cursor-pointer md:block"
+                    className="absolute bottom-[8rem] right-2 z-50 hidden h-fit w-fit cursor-pointer md:block"
                 >
                     <IoIosArrowBack size={25} />
                 </motion.div>

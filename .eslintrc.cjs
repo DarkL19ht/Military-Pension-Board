@@ -36,7 +36,6 @@ module.exports = {
         "prettier/prettier": 0,
         "no-console": "error",
         "import/extensions": 0,
-        "prettier/prettier": 0,
         "react/button-has-type": 0,
         "jsx-a11y/label-has-associated-control": [
             2,

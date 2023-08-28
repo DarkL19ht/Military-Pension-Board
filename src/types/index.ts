@@ -25,3 +25,15 @@ export interface UserRequestPayload {
     updated_on?: string;
     username: string;
 }
+
+export interface IPensioners {
+    id: number;
+    image: string;
+    firstName: string;
+    middleName: string;
+    lastName: string;
+    rank: string;
+    verificationMode: string;
+    referenceId: string;
+    status: string;
+}
