@@ -1,41 +1,26 @@
-import { Link } from "react-router-dom";
+import MpbBreadcrumb from "@/components/ui/MpbBreadcrumb";
+import breadcrumb from "@/lib/breadcrumb";
 
 export default function CreateAdminUser() {
     return (
         <div className="mx-auto w-4/5">
             <div className="mb-2 flex w-full justify-between py-3">
                 {/* Breacrumb */}
-                <nav aria-label="breadcrumb" className="text-base text-gray-500">
-                    <ol className="inline-flex items-center space-x-2 py-2 text-sm font-medium">
-                        <li className="inline-flex items-center">
-                            <Link
-                                to="/"
-                                className="text-secondary-500 hover:text-secondary-600"
-                            >
-                                Dashboard
-                            </Link>
-                        </li>
-                        <li className="inline-flex items-center space-x-2">
-                            <span className="text-secondary-400">/</span>
-                            <Link
-                                to="/"
-                                className="text-secondary-500 hover:text-secondary-600"
-                            >
-                                Create Admin User
-                            </Link>
-                        </li>
-                    </ol>
-                </nav>
+                <MpbBreadcrumb data={breadcrumb?.create_admin_user} />
             </div>
             <p className="mb-5 mt-3 text-center text-lg font-semibold md:w-[75%]">
                 Create Admin User
             </p>
-            <div className="mb-20 w-full overflow-auto rounded-md border border-gray-100 p-5  shadow-md sm:w-[75%]">
+            <div
+                className="mb-20 w-full overflow-auto rounded-md border
+                border-gray-100 p-5  shadow-md sm:w-[75%]"
+            >
                 <form className="w-full">
                     <div className="mx-3 mb-1 mt-3 flex flex-wrap sm:mt-20">
                         <div className="mb-1 w-full px-3 md:mb-0 md:w-1/2">
                             <label
-                                className="block pb-3 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
+                                className="block pb-3 text-sm font-medium tracking-wide
+                                 text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
                                 htmlFor="first-name"
                             >
                                 First name
