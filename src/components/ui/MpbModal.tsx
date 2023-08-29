@@ -25,6 +25,18 @@ const panelVariants = cva(
         },
     }
 );
+const titleVariants = cva(`flex items-center px-6 py-3`, {
+    variants: {
+        bgTitle: {
+            default: "bg-white text-green-600",
+            primary: "bg-green-100 text-green-600 font-bold",
+            secondary: "bg-red-100",
+        },
+    },
+    defaultVariants: {
+        bgTitle: "default",
+    },
+});
 
 interface IModal {
     isOpen: boolean;
@@ -35,19 +47,25 @@ interface IModal {
     backdrop?: boolean;
     hasBackArrow?: boolean;
     showCloseButton?: boolean;
+    showDivider?: boolean;
 }
 
-export interface IProps extends IModal, VariantProps<typeof panelVariants> {}
+export interface IProps
+    extends IModal,
+        VariantProps<typeof panelVariants>,
+        VariantProps<typeof titleVariants> {}
 
 export default function MpbModal({
-    isOpen,
-    closeModal,
     showCloseButton = true,
     goBack = undefined,
     title = "",
     size,
     backdrop = false,
     hasBackArrow = false,
+    showDivider = true,
+    bgTitle,
+    isOpen,
+    closeModal,
     children,
 }: IProps) {
     const hasBackdrop = useCallback(() => {
@@ -96,9 +114,12 @@ export default function MpbModal({
                                 <>
                                     <Dialog.Title
                                         as="h3"
-                                        className={`flex items-center ${
+                                        className={cn(
+                                            titleVariants({
+                                                bgTitle,
+                                            }),
                                             title ? "justify-between" : "justify-end"
-                                        } px-6 py-3`}
+                                        )}
                                     >
                                         {hasBackArrow && (
                                             <div>
@@ -110,7 +131,7 @@ export default function MpbModal({
                                             </div>
                                         )}
                                         {title && (
-                                            <h1 className="flex-1 text-center text-xl font-medium">
+                                            <h1 className="flex-1 text-center text-xl font-light">
                                                 {title}
                                             </h1>
                                         )}
@@ -124,7 +145,7 @@ export default function MpbModal({
                                             </span>
                                         )}
                                     </Dialog.Title>
-                                    {showCloseButton && <hr />}
+                                    {showDivider && <hr />}
                                 </>
                                 <div>{children}</div>
                             </Dialog.Panel>

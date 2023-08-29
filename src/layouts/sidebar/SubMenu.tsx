@@ -24,7 +24,7 @@ interface IData {
 
 export default function SubMenu({ data }: IData) {
     const { pathname } = useLocation();
-    const [subMenuOpen, setSubMenuOpen] = useState(false);
+    const [subMenuOpen, setSubMenuOpen] = useState(true);
     return (
         <>
             <li
@@ -54,7 +54,7 @@ export default function SubMenu({ data }: IData) {
                         {/* className="hover:text-blue-600 hover:font-medium" */}
                         <NavLink
                             to={`/${_.kebabCase(data?.name)}/${_.kebabCase(menu?.name)}`}
-                            className="link !bg-transparent capitalize"
+                            className="link cursor-pointer !bg-transparent capitalize"
                         >
                             {menu.name}
                         </NavLink>

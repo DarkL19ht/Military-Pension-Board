@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import useAuthentication from "@api/user-controller/useAuthentication";
 import Logo from "@/assets/images/logo.png";
 import MpbTextField from "@/components/@form/MpbTextField";
-import { MbpButton } from "@/components/ui/MpbButton";
+import { MpbButton } from "@/components/ui/MpbButton";
 import BannerImage from "@/assets/images/soldierimage.jpg";
 
 type FormValues = {
@@ -57,7 +57,7 @@ function Login() {
                     {/* TODO: remove line below */}
                     <pre className="hidden">{JSON.stringify(watch(), null, 2)}</pre>
                     <pre className="hidden">{JSON.stringify(errors, null, 2)}</pre>
-                    <form className="mt-[40px]">
+                    <form className="mt-[2.5rem]">
                         <div className="mb-5">
                             <MpbTextField
                                 label="Username"
@@ -105,7 +105,7 @@ function Login() {
                             </Link>
                         </div>
                         <div className="mt-8">
-                            <MbpButton
+                            <MpbButton
                                 type="submit"
                                 title="Login"
                                 isLoading={isLoginUser}
