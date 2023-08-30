@@ -1,5 +1,5 @@
 import { useController, UseControllerProps, Control } from "react-hook-form";
-// import { IconType } from "react-icons";
+import { IconType } from "react-icons";
 import { cn } from "@/lib";
 
 // export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -27,7 +27,6 @@ interface InputProps<
 > {
     name: TName;
     label?: string;
-    name: string;
     type: string;
     asterik: boolean;
     icon?: IconType;

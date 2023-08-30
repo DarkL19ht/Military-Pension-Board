@@ -7,7 +7,6 @@ interface InputProps<
 > {
     name: TName;
     label?: string;
-    name: string;
     type: string;
     asterik: boolean;
     icon?: IconType;

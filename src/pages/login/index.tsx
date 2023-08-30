@@ -61,7 +61,7 @@ export default function Login() {
                 >
                     <div className="w-full rounded-md bg-white p-4 sm:w-3/5  lg:w-2/5">
                         {/* TODO: remove line below */}
-                        <pre className="hiddens">{JSON.stringify(watch(), null, 2)}</pre>
+                        <pre className="hidden">{JSON.stringify(watch(), null, 2)}</pre>
                         <pre className="hidden">{JSON.stringify(errors, null, 2)}</pre>
                         <div className="mb-10 flex items-center justify-between">
                             <img src={Logo} alt="logo_image" className="h-12 w-12" />
