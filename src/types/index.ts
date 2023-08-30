@@ -10,3 +10,30 @@ export interface InputProps {
     icon: React.ComponentType<IconProps>;
     iconSize: number;
 }
+
+export interface UserRequestPayload {
+    created_by?: string;
+    created_on?: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    password: string;
+    phone: string;
+    roles: number[];
+    status: "DISABLED" | "ENABLED";
+    updated_by?: number;
+    updated_on?: string;
+    username: string;
+}
+
+export interface IPensioners {
+    id: number;
+    image: string;
+    firstName: string;
+    middleName: string;
+    lastName: string;
+    rank: string;
+    verificationMode: string;
+    referenceId: string;
+    status: string;
+}

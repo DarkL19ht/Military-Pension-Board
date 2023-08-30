@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @layer base {
-    @font-face {
+    /* @font-face {
         font-family: LatoBlack;
         src: url("/public/fonts/lato-black-webfont.woff") format("woff2");
         font-display: swap;
@@ -33,24 +33,11 @@
         font-display: swap;
         font-style: normal;
     }
+
     html {
         @apply font-Montserrat;
     }
-    body {
-        @apply bg-foreground;
-    }
-
-    h1 {
-        @apply text-xl font-medium capitalize;
-    }
-
-    .link {
-        @apply flex items-center gap-6 rounded-md p-2.5 font-medium duration-300 md:cursor-pointer;
-    }
-
-    .active {
-        @apply bg-blue-100 text-blue-600;
-    }
+    */
 
     [type="text"],
     [type="email"],
@@ -81,5 +68,46 @@
 
     .input-label {
         @apply mb-1 flex font-latoRegular text-base;
+    }
+
+    .link {
+        @apply flex items-center gap-6 rounded-md p-2.5 font-medium duration-300 md:cursor-pointer;
+    }
+
+    .active {
+        @apply bg-blue-100 text-blue-600;
+    }
+
+    .container-snap {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
+
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
+    .styled-checkbox {
+        width: 20px;
+        height: 20px;
+        background-color: #f1f1f1;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    /* Custom style for the checkbox when checked */
+    .styled-checkbox:checked {
+        background-color: #3cc29a;
+        /* Change to your desired color */
+        border-color: #4c944c;
+        /* Change to a slightly darker shade */
+    }
+
+    .styled-checkbox:hover {
+        background-color: #3cc29a;
+        /* Change to your desired color */
+        border-color: #4c944c;
+        /* Change to a slightly darker shade */
     }
 }

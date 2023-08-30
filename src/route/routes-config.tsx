@@ -1,28 +1,61 @@
-import Login from "@/pages/login/Login";
-import Dashboard from "@/pages/dashboard/Dashboard";
-import RootLayout from "@/layouts/RootLayout";
 import Pensionerslist from "@/pages/pensioners/Pensionerslist";
 import Roles from "@/pages/roles/Roles";
+// import React from "react";
+import Login from "@/pages/login";
+import Dashboard from "@/pages/dashboard";
+import Profile from "@/pages/profile";
+import RootLayout from "@/layouts/RootLayout";
+import AdminUsersTable from "@/pages/admin-user/admin-users-table";
+import AddAdminUser from "@/pages/admin-user/create-admin-user";
+import PensionerTable from "@/pages/pensioner/pensioners-table";
+import AddPensioners from "@/pages/pensioner/onboard-pensioner";
 
 const routeConfig = [
     {
-        path: "/",
+        path: "/login",
         element: <Login />,
     },
     {
-        path: "/dashboard",
+        path: "/",
         element: <RootLayout />,
-        children: [{ path: "", index: true, element: <Dashboard /> }],
-    },
-    {
-        path: "/pensioners",
-        element: <RootLayout />,
-        children: [{ path: "", index: true, element: <Pensionerslist /> }],
-    },
-    {
-        path: "/roles",
-        element: <RootLayout />,
-        children: [{ path: "", index: true, element: <Roles /> }],
+        children: [
+            { path: "dashboard", index: true, element: <Dashboard /> },
+            { path: "settings", element: <Profile /> },
+            {
+                path: "manage-pensioners",
+                children: [
+                    {
+                        path: "view-pensioners",
+                        element: <PensionerTable />,
+                    },
+                    {
+                        path: "add-pensioners",
+                        element: <AddPensioners />,
+                    },
+                ],
+            },
+            {
+                path: "manage-admin",
+                children: [
+                    {
+                        path: "view-admin-users",
+                        element: <AdminUsersTable />,
+                    },
+                    {
+                        path: "add-admin-users",
+                        element: <AddAdminUser />,
+                    },
+                    {
+                        path: "roles",
+                        element: <Roles />,
+                    },
+                    {
+                        path: "pensioners",
+                        element: <Pensionerslist />,
+                    },
+                ],
+            },
+        ],
     },
 ];
 

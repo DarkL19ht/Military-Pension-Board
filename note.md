@@ -24,6 +24,13 @@ module.exports = {
 ```
 
 ```js
+ className={cn(
+            "fixed inset-0 bg-black",
+            `bg-opacity-${opacity}`
+    )}
+```
+
+```js
 
 eslint rule
 0 - off
@@ -133,5 +140,4 @@ export default {
 .active {
     @apply bg-blue-100 text-blue-600;
 }
-
 ```

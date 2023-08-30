@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { RadioGroup, Disclosure } from "@headlessui/react";
-import { CheckIcon } from "lucide-react";
-// import RolesRadioGroup from "./RolesRadioGroup";
+import { Disclosure } from "@headlessui/react";
+
 import caret from "@/assets/icons/downcaret.svg";
 
 // label, color
@@ -10,12 +9,13 @@ interface Props {
     label: string;
     color: string;
     headerColor: string;
-    checkboxColor: string;
 }
 
 function Rolebar(props: Props) {
-    const [plan, setPlan] = useState("startup");
-    const { label, color, headerColor, checkboxColor } = props;
+    const [viewReports, setViewReports] = useState(false);
+    const [onboardPensioners, setOnboardPensioners] = useState(false);
+    const [viewPensionersInfo, setViewPensionersInfo] = useState(false);
+    const { label, color, headerColor } = props;
 
     return (
         <div
@@ -34,95 +34,46 @@ function Rolebar(props: Props) {
                         </Disclosure.Button>
                         <Disclosure.Panel className="px-4 pb-2 pt-2 text-sm text-gray-500">
                             <p>View reports and onboard pensioners</p>
-                            <RadioGroup value={plan} onChange={setPlan}>
-                                <RadioGroup.Option value="startup" className="mt-2">
-                                    {({ checked }) => (
-                                        <div className="flex ">
-                                            <div className="mr-3 rounded border-2 align-middle">
-                                                <div
-                                                    className={
-                                                        checked
-                                                            ? "shrink-0 text-white"
-                                                            : "h-5 w-5 shrink-0 border-2 text-white"
-                                                    }
-                                                >
-                                                    {checked && (
-                                                        <CheckIcon
-                                                            className={
-                                                                checked
-                                                                    ? `${checkboxColor} h-5 w-5`
-                                                                    : "h-4 w-4"
-                                                            }
-                                                        />
-                                                    )}
-                                                </div>
-                                            </div>
-                                            <p className="mt-1 align-bottom text-sm">
-                                                View Reports
-                                            </p>
-                                        </div>
-                                    )}
-                                </RadioGroup.Option>
-                                <RadioGroup.Option value="business" className="mt-2">
-                                    {({ checked }) => (
-                                        <div className="flex ">
-                                            <div className="mr-3 rounded border-2 align-middle">
-                                                <div
-                                                    className={
-                                                        checked
-                                                            ? "shrink-0 text-white"
-                                                            : "h-5 w-5 shrink-0 border-2 text-white"
-                                                    }
-                                                >
-                                                    {checked && (
-                                                        <CheckIcon
-                                                            className={
-                                                                checked
-                                                                    ? `${checkboxColor} h-5 w-5`
-                                                                    : "h-4 w-4"
-                                                            }
-                                                        />
-                                                    )}
-                                                </div>
-                                            </div>
-                                            <p className="mt-1 align-bottom">
-                                                Onboard Pensioners
-                                            </p>
-                                        </div>
-                                    )}
-                                </RadioGroup.Option>
-                                <RadioGroup.Option
-                                    value="pensionersInfo"
-                                    className="mt-2"
-                                >
-                                    {({ checked }) => (
-                                        <div className="flex ">
-                                            <div className="mr-3 rounded border-2 align-middle">
-                                                <div
-                                                    className={
-                                                        checked
-                                                            ? "shrink-0 text-white"
-                                                            : "h-5 w-5 shrink-0 border-2 text-white"
-                                                    }
-                                                >
-                                                    {checked && (
-                                                        <CheckIcon
-                                                            className={
-                                                                checked
-                                                                    ? `${checkboxColor} h-5 w-5`
-                                                                    : "h-4 w-4"
-                                                            }
-                                                        />
-                                                    )}
-                                                </div>
-                                            </div>
-                                            <p className="mt-1 align-bottom">
-                                                View Pensioners Information
-                                            </p>
-                                        </div>
-                                    )}
-                                </RadioGroup.Option>
-                            </RadioGroup>
+
+                            <div className="mt-2 flex justify-start">
+                                <input
+                                    id="viewReports"
+                                    type="checkbox"
+                                    name="adminRight"
+                                    value={viewReports}
+                                    onChange={() => setViewReports(true)}
+                                    className="styled-checkbox mb-2 mr-1"
+                                />
+                                <label htmlFor="viewReports">View Reports</label>
+                            </div>
+
+                            <div className="flex justify-start">
+                                <input
+                                    id="onboardPensioners"
+                                    type="checkbox"
+                                    name="adminRight"
+                                    value={onboardPensioners}
+                                    onChange={() => setOnboardPensioners(true)}
+                                    className="styled-checkbox mb-2 mr-1"
+                                />
+                                <label htmlFor="onboardPensioners">
+                                    Onboard Pensioners
+                                </label>
+                            </div>
+
+                            <div className="flex justify-start">
+                                <input
+                                    id="viewPensionersInfo"
+                                    type="checkbox"
+                                    name="adminRight"
+                                    value={viewPensionersInfo}
+                                    onChange={() => setViewPensionersInfo(true)}
+                                    className="styled-checkbox mr-1 "
+                                />
+                                <label htmlFor="viewPensionersInfo">
+                                    View Pensioners Information
+                                </label>
+                            </div>
                         </Disclosure.Panel>
                     </>
                 )}

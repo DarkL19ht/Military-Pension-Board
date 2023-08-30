@@ -25,6 +25,20 @@ export const mpbPlugin = plugin(
                 "--mpb-color-neutral-600": "211, 19%, 55%,", // background: hsla(211, 19%, 55%, 1);
                 "--mpb-color-neutral-700": "0, 72%, 52%", // background: hsla(0, 8%, 22%, 1);
                 "--mpb-color-neutral-800": "221, 39%, 11%,", // background: hsla(221, 39%, 11%, 1);
+                "--radius": "0.5rem",
+            },
+        });
+
+        addBase({
+            "*": {
+                "@apply border-border": {},
+            },
+            body: {
+                // "@apply text-background": {},
+            },
+
+            h1: {
+                "@apply text-xl font-medium capitalize": {},
             },
         });
     },
@@ -65,7 +79,7 @@ export const mpbPlugin = plugin(
                         foreground: "hsl(var(--secondary-foreground))",
                     },
                     header: {
-                        DEFAULT: "hsl(var(--header-background))",
+                        // DEFAULT: "hsl(var(--header-background))",
                     },
                 },
                 textColor: {
