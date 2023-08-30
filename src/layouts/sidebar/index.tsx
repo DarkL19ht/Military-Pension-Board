@@ -30,6 +30,10 @@ const subMenusList = [
                 name: "View Pensioners",
                 path: "",
             },
+            {
+                name: "View Pensioner's Profile",
+                path: "",
+            },
         ],
     },
     {

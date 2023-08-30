@@ -7,6 +7,7 @@ import AdminUsersTable from "@/pages/admin-user/admin-users-table";
 import AddAdminUser from "@/pages/admin-user/create-admin-user";
 import PensionerTable from "@/pages/pensioner/pensioners-table";
 import AddPensioners from "@/pages/pensioner/onboard-pensioner";
+import ViewPensionersProfile from "@/pages/pensioner/view-pensioners-profile";
 
 const routeConfig = [
     {
@@ -29,6 +30,10 @@ const routeConfig = [
                     {
                         path: "add-pensioners",
                         element: <AddPensioners />,
+                    },
+                    {
+                        path: "view-pensioners-profile",
+                        element: <ViewPensionersProfile />,
                     },
                 ],
             },
