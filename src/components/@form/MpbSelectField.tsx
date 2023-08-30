@@ -1,25 +1,5 @@
 import { useController, UseControllerProps, Control } from "react-hook-form";
-// import { IconType } from "react-icons";
 import { cn } from "@/lib";
-
-// export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-// label: string;
-// name: string;
-// type: string;
-// asterik: boolean;
-// icon: IconType;
-// className: string;
-//     rule: any;
-//     control: any;
-// }
-
-// type ValidationRules = {
-//     required: string;
-//     pattern: {
-//         value: string;
-//         message: string;
-//     };
-// };
 
 interface InputProps<
     TFieldValues extends FieldValues = FieldValues,
@@ -34,29 +14,39 @@ interface InputProps<
     className?: string;
     rule?: any;
     control: Control<TFieldValues>;
+    options: any[];
+    optionTitle?: string;
+    optionValue?: string;
+    optionLabel?: string;
 }
 
-export default function MpbTextField(props: UseControllerProps<InputProps>) {
+export default function MpbSelectField(props: UseControllerProps<InputProps>) {
     const {
         field: { onChange, onBlur, value },
         fieldState: { isTouched },
         formState: { errors },
     } = useController(props);
 
-    const { type, name, label, asterik = true, icon, className, ...others } = props;
+    const {
+        type,
+        name,
+        label,
+        asterik = true,
+        icon,
+        className,
+        optionTitle,
+        optionValue,
+        optionLabel,
+        options,
+        ...others
+    } = props;
 
-    const baseClass = cn(
-        `input-control`,
-        icon && "pl-10",
-        "placeholder:text-sm placeholder:text-gray-400 placeholder:font-light",
-        {
-            "ring-1 ring-red-500 border-none focus:ring-1 focus:ring-red-500":
-                isTouched && !!errors[name]?.message,
-            "ring-1 ring-red-600 border-none focus:ring-1 focus:ring-red-500":
-                !!errors[name]?.message,
-        },
-        className
-    );
+    const baseClass = cn(icon && "pl-10", className, {
+        "ring-1 ring-red-500 border-none focus:ring-1 focus:ring-red-500":
+            isTouched && !!errors[name]?.message,
+        "ring-1 ring-red-600 border-none focus:ring-1 focus:ring-red-500":
+            !!errors[name]?.message,
+    });
 
     return (
         <>
@@ -72,15 +62,22 @@ export default function MpbTextField(props: UseControllerProps<InputProps>) {
                         <span className="pr-[12px]">{icon}</span>
                     </div>
                 )}
-                <input
-                    name={name}
-                    type={type}
-                    value={value}
-                    onChange={onChange}
-                    onBlur={onBlur}
+                <select
                     className={baseClass}
+                    value={value}
+                    onBlur={onBlur}
+                    onChange={onChange}
                     {...others}
-                />
+                >
+                    <option value="">{optionTitle}</option>
+                    {options?.map((data) => {
+                        return (
+                            <option key={data[optionValue]} value={data[optionValue]}>
+                                {data[optionLabel]}
+                            </option>
+                        );
+                    })}
+                </select>
             </div>
             {errors[name] && (
                 <p className="mt-1 text-sm text-red-500">
@@ -90,3 +87,11 @@ export default function MpbTextField(props: UseControllerProps<InputProps>) {
         </>
     );
 }
+
+MpbSelectField.defaultProps = {
+    optionTitle: "",
+    optionValue: "value",
+    optionLabel: "label",
+    options: [],
+    asterik: false,
+};

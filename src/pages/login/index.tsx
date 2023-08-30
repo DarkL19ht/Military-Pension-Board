@@ -6,6 +6,12 @@ import { MpbButton } from "@/components/ui/MpbButton";
 import MpbTextField from "@/components/@form/MpbTextField";
 import BannerImage from "@/assets/images/soldierimage.jpg";
 import Logo from "@/assets/images/logo.png";
+import MpbCheckbox from "@/components/@form/MpbCheckbox";
+
+type FormValues = {
+    username: string;
+    password: string;
+};
 
 export default function Login() {
     const {
@@ -55,7 +61,7 @@ export default function Login() {
                 >
                     <div className="w-full rounded-md bg-white p-4 sm:w-3/5  lg:w-2/5">
                         {/* TODO: remove line below */}
-                        <pre className="hidden">{JSON.stringify(watch(), null, 2)}</pre>
+                        <pre className="hiddens">{JSON.stringify(watch(), null, 2)}</pre>
                         <pre className="hidden">{JSON.stringify(errors, null, 2)}</pre>
                         <div className="mb-10 flex items-center justify-between">
                             <img src={Logo} alt="logo_image" className="h-12 w-12" />
@@ -93,7 +99,7 @@ export default function Login() {
                                 />
                             </div>
                             <div className="flex items-center justify-between">
-                                <div className="flex cursor-pointer items-center gap-x-2">
+                                {/* <div className="flex cursor-pointer items-center gap-x-2">
                                     <input
                                         type="checkbox"
                                         name=""
@@ -103,6 +109,13 @@ export default function Login() {
                                     <span className="text-sm text-[#00873D]">
                                         Remember me
                                     </span>
+                                </div> */}
+                                <div>
+                                    <MpbCheckbox
+                                        control={control}
+                                        label="Remember me"
+                                        name="rememberMe"
+                                    />
                                 </div>
                                 {/* TODO: change the Link to div */}
                                 <Link to="/dashboard" className="text-sm">

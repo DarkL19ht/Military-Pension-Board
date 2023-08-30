@@ -1,7 +1,66 @@
+import { useForm } from "react-hook-form";
+import { CiUser } from "react-icons/ci";
 import MpbBreadcrumb from "@/components/ui/MpbBreadcrumb";
 import breadcrumb from "@/lib/breadcrumb";
+import { MpbTextField } from "@/components";
+import MpbSelectField from "@/components/@form/MpbSelectField";
+import MpbReactSelectField from "@/components/@form/MpbReactSelectField";
+
+type FormValues = {
+    email: string;
+    firstName: string;
+    lastName: string;
+    phone: string;
+    gender: string;
+    roles: number[];
+    username: string;
+    rank: string;
+};
+
+const ranks = [
+    {
+        label: "First Sergeant",
+        value: "First Sergeant",
+    },
+    {
+        label: "Captain (Air Force)",
+        value: "Captain (Air Force)",
+    },
+    {
+        label: "Lieutenant General",
+        value: "Lieutenant General",
+    },
+    {
+        label: "Brigadier General",
+        value: "Brigadier General",
+    },
+    {
+        label: "Command Sergeant Major",
+        value: "Chief Master Sergeant ",
+    },
+];
 
 export default function CreateAdminUser() {
+    const {
+        control,
+        //  handleSubmit,
+        watch,
+        // formState: { errors, isValid, isDirty },
+        formState: { errors },
+    } = useForm<FormValues>({
+        mode: "all",
+        defaultValues: {
+            email: "",
+            firstName: "",
+            lastName: "",
+            phone: "",
+            gender: "",
+            roles: [],
+            username: "",
+            rank: "",
+        },
+    });
+
     return (
         <div className="mx-auto w-4/5">
             <div className="mb-2 flex w-full justify-between py-3">
@@ -15,126 +74,122 @@ export default function CreateAdminUser() {
                 className="mb-20 w-full overflow-auto rounded-md border
                 border-gray-100 p-5  shadow-md sm:w-[75%]"
             >
-                <form className="w-full">
-                    <div className="mx-3 mb-1 mt-3 flex flex-wrap sm:mt-20">
-                        <div className="mb-1 w-full px-3 md:mb-0 md:w-1/2">
-                            <label
-                                className="block pb-3 text-sm font-medium tracking-wide
-                                 text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
-                                htmlFor="first-name"
-                            >
-                                First name
-                            </label>
-                            <input
-                                className="mb-3 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
-                                id="first-name"
+                <form className="w-full space-y-5">
+                    {/* TODO: remove below */}
+                    <pre className="hidden">{JSON.stringify(watch(), null, 2)}</pre>
+                    <pre className="hidden">{JSON.stringify(errors, null, 2)}</pre>
+                    <div className="flex gap-3">
+                        <div className="w-1/2">
+                            <MpbTextField
+                                label="First name"
+                                name="firstName"
                                 type="text"
-                                placeholder="Jane"
+                                icon={<CiUser size={20} />}
+                                control={control}
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: "first name is required",
+                                    },
+                                }}
                             />
                         </div>
-                        <div className="w-full px-3 md:w-1/2">
-                            <label
-                                className="block pb-3 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
-                                htmlFor="last-name"
-                            >
-                                Last name
-                            </label>
-                            <input
-                                className="mb-3 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
-                                id="last-name"
+                        <div className="w-1/2">
+                            <MpbTextField
+                                label="Last name"
+                                name="lastName"
                                 type="text"
-                                placeholder="Joseph"
+                                icon={<CiUser size={20} />}
+                                control={control}
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: "last name is required",
+                                    },
+                                }}
                             />
                         </div>
                     </div>
-                    <div className="mx-3 mb-1 flex flex-wrap">
-                        <div className="mb-3 w-full px-3 md:mb-0 md:w-1/2">
-                            <label
-                                className="block pb-3 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
-                                htmlFor="rank"
-                            >
-                                Rank
-                            </label>
-                            <div className="relative">
-                                <select
-                                    className="block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 pr-8 leading-tight text-gray-700 placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
-                                    id="rank"
-                                >
-                                    <option>Colonel</option>
-                                    <option>Colonel</option>
-                                    <option>Colonel</option>
-                                </select>
-                                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                                    <svg
-                                        className="h-4 w-4 fill-current"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 20 20"
-                                    >
-                                        {/* <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /> */}
-                                    </svg>
-                                </div>
-                            </div>
+                    <div className="flex gap-3">
+                        <div className="w-1/2">
+                            <MpbSelectField
+                                control={control}
+                                label="Rank"
+                                name="rank"
+                                icon={<CiUser size={20} />}
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: "Please, select a rank",
+                                    },
+                                }}
+                                options={ranks}
+                            />
                         </div>
-                        <div className="w-full px-3 md:w-1/2">
-                            <label
-                                className="block pb-3 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
-                                htmlFor="phone-number"
-                            >
-                                Phone number
-                            </label>
-                            <input
-                                className="mb-3 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-white placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
-                                id="phone-number"
-                                type="text"
-                                placeholder="0905634289"
+                        <div className="w-1/2">
+                            <MpbTextField
+                                label="Phone number"
+                                name="phoneNumber"
+                                placeholder="Enter Phone Number"
+                                type="number"
+                                icon={<CiUser size={20} />}
+                                control={control}
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: "Phone number is required",
+                                    },
+                                }}
                             />
                         </div>
                     </div>
-                    <div className="mx-3 mb-1 flex flex-wrap">
-                        <div className="mb-3 w-full px-3 md:mb-0 md:w-1/2">
-                            <label
-                                className="block pb-3 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
-                                htmlFor="email-address"
-                            >
-                                Email address
-                            </label>
-                            <input
-                                className="mb-3 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-white placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
-                                id="email-address"
-                                type="text"
-                                placeholder="Susanjoseph@nigerianarmy.com.ng"
+                    <div className="flex gap-3">
+                        <div className="w-1/2">
+                            <MpbTextField
+                                label="Email address"
+                                name="email"
+                                type="email"
+                                icon={<CiUser size={20} />}
+                                control={control}
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: "Email is required",
+                                    },
+                                }}
                             />
                         </div>
-                        <div className="w-full px-3 md:w-1/2">
-                            <label
-                                className="block pb-3 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
-                                htmlFor="gender"
-                            >
-                                Gender
-                            </label>
-                            <input
-                                className="mb-3 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-white placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
-                                id="gender"
-                                type="text"
-                                placeholder="Female"
+                        <div className="w-1/2">
+                            <MpbSelectField
+                                control={control}
+                                label="Gender"
+                                name="gender"
+                                icon={<CiUser size={20} />}
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: "Please, select a gender",
+                                    },
+                                }}
+                                options={[]}
                             />
                         </div>
                     </div>
-                    <div className="mx-3 mb-1 flex flex-wrap">
-                        <div className="w-full px-3">
-                            <label
-                                className="block pb-3 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
-                                htmlFor="role"
-                            >
-                                Role
-                            </label>
-                            <input
-                                className="mb-3 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-white placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
-                                id="role"
-                                type="password"
-                                placeholder="Admin 1"
-                            />
-                        </div>
+                    <div className="flex w-full flex-col">
+                        <MpbReactSelectField
+                            label="Roles"
+                            control={control}
+                            name="role"
+                            options={ranks}
+                            asterik
+                            isMulti
+                            rules={{
+                                required: {
+                                    value: true,
+                                    message: "Please choose a role",
+                                },
+                            }}
+                        />
                     </div>
                     <div className="flex justify-center">
                         <button
