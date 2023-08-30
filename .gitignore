@@ -27,3 +27,4 @@ dist-ssr
 # project directories and files
 /src/@bin/*
 /src/@bin/
+note.md

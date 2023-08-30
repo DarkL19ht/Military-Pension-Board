@@ -1,8 +1,9 @@
 import { useForm } from "react-hook-form";
 import { CiUser } from "react-icons/ci";
+import useCreateUser from "@api/user-controller/useCreateUser";
 import MpbBreadcrumb from "@/components/ui/MpbBreadcrumb";
 import breadcrumb from "@/lib/breadcrumb";
-import { MpbTextField } from "@/components";
+import { MpbTextField, MpbButton } from "@/components";
 import MpbSelectField from "@/components/@form/MpbSelectField";
 import MpbReactSelectField from "@/components/@form/MpbReactSelectField";
 
@@ -43,7 +44,7 @@ const ranks = [
 export default function CreateAdminUser() {
     const {
         control,
-        //  handleSubmit,
+        handleSubmit,
         watch,
         // formState: { errors, isValid, isDirty },
         formState: { errors },
@@ -61,6 +62,12 @@ export default function CreateAdminUser() {
         },
     });
 
+    const { CreateUser, isCreatingUser } = useCreateUser();
+
+    const handleCreateUser = (values: FormValues) => {
+        CreateUser(values);
+    };
+
     return (
         <div className="mx-auto w-4/5">
             <div className="mb-2 flex w-full justify-between py-3">
@@ -71,7 +78,7 @@ export default function CreateAdminUser() {
                 Create Admin User
             </p>
             <div
-                className="mb-20 w-full overflow-auto rounded-md border
+                className="mb-20 w-full rounded-md border
                 border-gray-100 p-5  shadow-md sm:w-[75%]"
             >
                 <form className="w-full space-y-5">
@@ -89,7 +96,7 @@ export default function CreateAdminUser() {
                                 rules={{
                                     required: {
                                         value: true,
-                                        message: "first name is required",
+                                        message: "First name is required",
                                     },
                                 }}
                             />
@@ -104,7 +111,7 @@ export default function CreateAdminUser() {
                                 rules={{
                                     required: {
                                         value: true,
-                                        message: "last name is required",
+                                        message: "Last name is required",
                                     },
                                 }}
                             />
@@ -181,7 +188,6 @@ export default function CreateAdminUser() {
                             control={control}
                             name="role"
                             options={ranks}
-                            asterik
                             isMulti
                             rules={{
                                 required: {
@@ -192,12 +198,17 @@ export default function CreateAdminUser() {
                         />
                     </div>
                     <div className="flex justify-center">
-                        <button
+                        <MpbButton
+                            title="Create new user"
+                            onClick={handleSubmit(handleCreateUser)}
+                            isLoading={isCreatingUser}
+                        />
+                        {/* <button
                             type="button"
                             className="mb-10 mt-10 inline-flex h-[40px] w-64 items-center justify-center rounded-lg bg-[#00873D] px-10 py-6 text-[#ffffff]"
                         >
                             Create new user
-                        </button>
+                        </button> */}
                     </div>
                 </form>
             </div>

@@ -7,11 +7,9 @@ import MpbTextField from "@/components/@form/MpbTextField";
 import BannerImage from "@/assets/images/soldierimage.jpg";
 import Logo from "@/assets/images/logo.png";
 import MpbCheckbox from "@/components/@form/MpbCheckbox";
+import { UserRequestPayload } from "@/types";
 
-type FormValues = {
-    username: string;
-    password: string;
-};
+interface FormValues extends Pick<UserRequestPayload, "username" | "password"> {}
 
 export default function Login() {
     const {

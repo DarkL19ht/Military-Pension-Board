@@ -30,7 +30,7 @@ export default function MpbSelectField(props: UseControllerProps<InputProps>) {
         type,
         name,
         label,
-        asterik = true,
+        asterik,
         icon,
         className,
         optionTitle,
@@ -92,5 +92,5 @@ MpbSelectField.defaultProps = {
     optionValue: "value",
     optionLabel: "label",
     options: [],
-    asterik: false,
+    asterik: true,
 };

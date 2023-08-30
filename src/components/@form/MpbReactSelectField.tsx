@@ -22,7 +22,7 @@ export default function MpbReactSelectField(props: UseControllerProps<InputProps
         formState: { errors },
     } = useController(props);
 
-    const { name, label, asterik, options, ...others } = props;
+    const { name, label, asterik = true, options, ...others } = props;
 
     const selectStyle = {
         control: (styles: any) => ({
@@ -49,7 +49,8 @@ export default function MpbReactSelectField(props: UseControllerProps<InputProps
     return (
         <>
             <label htmlFor="" className="input-label">
-                {label}&nbsp;{asterik && <span className="text-red-600">*</span>}
+                {asterik && <span className="text-red-600">*</span>}
+                &nbsp;{label}
             </label>
             <Select
                 {...field}
