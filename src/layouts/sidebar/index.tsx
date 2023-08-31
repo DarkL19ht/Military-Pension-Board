@@ -50,6 +50,16 @@ const subMenusList = [
             },
         ],
     },
+    {
+        name: "Manage Role",
+        icon: TbReportAnalytics,
+        menus: [
+            {
+                name: "Create Role",
+                path: "",
+            },
+        ],
+    },
 ];
 
 function Sidebar() {
@@ -146,12 +156,7 @@ function Sidebar() {
                                 <span>Dashboard</span>
                             </NavLink>
                         </li>
-                        {/* <li>
-                            <NavLink to="admin-users" className="link">
-                                <TbReportAnalytics size={20} className="min-w-max" />
-                                <span>Manage admin</span>
-                            </NavLink>
-                        </li> */}
+
                         {/* Menu with submenu */}
                         {open && (
                             <div>

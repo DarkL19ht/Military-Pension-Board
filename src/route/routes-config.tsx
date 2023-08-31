@@ -11,6 +11,7 @@ import AddPensioners from "@/pages/pensioner/onboard-pensioner";
 import PensionersProfile from "@/pages/pensioner/pensioners-profile";
 import ProtectedRoute from "./protected-route";
 import PublicRoute from "./public-route";
+import AddRole from "@/pages/role/create-role";
 
 const routeConfig = [
     {
@@ -58,6 +59,15 @@ const routeConfig = [
                     {
                         path: "add-admin-users",
                         element: <AddAdminUser />,
+                    },
+                ],
+            },
+            {
+                path: "manage-role",
+                children: [
+                    {
+                        path: "create-role",
+                        element: <AddRole />,
                     },
                 ],
             },
