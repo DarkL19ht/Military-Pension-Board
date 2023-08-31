@@ -5,3 +5,4 @@ export { default as MpbTextArea } from "./@form/MpbTextArea";
 export { default as MpbSelectField } from "./@form/MpbSelectField";
 export { default as MpbReactSelectField } from "./@form/MpbReactSelectField";
 export { default as MpbSweetAlert } from "./ui/MpbSweetAlert";
+export { default as MpbMenu } from "./ui/MpbMenu";

@@ -79,7 +79,7 @@ export default function CreateAdminUser() {
             </p>
             <div
                 className="mb-20 w-full rounded-md border
-                border-gray-100 p-5  shadow-md sm:w-[75%]"
+                border-gray-100 px-5 pb-4 pt-10  shadow-md sm:w-[75%]"
             >
                 <form className="w-full space-y-5">
                     {/* TODO: remove below */}
@@ -197,7 +197,7 @@ export default function CreateAdminUser() {
                             }}
                         />
                     </div>
-                    <div className="flex justify-center">
+                    <div className="flex justify-center py-5">
                         <MpbButton
                             title="Create new user"
                             onClick={handleSubmit(handleCreateUser)}

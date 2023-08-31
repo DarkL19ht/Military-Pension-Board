@@ -10,7 +10,7 @@ const rootPersistConfig = {
     key: "root",
     version: 1,
     storage,
-    whitelist: ["authReducer", "userReducer"],
+    whitelist: ["authReducer", "appReducer"],
 };
 
 const baseReducer = combineReducers({
@@ -26,6 +26,8 @@ const rootReducer = (state: RootState, action: AnyAction) => {
         storage.removeItem("persist:root");
         localStorage.removeItem("mpb");
         // localStorage.clear();
+        window.location.href = "/";
+
         return baseReducer(undefined, action);
     }
     return baseReducer(state, action);

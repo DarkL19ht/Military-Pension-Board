@@ -1,4 +1,5 @@
 // import React from "react";
+import { Navigate } from "react-router-dom";
 import Login from "@/pages/login";
 import Dashboard from "@/pages/dashboard";
 import Profile from "@/pages/profile";
@@ -8,15 +9,25 @@ import AddAdminUser from "@/pages/admin-user/create-admin-user";
 import PensionerTable from "@/pages/pensioner/pensioners-table";
 import AddPensioners from "@/pages/pensioner/onboard-pensioner";
 import PensionersProfile from "@/pages/pensioner/pensioners-profile";
+import ProtectedRoute from "./protected-route";
+import PublicRoute from "./public-route";
 
 const routeConfig = [
     {
-        path: "/login",
-        element: <Login />,
+        path: "/",
+        element: (
+            <PublicRoute>
+                <Login />
+            </PublicRoute>
+        ),
     },
     {
         path: "/",
-        element: <RootLayout />,
+        element: (
+            <ProtectedRoute>
+                <RootLayout />
+            </ProtectedRoute>
+        ),
         children: [
             { path: "dashboard", index: true, element: <Dashboard /> },
             { path: "settings", element: <Profile /> },
@@ -51,6 +62,10 @@ const routeConfig = [
                 ],
             },
         ],
+    },
+    {
+        path: "*",
+        element: <Navigate to="/" />,
     },
 ];
 

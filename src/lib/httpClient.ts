@@ -1,7 +1,7 @@
 import axios from "axios";
 import appConfig from "@/config";
 
-const token = localStorage.getItem("sid");
+const token = localStorage.getItem("mpb");
 
 // PUBLIC HTTP client
 export const HTTP = axios.create({

@@ -172,7 +172,7 @@ function Sidebar() {
                         </li>
                     </ul>
                     {/* second  */}
-                    {(open || isTabletMid) && (
+                    {/* {(open || isTabletMid) && (
                         <div className="z-50 my-auto max-h-48  w-full flex-1 whitespace-pre text-sm font-medium ">
                             <div className="flex items-center justify-between border-y border-slate-300 p-4">
                                 <div>
@@ -184,7 +184,7 @@ function Sidebar() {
                                 </p>
                             </div>
                         </div>
-                    )}
+                    )} */}
                 </div>
 
                 {/* control button */}

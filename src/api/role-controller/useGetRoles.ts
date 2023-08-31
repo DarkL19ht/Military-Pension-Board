@@ -6,12 +6,12 @@ interface IParameters {
     size?: number;
     page?: number;
 }
-export default function useUser({ size, page }: IParameters = {}) {
+export default function useGetRoles({ size, page }: IParameters = {}) {
     return useQuery({
         queryKey: [queryKeys.GET_USERS, size, page],
         queryFn: async () => {
             try {
-                const res = await AuthHTTP.get("/api/user", {
+                const res = await AuthHTTP.get("/api/role", {
                     params: {
                         size,
                         number: page,
