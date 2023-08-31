@@ -4,13 +4,22 @@ type State = {
     isChangeRole: boolean;
 };
 
+export const enum ReducerActionType {
+    OPEN_RESET_MODAL = "openResetModal",
+    CLOSE_RESET_MODAL = "closeResetModal",
+    OPEN_DISABLE_MODAL = "openDisableModal",
+    CLOSE_DISABLE_MODAL = "closeDisableModal",
+    OPEN_CHANGE_ROLE_MODAL = "openChangeRoleModal",
+    CLOSE_CHANGE_ROLE_MODAL = "closeChangeRoleModal",
+}
+
 type Action =
-    | { type: "openResetModal" }
-    | { type: "closeResetModal" }
-    | { type: "openDisableModal" }
-    | { type: "closeDisableModal" }
-    | { type: "openChangeRoleModal" }
-    | { type: "closeChangeRoleModal" };
+    | { type: ReducerActionType.OPEN_RESET_MODAL } // {type : "openResetModal"}
+    | { type: ReducerActionType.CLOSE_RESET_MODAL }
+    | { type: ReducerActionType.OPEN_DISABLE_MODAL }
+    | { type: ReducerActionType.CLOSE_DISABLE_MODAL }
+    | { type: ReducerActionType.OPEN_CHANGE_ROLE_MODAL }
+    | { type: ReducerActionType.CLOSE_CHANGE_ROLE_MODAL };
 
 export const initialState: State = {
     isResetPassword: false,
@@ -18,35 +27,35 @@ export const initialState: State = {
     isChangeRole: false,
 };
 
-export const reducer = (state: State, action: Action) => {
+export const reducer = (state: State, action: Action): typeof initialState => {
     const { type } = action;
     switch (type) {
-        case "openResetModal":
+        case ReducerActionType.OPEN_RESET_MODAL:
             return {
                 ...state,
                 isResetPassword: true,
             };
-        case "closeResetModal":
+        case ReducerActionType.CLOSE_RESET_MODAL:
             return {
                 ...state,
                 isResetPassword: false,
             };
-        case "openDisableModal":
+        case ReducerActionType.OPEN_DISABLE_MODAL:
             return {
                 ...state,
                 isDisableUser: true,
             };
-        case "closeDisableModal":
+        case ReducerActionType.CLOSE_DISABLE_MODAL:
             return {
                 ...state,
                 isDisableUser: false,
             };
-        case "openChangeRoleModal":
+        case ReducerActionType.OPEN_CHANGE_ROLE_MODAL:
             return {
                 ...state,
                 isChangeRole: true,
             };
-        case "closeChangeRoleModal":
+        case ReducerActionType.CLOSE_CHANGE_ROLE_MODAL:
             return {
                 ...state,
                 isChangeRole: false,

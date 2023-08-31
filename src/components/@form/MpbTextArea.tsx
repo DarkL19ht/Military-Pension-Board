@@ -1,5 +1,5 @@
 import { useController, UseControllerProps, Control } from "react-hook-form";
-import { IconType } from "react-icons";
+// import { IconType } from "react-icons";
 import { cn } from "@/lib";
 
 // export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -27,56 +27,62 @@ interface InputProps<
 > {
     name: TName;
     label?: string;
+    name: string;
     type: string;
     asterik: boolean;
     icon?: IconType;
     className?: string;
     rule?: any;
     control: Control<TFieldValues>;
+    rows: number;
 }
 
-export default function MpbTextField(props: UseControllerProps<InputProps>) {
+export default function MpbTextArea(props: UseControllerProps<InputProps>) {
     const {
         field: { onChange, onBlur, value },
         fieldState: { isTouched },
         formState: { errors },
     } = useController(props);
 
-    const { type, name, label, asterik = true, icon, className, ...others } = props;
+    const {
+        type,
+        name,
+        label,
+        rows = 3,
+        asterik = true,
+        icon,
+        className,
+        ...others
+    } = props;
 
-    const baseClass = cn(
-        `input-control`,
-        icon && "pl-10",
-        "placeholder:text-sm placeholder:text-gray-400 placeholder:font-light",
-        {
-            "ring-1 ring-red-500 border-none focus:ring-1 focus:ring-red-500":
-                isTouched && !!errors[name]?.message,
-            "ring-1 ring-red-600 border-none focus:ring-1 focus:ring-red-500":
-                !!errors[name]?.message,
-        },
-        className
-    );
+    const baseClass = cn(className, {
+        "ring-1 ring-red-500 border-none focus:ring-1 focus:ring-red-500":
+            isTouched && !!errors[name]?.message,
+        "ring-1 ring-red-600 border-none focus:ring-1 focus:ring-red-500":
+            !!errors[name]?.message,
+    });
 
     return (
         <>
-            {label && (
-                <label htmlFor="username" className="input-label">
-                    {asterik && <span className="mr-[6px] text-[#DB1813]">*</span>}
-                    {label}
-                </label>
-            )}
-            <div className="relative">
-                {icon && (
-                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center px-2.5">
-                        <span className="pr-[12px]">{icon}</span>
-                    </div>
+            <div>
+                {label && (
+                    <label
+                        htmlFor={name}
+                        className="mb-1 block text-sm font-medium text-gray-700"
+                    >
+                        {asterik && <span className="mr-[6px] text-[#DB1813]">*</span>}
+                        {label}
+                    </label>
                 )}
-                <input
+                <textarea
+                    id={name}
                     name={name}
-                    type={type}
-                    value={value}
                     onChange={onChange}
+                    value={value}
                     onBlur={onBlur}
+                    rows={rows}
+                    placeholder="Leave a message"
+                    defaultValue=""
                     className={baseClass}
                     {...others}
                 />

@@ -141,3 +141,23 @@ export default {
     @apply bg-blue-100 text-blue-600;
 }
 ```
+
+```ts
+const handleTextInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch({ type: "changeRole" });
+};
+
+const [count, setCount] = useState<user[] | null>(null);
+```
+
+```ts
+
+type UserCols = "username" | "nickname" | "roles";
+type User = Record<UserCols, string | string[] | undefined>;
+const user = {
+    username: "Dave",
+    nickname: undefined,
+    roles: ["admin", "dev"],
+} satisfies User
+
+```

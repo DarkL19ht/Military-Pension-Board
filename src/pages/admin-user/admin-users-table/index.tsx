@@ -14,7 +14,7 @@ import {
 import ResetPasswordModal from "./ResetPasswordModal";
 import ChangeRoleModal from "./ChangeRoleModal";
 import { MpbSweetAlert, buttonVariants } from "@/components";
-import { reducer, initialState } from "./reducer";
+import { reducer, initialState, ReducerActionType } from "./reducer";
 
 export default function AdminUsersTable() {
     const [state, runDispatch] = useReducer(reducer, initialState);
@@ -111,7 +111,7 @@ export default function AdminUsersTable() {
                                                         className="flex w-full items-center gap-x-3 py-2"
                                                         onClick={() =>
                                                             runDispatch({
-                                                                type: "openResetModal",
+                                                                type: ReducerActionType.OPEN_RESET_MODAL,
                                                             })
                                                         }
                                                     >
@@ -126,7 +126,7 @@ export default function AdminUsersTable() {
                                                         className="flex w-full items-center gap-x-3  py-2"
                                                         onClick={() =>
                                                             runDispatch({
-                                                                type: "openChangeRoleModal",
+                                                                type: ReducerActionType.OPEN_CHANGE_ROLE_MODAL,
                                                             })
                                                         }
                                                     >
@@ -141,7 +141,7 @@ export default function AdminUsersTable() {
                                                         className="group flex w-full items-center gap-x-3 py-2 hover:text-red-400"
                                                         onClick={() =>
                                                             runDispatch({
-                                                                type: "openDisableModal",
+                                                                type: ReducerActionType.OPEN_DISABLE_MODAL,
                                                             })
                                                         }
                                                     >
@@ -169,11 +169,15 @@ export default function AdminUsersTable() {
             {/* create modal goes here */}
             <ResetPasswordModal
                 isOpen={isResetPassword}
-                closeModal={() => runDispatch({ type: "closeResetModal" })}
+                closeModal={() =>
+                    runDispatch({ type: ReducerActionType.CLOSE_RESET_MODAL })
+                }
             />
             <MpbSweetAlert
                 isOpen={isDisableUser}
-                closeModal={() => runDispatch({ type: "closeDisableModal" })}
+                closeModal={() =>
+                    runDispatch({ type: ReducerActionType.CLOSE_DISABLE_MODAL })
+                }
                 message="Are you you want to disable this user"
                 onConfirm={() => undefined}
                 bgTitle="primary"
@@ -186,7 +190,9 @@ export default function AdminUsersTable() {
             />
             <ChangeRoleModal
                 isOpen={isChangeRole}
-                closeModal={() => runDispatch({ type: "closeChangeRoleModal" })}
+                closeModal={() =>
+                    runDispatch({ type: ReducerActionType.CLOSE_CHANGE_ROLE_MODAL })
+                }
             />
         </div>
     );

@@ -1,6 +1,6 @@
 import { CiUser, CiLock } from "react-icons/ci";
 import { Link } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import useAuthentication from "@api/user-controller/useAuthentication";
 import Logo from "@/assets/images/logo.png";
 import MpbTextField from "@/components/@form/MpbTextField";
@@ -32,7 +32,11 @@ function Login() {
         onError: () => {},
     });
 
-    const handleAuthentication = (values: FormValues) => {
+    // const handleAuthentication:  = (values: FormValues) => {
+    //     LoginUser(values);
+    // };
+
+    const handleAuthentication: SubmitHandler<FormValues> = (values) => {
         LoginUser(values);
     };
 
@@ -98,6 +102,7 @@ function Login() {
                                 />
                                 <span className="text-[#00873D]">Remember me</span>
                             </div>
+
                             {/* TODO: change the Link to div */}
                             <Link to="/dashboard" className="">
                                 Forgot password?{" "}

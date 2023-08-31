@@ -37,3 +37,25 @@ export interface IPensioners {
     referenceId: string;
     status: string;
 }
+
+export interface IAuthState {
+    isAuthenticated: boolean;
+    accessToken: string | null;
+    user: Record<string, any>;
+}
+
+export interface IDecodedToken {
+    firstname: string;
+    user_name: string;
+    roles: string[];
+    mobile: number;
+    authorities: string[];
+    client_id: string;
+    lastname: string;
+    aud: string[];
+    scope: string[];
+    exp: number;
+    jti: string;
+    email: string;
+    username: string;
+}

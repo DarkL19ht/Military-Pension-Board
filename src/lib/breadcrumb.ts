@@ -9,6 +9,16 @@ const breadCrumb = {
             path: "/",
         },
     ],
+    create_admin_role: [
+        {
+            title: "Dashboard",
+            path: "/",
+        },
+        {
+            title: "Create Admin Role",
+            path: "/",
+        },
+    ],
 };
 
 export default breadCrumb;
