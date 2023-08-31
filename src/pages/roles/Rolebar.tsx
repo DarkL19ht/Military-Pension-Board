@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Disclosure } from "@headlessui/react";
-
+// import { CheckIcon } from "lucide-react";
+// import RolesRadioGroup from "./RolesRadioGroup";
 import caret from "@/assets/icons/downcaret.svg";
 
 // label, color
@@ -9,13 +10,16 @@ interface Props {
     label: string;
     color: string;
     headerColor: string;
+    checkboxColor: string;
 }
 
 function Rolebar(props: Props) {
     const [viewReports, setViewReports] = useState(false);
     const [onboardPensioners, setOnboardPensioners] = useState(false);
     const [viewPensionersInfo, setViewPensionersInfo] = useState(false);
-    const { label, color, headerColor } = props;
+    const { label, color, headerColor, checkboxColor } = props;
+
+    // const handleReportsChnage = () => setViewReports(true)
 
     return (
         <div
@@ -42,7 +46,7 @@ function Rolebar(props: Props) {
                                     name="adminRight"
                                     value={viewReports}
                                     onChange={() => setViewReports(true)}
-                                    className="styled-checkbox mb-2 mr-1"
+                                    className={`styled-checkbox mb-2 mr-1 ${checkboxColor}`}
                                 />
                                 <label htmlFor="viewReports">View Reports</label>
                             </div>
@@ -54,7 +58,7 @@ function Rolebar(props: Props) {
                                     name="adminRight"
                                     value={onboardPensioners}
                                     onChange={() => setOnboardPensioners(true)}
-                                    className="styled-checkbox mb-2 mr-1"
+                                    className={`styled-checkbox mb-2 mr-1 ${checkboxColor}`}
                                 />
                                 <label htmlFor="onboardPensioners">
                                     Onboard Pensioners
@@ -68,7 +72,7 @@ function Rolebar(props: Props) {
                                     name="adminRight"
                                     value={viewPensionersInfo}
                                     onChange={() => setViewPensionersInfo(true)}
-                                    className="styled-checkbox mr-1 "
+                                    className={`styled-checkbox mb-2 mr-1 ${checkboxColor}`}
                                 />
                                 <label htmlFor="viewPensionersInfo">
                                     View Pensioners Information

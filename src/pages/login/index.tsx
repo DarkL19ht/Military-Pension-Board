@@ -1,11 +1,18 @@
 import { CiUser, CiLock } from "react-icons/ci";
 import { Link } from "react-router-dom";
+// import { Link, useNavigate } from "react-router-dom";
+// import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import useAuthentication from "@api/user-controller/useAuthentication";
 import { MpbButton } from "@/components/ui/MpbButton";
 import MpbTextField from "@/components/@form/MpbTextField";
 import BannerImage from "@/assets/images/soldierimage.jpg";
 import Logo from "@/assets/images/logo.png";
+import MpbCheckbox from "@/components/@form/MpbCheckbox";
+import { UserRequestPayload } from "@/types";
+// import { useAuth } from "@/hooks";
+
+interface FormValues extends Pick<UserRequestPayload, "username" | "password"> {}
 
 export default function Login() {
     const {
@@ -22,13 +29,14 @@ export default function Login() {
         },
     });
 
-    const { LoginUser, isLoginUser } = useAuthentication({
-        onSuccess: () => {},
-        onError: () => {},
-    });
+    const { LoginUser, isLoginUser, loginErrorResponse: errorObj } = useAuthentication();
 
     const handleAuthentication = (values: FormValues) => {
-        LoginUser(values);
+        const formData = new URLSearchParams();
+        formData.append("username", values.username);
+        formData.append("password", values.password);
+        formData.append("grant_type", "password");
+        LoginUser(formData);
     };
 
     return (
@@ -61,6 +69,11 @@ export default function Login() {
                             <img src={Logo} alt="logo_image" className="h-12 w-12" />
                             <h1 className="text-center">Military Pension Portal</h1>
                         </div>
+                        {errorObj?.error && (
+                            <h4 className="mb-3 text-center text-red-600">
+                                {errorObj.error_description}
+                            </h4>
+                        )}
                         <form className="">
                             <div className="mb-5">
                                 <MpbTextField
@@ -93,7 +106,7 @@ export default function Login() {
                                 />
                             </div>
                             <div className="flex items-center justify-between">
-                                <div className="flex cursor-pointer items-center gap-x-2">
+                                {/* <div className="flex cursor-pointer items-center gap-x-2">
                                     <input
                                         type="checkbox"
                                         name=""
@@ -103,6 +116,13 @@ export default function Login() {
                                     <span className="text-sm text-[#00873D]">
                                         Remember me
                                     </span>
+                                </div> */}
+                                <div>
+                                    <MpbCheckbox
+                                        control={control}
+                                        label="Remember me"
+                                        name="rememberMe"
+                                    />
                                 </div>
                                 {/* TODO: change the Link to div */}
                                 <Link to="/dashboard" className="text-sm">

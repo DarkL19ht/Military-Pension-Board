@@ -1,11 +1,20 @@
+import { useState } from "react";
 import { FiSearch, FiBell } from "react-icons/fi";
 // import { FaEnvelope } from "react-icons/fa";
+import { FaUser, FaCog } from "react-icons/fa";
+import { MdLogout } from "react-icons/md";
+import { IoIosArrowDown } from "react-icons/io";
 import { HiOutlineSun, HiOutlineMoon } from "react-icons/hi2";
 import profileImage from "@/assets/images/ib.png";
 import { useTheme } from "@/providers/ThemeProvider";
+import { MpbMenu } from "@/components";
+import { useAuth } from "@/hooks";
 
 function Header() {
     const { setTheme, theme } = useTheme();
+    const [profileOpen, setProfileOpen] = useState(false);
+    const { dispatch, logout, authState } = useAuth();
+
     return (
         <div
             // className="sticky top-0 shadow-lg
@@ -48,7 +57,7 @@ function Header() {
                         )}
                     </button>
                 </div>
-                <div className="relative flex items-center gap-[15px] ">
+                <div className="relative flex items-center gap-[15px]">
                     <div className="relative flex h-[50px] w-[50px] cursor-pointer items-center justify-center rounded-full bg-green-700">
                         <img
                             src={profileImage}
@@ -57,9 +66,53 @@ function Header() {
                         />
                     </div>
                     <div className="flex flex-col ">
-                        <p className="text-gray-600">Olayinka IB</p>
-                        <p className="text-gray-400">Admin</p>
+                        <h4 className="text-gray-600">
+                            {authState?.user?.firstname}&nbsp;
+                            {authState?.user?.lastname}
+                        </h4>
+                        <p className="text-sm  text-green-600">
+                            {authState.user?.roles[0]}
+                        </p>
                     </div>
+                    <MpbMenu>
+                        <MpbMenu.Button onClick={() => setProfileOpen(!profileOpen)}>
+                            <IoIosArrowDown
+                                className={` ${
+                                    profileOpen && "rotate-180"
+                                } duration-200 `}
+                            />
+                        </MpbMenu.Button>
+                        <MpbMenu.Items className="right-0 mt-2">
+                            <MpbMenu.Item
+                                onClick={() => {
+                                    setProfileOpen(!profileOpen);
+                                }}
+                                className="flex items-center gap-5"
+                            >
+                                <FaUser className="mr-2" />
+                                <span>Profile</span>
+                            </MpbMenu.Item>
+                            <MpbMenu.Item
+                                onClick={() => {
+                                    setProfileOpen(!profileOpen);
+                                }}
+                                className="flex items-center gap-5"
+                            >
+                                <FaCog />
+                                <span>Settings</span>
+                            </MpbMenu.Item>{" "}
+                            <MpbMenu.Item
+                                onClick={() => {
+                                    setProfileOpen(!profileOpen);
+                                    dispatch(logout());
+                                }}
+                                className="flex items-center gap-5"
+                            >
+                                <MdLogout />
+                                <span>Logout</span>
+                            </MpbMenu.Item>
+                        </MpbMenu.Items>
+                    </MpbMenu>
                 </div>
             </div>
         </div>

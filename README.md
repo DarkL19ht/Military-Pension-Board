@@ -42,7 +42,7 @@ Military Pensions Board – Admin Portal Management
 - [X] ***axios instance and interceptor***
 - [X] `***React router setup***`
 - [X] Proteced route
-- [ ] ***`React Hook Form Setup`***
+- [X] ***`React Hook Form Setup`***
 - [ ] ***building UI components***
 - [X] ***Absolute import***
 - [X] Multi-environment setup
@@ -57,7 +57,8 @@ Military Pensions Board – Admin Portal Management
 - [ ] Svgr setup for build svg icons
 - [X] ***Login form page UI design***
 - [ ] ***Login implementation***
-- [ ] ***`Dashboard Layout UI design`***
+- [X] ***`Dashboard Layout UI design`***
+- [ ] Create User
 
 ## Future Task
 - [ ] Refactor dark mode implementation

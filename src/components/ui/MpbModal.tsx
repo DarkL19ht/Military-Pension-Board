@@ -113,7 +113,7 @@ export default function MpbModal({
                             >
                                 <>
                                     <Dialog.Title
-                                        as="h3"
+                                        as="h1"
                                         className={cn(
                                             titleVariants({
                                                 bgTitle,
@@ -131,9 +131,9 @@ export default function MpbModal({
                                             </div>
                                         )}
                                         {title && (
-                                            <h1 className="flex-1 text-center text-xl font-light">
+                                            <h3 className="flex-1 text-center text-xl font-light">
                                                 {title}
-                                            </h1>
+                                            </h3>
                                         )}
                                         {showCloseButton && (
                                             <span>

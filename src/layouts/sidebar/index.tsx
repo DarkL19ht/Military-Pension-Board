@@ -30,6 +30,10 @@ const subMenusList = [
                 name: "View Pensioners",
                 path: "",
             },
+            {
+                name: "Pensioner's Profile",
+                path: "",
+            },
         ],
     },
     {
@@ -50,6 +54,16 @@ const subMenusList = [
             },
             {
                 name: "pensioners",
+                path: "",
+            },
+        ],
+    },
+    {
+        name: "Manage Role",
+        icon: TbReportAnalytics,
+        menus: [
+            {
+                name: "Create Role",
                 path: "",
             },
         ],
@@ -150,26 +164,6 @@ function Sidebar() {
                                 <span>Dashboard</span>
                             </NavLink>
                         </li>
-                        {/* <li>
-                            <NavLink to="admin-users" className="link">
-                                <TbReportAnalytics size={20} className="min-w-max" />
-                                <span>Manage admin</span>
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="/pensioners" className="link">
-                                <TbReportAnalytics size={20} className="min-w-max" />
-                                <span>Pensioners</span>
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="/roles" className="link">
-                                <TbReportAnalytics size={20} className="min-w-max" />
-                                <span>Admin Roles</span>
-                            </NavLink>
-                        </li>
-
-                        </li> */}
                         {/* Menu with submenu */}
                         {open && (
                             <div>

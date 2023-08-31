@@ -4,7 +4,9 @@ import { useAppSelector } from "@/hooks/useRedux";
 
 function PublicRoute({ children }: { children: React.ReactNode }) {
     const location = useLocation();
-    const isAuthenticated = useAppSelector((state) => state.authReducer.isAuthenticated);
+    const isAuthenticated = useAppSelector(
+        (state) => state?.authReducer?.isAuthenticated
+    );
 
     return isAuthenticated ? (
         <Navigate to="/dashboard" state={{ from: location }} replace />
