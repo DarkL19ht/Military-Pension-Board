@@ -1,5 +1,5 @@
 import { FaLaptop } from "react-icons/fa";
-import { MpbButton } from "@/components/ui/MpbButton";
+import { MpbButton } from "@/components/ui/button/MpbButton";
 
 export default function Dashboard() {
     return (

@@ -1,4 +1,4 @@
-export { MpbButton, buttonVariants } from "./ui/MpbButton";
+export { MpbButton, buttonVariants } from "./ui/button/MpbButton";
 export { default as MpbCheckbox } from "./@form/MpbCheckbox";
 export { default as MpbTextField } from "./@form/MpbTextField";
 export { default as MpbTextArea } from "./@form/MpbTextArea";

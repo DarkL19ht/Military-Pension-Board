@@ -1,69 +1,20 @@
 import { useReducer } from "react";
 import { CgMoreVertical } from "react-icons/cg";
 import { Link } from "react-router-dom";
-// import { MdLockReset } from "react-icons/md";
-// React Table
-import { ColumnDef } from "@tanstack/react-table";
-//
+import { MdLockReset } from "react-icons/md";
 import Pagination from "@/components/pagination/Pagination";
 import { adminData } from "@/lib/fakers";
-// import {
-//     DropdownMenu,
-//     DropdownMenuContent,
-//     DropdownMenuItem,
-//     DropdownMenuSeparator,
-//     DropdownMenuTrigger,
-// } from "@/components/ui/dropdown-menu";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import ResetPasswordModal from "./ResetPasswordModal";
 import ChangeRoleModal from "./ChangeRoleModal";
 import { MpbSweetAlert, buttonVariants } from "@/components";
 import { reducer, initialState, ReducerActionType } from "./reducer";
-import DataTable from "./react-table/DataTable";
-
-export type Admin = {
-    id: number;
-    username: string;
-    referenceId: string;
-    createdAt: string;
-    role: string;
-};
-
-export const columns: ColumnDef<Admin>[] = [
-    {
-        accessorKey: "id",
-        header: "ID",
-    },
-    {
-        accessorKey: "username",
-        header: "Username",
-    },
-    {
-        accessorKey: "referenceId",
-        header: "ReferenceId",
-    },
-    {
-        accessorKey: "createdAt",
-        header: "CreatedAt",
-    },
-    {
-        accessorKey: "role",
-        header: "Role",
-    },
-    {
-        // accessorKey: "",
-        id: "Action",
-        cell: () => {
-            return (
-                <td
-                    className="flex cursor-pointer items-center justify-center 
-                    whitespace-nowrap px-2 py-4 text-center text-xs"
-                >
-                    <CgMoreVertical />
-                </td>
-            );
-        },
-    },
-];
 
 export default function AdminUsersTable() {
     const [state, runDispatch] = useReducer(reducer, initialState);
@@ -104,13 +55,10 @@ export default function AdminUsersTable() {
                 </div>
             </div>
             {/* Card layout */}
-            {/* <div className="mb-20 overflow-auto rounded-md border border-gray-100  p-5 shadow-md"> */}
-            <div className="mb-20 rounded-md border border-gray-100  p-5 shadow-md">
+            <div className="mb-20 overflow-auto rounded-md border border-gray-100  p-5 shadow-md">
                 {/* Table UI */}
-                <DataTable columns={columns} data={adminData} />
-
-                {/* <table className="w-full border border-gray-300 text-left font-light">
-                    <thead className="border-b bg-[#F2FAF5] font-medium">
+                <table className="w-full border border-gray-300 text-left font-light">
+                    <thead className="t border-b bg-[#F2FAF5] font-medium">
                         <tr className="text-[#00873D]">
                             <th scope="col" className="px-2 py-4 text-center text-sm">
                                 S/N
@@ -152,13 +100,68 @@ export default function AdminUsersTable() {
                                         {item.role}
                                     </td>
                                     <td className="flex cursor-pointer items-center justify-center whitespace-nowrap px-2 py-4 text-center text-xs">
-                                        <CgMoreVertical />
+                                        <DropdownMenu>
+                                            <DropdownMenuTrigger>
+                                                <CgMoreVertical />
+                                            </DropdownMenuTrigger>
+                                            <DropdownMenuContent className="flex w-full flex-col text-gray-500">
+                                                <DropdownMenuItem>
+                                                    <button
+                                                        type="button"
+                                                        className="flex w-full items-center gap-x-3 py-2"
+                                                        onClick={() =>
+                                                            runDispatch({
+                                                                type: ReducerActionType.OPEN_RESET_MODAL,
+                                                            })
+                                                        }
+                                                    >
+                                                        <MdLockReset />
+                                                        <span>Reset Password</span>
+                                                    </button>
+                                                </DropdownMenuItem>
+                                                <DropdownMenuSeparator />
+                                                <DropdownMenuItem>
+                                                    <button
+                                                        type="button"
+                                                        className="flex w-full items-center gap-x-3  py-2"
+                                                        onClick={() =>
+                                                            runDispatch({
+                                                                type: ReducerActionType.OPEN_CHANGE_ROLE_MODAL,
+                                                            })
+                                                        }
+                                                    >
+                                                        <MdLockReset />
+                                                        <span>Change Role</span>
+                                                    </button>
+                                                </DropdownMenuItem>
+                                                <DropdownMenuSeparator />
+                                                <DropdownMenuItem>
+                                                    <button
+                                                        type="button"
+                                                        className="group flex w-full items-center gap-x-3 py-2 hover:text-red-400"
+                                                        onClick={() =>
+                                                            runDispatch({
+                                                                type: ReducerActionType.OPEN_DISABLE_MODAL,
+                                                            })
+                                                        }
+                                                    >
+                                                        <MdLockReset
+                                                            size={20}
+                                                            className="group-hover:text-red-400"
+                                                        />
+                                                        <span className="group-hover:text-red-500">
+                                                            Disable User
+                                                        </span>
+                                                    </button>
+                                                </DropdownMenuItem>
+                                            </DropdownMenuContent>
+                                        </DropdownMenu>
                                     </td>
                                 </tr>
                             );
                         })}
                     </tbody>
-                </table> */}
+                </table>
                 <div className="py-2">
                     <Pagination />
                 </div>
