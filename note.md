@@ -150,14 +150,64 @@ const handleTextInput = (e: React.ChangeEvent<HTMLInputElement>) => {
 const [count, setCount] = useState<user[] | null>(null);
 ```
 
-```ts
+## Typescript tutorial
 
+```ts
+// Record utility & satisfies
 type UserCols = "username" | "nickname" | "roles";
 type User = Record<UserCols, string | string[] | undefined>;
 const user = {
     username: "Dave",
     nickname: undefined,
     roles: ["admin", "dev"],
-} satisfies User
+} satisfies User;
+
+//index signature
+interface Incomes {
+    [key: string | number]: number;
+}
+
+// key of
+interface Student {
+    name: string;
+    gpa: number;
+    classes?: number[];
+}
+const student: Student = {
+    name: "Blessing Jane",
+    gpa: 3.5,
+    classes: [100, 200],
+};
+
+for (const key in student) {
+    console.log(`${key}: ${student[key as keyof Student]}`);
+}
+
+Object.keys(student).map((key) => {
+    console.log(student[key as keyof typeof student]);
+});
+
+const logStudent = (student: Student, key: keyof Student): void => {
+    console.log(`student ${key}:${student[key]}`);
+};
+
+type setting = string | number | { [key: string]: setting } | setting[];
+```
+
+```ts
+// currency format for React-Table
+{
+   accessorkey: 'amount', 
+   header: () => <div className='text-right'›Amount</div›,
+   cell: ({ row }) =› {
+      const amount = parseFloat (row. getvalue ('amount' ))
+      const formatted = new Intl.NumberFormat('en-US',{
+          style: "currency",
+          currency: "USD"
+      }).format(amount)
+      return <div className='text-right font-medium'›{formatted}</div>
+    }
+
+}
 
 ```

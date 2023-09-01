@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 // import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import useAuthentication from "@api/user-controller/useAuthentication";
-import { MpbButton } from "@/components/ui/MpbButton";
+import { MpbButton } from "@/components/ui/button/MpbButton";
 import MpbTextField from "@/components/@form/MpbTextField";
 import BannerImage from "@/assets/images/soldierimage.jpg";
 import Logo from "@/assets/images/logo.png";
@@ -130,7 +130,7 @@ export default function Login() {
                                     <span className="text-[#00873D]">Reset here</span>
                                 </Link>
                             </div>
-                            <div className="mt-8">
+                            <div className="my-8">
                                 <MpbButton
                                     type="submit"
                                     title="Login"

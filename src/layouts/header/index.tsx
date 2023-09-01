@@ -71,7 +71,7 @@ function Header() {
                             {authState?.user?.lastname}
                         </h4>
                         <p className="text-sm  text-green-600">
-                            {authState.user?.roles[0]}
+                            {authState?.user?.roles?.[0]}
                         </p>
                     </div>
                     <MpbMenu>
