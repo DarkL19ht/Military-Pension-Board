@@ -1,13 +1,11 @@
-/* eslint-disable react/require-default-props */
 import { Dialog, Transition } from "@headlessui/react";
 import React, { Fragment, useCallback } from "react";
-import { BsXCircle } from "react-icons/bs";
-import { HiArrowLeft } from "react-icons/hi2";
+import { XCircle, ArrowLeft } from "lucide-react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib";
 
 const panelVariants = cva(
-    `w-full transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all`,
+    `w-full transform overflow-hidden rounded-xl bg-white text-left align-middle shadow-xl transition-all`,
     {
         variants: {
             size: {
@@ -28,7 +26,7 @@ const panelVariants = cva(
 const titleVariants = cva(`flex items-center px-6 py-3`, {
     variants: {
         bgTitle: {
-            default: "bg-white text-green-600",
+            default: "bg-white text-gray-700 font-medium",
             primary: "bg-green-100 text-green-600 font-bold",
             secondary: "bg-red-100",
         },
@@ -56,13 +54,13 @@ export interface IProps
         VariantProps<typeof titleVariants> {}
 
 export default function MpbModal({
-    showCloseButton = true,
-    goBack = undefined,
-    title = "",
+    showCloseButton,
+    goBack,
+    title,
     size,
-    backdrop = false,
-    hasBackArrow = false,
-    showDivider = true,
+    backdrop,
+    hasBackArrow,
+    showDivider,
     bgTitle,
     isOpen,
     closeModal,
@@ -123,7 +121,7 @@ export default function MpbModal({
                                     >
                                         {hasBackArrow && (
                                             <div>
-                                                <HiArrowLeft
+                                                <ArrowLeft
                                                     fontSize={25}
                                                     className="cursor-pointer"
                                                     onClick={goBack}
@@ -131,14 +129,14 @@ export default function MpbModal({
                                             </div>
                                         )}
                                         {title && (
-                                            <h3 className="flex-1 text-center text-xl font-light">
+                                            <h3 className="flex-1 text-center">
                                                 {title}
                                             </h3>
                                         )}
                                         {showCloseButton && (
                                             <span>
-                                                <BsXCircle
-                                                    fontSize={25}
+                                                <XCircle
+                                                    size={25}
                                                     className="cursor-pointer"
                                                     onClick={closeModal}
                                                 />
@@ -156,3 +154,12 @@ export default function MpbModal({
         </Transition>
     );
 }
+
+MpbModal.defaultProps = {
+    showCloseButton: true,
+    goBack: undefined,
+    title: "",
+    backdrop: false,
+    hasBackArrow: false,
+    showDivider: false,
+};

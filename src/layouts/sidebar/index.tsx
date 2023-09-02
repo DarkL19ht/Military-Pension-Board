@@ -7,7 +7,7 @@ import { useMediaQuery } from "react-responsive";
 // * React icons
 import { IoIosArrowBack } from "react-icons/io";
 import { HiOutlineHome } from "react-icons/hi";
-import { SlSettings } from "react-icons/sl";
+import { Users, Cog } from "lucide-react";
 // import { AiOutlineAppstore } from "react-icons/ai";
 // import { BsPerson } from "react-icons/bs";
 // import { HiOutlineDatabase } from "react-icons/hi";
@@ -32,20 +32,6 @@ const subMenusList = [
             },
             {
                 name: "Pensioner's Profile",
-                path: "",
-            },
-        ],
-    },
-    {
-        name: "Manage Admin",
-        icon: TbReportAnalytics,
-        menus: [
-            {
-                name: "Add Admin Users",
-                path: "",
-            },
-            {
-                name: "View Admin Users",
                 path: "",
             },
         ],
@@ -171,13 +157,20 @@ function Sidebar() {
                         )}
                         <li>
                             <NavLink to="/settings" className="link">
-                                <SlSettings size={23} className="min-w-max" />
-                                Settings
+                                <Cog size={20} color="green" className="min-w-max" />
+                                Role Management
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="admin-management" className="link">
+                                {/* <SlSettings size={23} className="min-w-max" /> */}
+                                <Users size={20} color="green" className="min-w-max" />
+                                Admin Management
                             </NavLink>
                         </li>
                     </ul>
                     {/* second  */}
-                    {/* {(open || isTabletMid) && (
+                    {(open || isTabletMid) && (
                         <div className="z-50 my-auto max-h-48  w-full flex-1 whitespace-pre text-sm font-medium ">
                             <div className="flex items-center justify-between border-y border-slate-300 p-4">
                                 <div>
@@ -189,7 +182,7 @@ function Sidebar() {
                                 </p>
                             </div>
                         </div>
-                    )} */}
+                    )}
                 </div>
 
                 {/* control button */}

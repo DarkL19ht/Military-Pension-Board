@@ -43,26 +43,61 @@ Military Pensions Board – Admin Portal Management
 - [X] `***React router setup***`
 - [X] Proteced route
 - [X] ***`React Hook Form Setup`***
-- [ ] ***building UI components***
+- [X] ***building UI components***
 - [X] ***Absolute import***
 - [X] Multi-environment setup
 - [ ] Twin.macro setup  nb n nm ,    
 - [ ] Theming customization & setup
 - [ ] component lazy loading
-- [ ] React Table setup
+- [X] React Table setup
 - [X] configure dark mode
 - [X] lint-stage and husky setup
 - [ ] change the favicon
 - [ ] restructure the dashboard layout, sidebar menu
 - [ ] Svgr setup for build svg icons
 - [X] ***Login form page UI design***
-- [ ] ***Login implementation***
+- [X] ***Login implementation***
 - [X] ***`Dashboard Layout UI design`***
-- [ ] Create User
+  
+- [ ] Refresh token implementation
+<!-- Admin Management -->
+- [ ] Create Admin User
+- [ ] Query Admin User
+- [ ] Querying admin table by size, pageNumber
+- [ ] Search on Admin User table
+- [ ] Edit Admin User
+- [ ] Disable Admin User
+- [ ] Reset Password on admin user
+<!-- Pensioner Management -->
+- [ ] Create Pensioner
+- [ ] Query Pagination
+- [ ] Query pensioners table by size, pageNumber
+- [ ] search pensioner table by name etc
+- [ ] Filtering pensioner table
+- [ ] Csv upload
+<!-- Role management -->
+- [ ] Role management UI
+- [ ] Create role name and description
+- [ ] Map role to permissions
+- [ ] Edit role permissions
+<!-- Verification  -->
+<!-- Profile -->
+- [ ] display profile information
+- [ ] Edit profile information
+- [ ] change password
+- [ ] 
+
+
+  
 
 ## Future Task
 - [ ] Refactor dark mode implementation
 - [ ] Restructure the navigation (side & header) bar
+
+
+
+## Note
+- createdBy is return "1" while UI expect "name" to be displayed
 
 
 ## Credits
