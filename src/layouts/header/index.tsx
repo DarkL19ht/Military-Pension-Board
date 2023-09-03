@@ -18,8 +18,8 @@ function Header() {
     return (
         <div
             // className="sticky top-0 shadow-lg
-            className="flex h-[70px] min-w-max items-center justify-between
-            bg-header px-[25px]"
+            className="bg-header flex h-[70px] min-w-max items-center
+            justify-between px-[25px]"
         >
             <div className="max-w-xs pl-3">
                 <div>
