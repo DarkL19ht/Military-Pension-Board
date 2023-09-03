@@ -17,30 +17,34 @@ const buttonVariants = cva(
     {
         variants: {
             variant: {
-                default: "bg-primary text-primary-foreground ", // add hover:
-                destructive:
+                primary: "bg-btn-primary text-btn-primary", // add hover:
+                secondary:
+                    "bg-btn-secondary text-btn-secondary hover:bg-btn-secondary/40",
+                success:
                     "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-                outline:
-                    "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
-                secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-                ghost: "hover:bg-accent hover:text-accent-foreground",
+                warning: "bg-btn-warning text-btn-warning",
+                "outline-primary":
+                    "bg-outline text-outline-primary border border-outline-primary",
+                "outline-secondary":
+                    "bg-outline-secondary text-outline-secondary border border-outline-secondary",
+                cancel: "bg-btn-cancel text-btn-cancel",
                 link: "text-primary underline-offset-4 hover:underline",
             },
             size: {
                 default: "h-10 px-4 py-2",
-                sm: "h-9 rounded-md px-3",
-                lg: "h-11 rounded-md px-8",
-                icon: "h-10 w-10",
+                sm: "h-9 rounded-btn-sm px-3",
+                md: "h-9 rounded-btn-md px-5",
+                lg: "h-11 rounded-btn-lg px-8",
             },
             fullWidth: {
                 true: "w-full",
             },
             disabled: {
-                true: "disabled:cursor-not-allowed disabled:bg-green-600 disabled:opacity-100 ",
+                true: "disabled:cursor-not-allowed disabled:bg-gray-300 disabled:opacity-100 ",
             },
         },
         defaultVariants: {
-            variant: "default",
+            variant: "primary",
             size: "default",
         },
     }

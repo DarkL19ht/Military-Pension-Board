@@ -1,6 +1,9 @@
 import { cn } from "@/lib";
 
-function Skeleton({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+export default function MpbSkeleton({
+    className,
+    ...props
+}: React.HTMLAttributes<HTMLDivElement>) {
     return (
         <div
             className={cn("animate-pulse rounded-md bg-gray-200", className)}
@@ -8,5 +11,3 @@ function Skeleton({ className, ...props }: React.HTMLAttributes<HTMLDivElement>)
         />
     );
 }
-
-export default Skeleton;

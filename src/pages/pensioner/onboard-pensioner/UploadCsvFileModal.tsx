@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import MpbModal from "@/components/ui/MpbModal";
+import MpbModal from "@/components/ui/modal/MpbModal";
 
 interface IProps {
     isOpen: boolean;

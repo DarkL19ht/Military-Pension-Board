@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
-
 import { MpbButton } from "./MpbButton";
+import { withCentered } from "@/lib/decorators";
 
 const meta: Meta<typeof MpbButton> = {
-    title: "Component/Button",
+    title: "Component/MpbButton",
     component: MpbButton,
     tags: ["autodocs"],
     argTypes: {
@@ -16,10 +16,19 @@ const meta: Meta<typeof MpbButton> = {
         },
         variant: {
             control: "inline-radio",
-            options: ["default", "destructive", "outline", "secondary", "ghost", "link"],
+            options: [
+                "primary",
+                "secondary",
+                "warning",
+                "outline-primary",
+                "outline-secondary",
+                "cancel",
+                "link",
+            ],
         },
-        size: { control: "inline-radio", options: ["default", "sm", "lg", "icon"] },
+        size: { control: "inline-radio", options: ["default", "sm", "md", "lg"] },
     },
+    decorators: [withCentered],
 };
 
 export default meta;
@@ -27,8 +36,36 @@ type Story = StoryObj<typeof MpbButton>;
 
 export const Primary: Story = {
     args: {
-        variant: "default",
+        variant: "primary",
+        fullWidth: false,
+        title: "Submit",
+        disabled: false,
+    },
+};
+
+export const Secondary: Story = {
+    args: {
+        variant: "secondary",
+        fullWidth: false,
+        title: "Submit",
+        disabled: false,
+    },
+};
+
+export const FullWidth: Story = {
+    args: {
+        variant: "primary",
         fullWidth: true,
         title: "Submit",
+        disabled: false,
+    },
+};
+
+export const Disabled: Story = {
+    args: {
+        variant: "primary",
+        fullWidth: true,
+        title: "Submit",
+        disabled: true,
     },
 };

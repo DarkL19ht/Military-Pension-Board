@@ -16,6 +16,7 @@ export default function useGetUsers({ size, pageNumber }: IParameters = {}) {
                     params: {
                         size,
                         number: pageNumber,
+                        sort: true,
                     },
                 });
                 return res?.data?.data;

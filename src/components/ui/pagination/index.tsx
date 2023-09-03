@@ -1,11 +1,30 @@
 import ReactPaginate from "react-paginate";
+import { Updater } from "@tanstack/react-table";
 import { cn } from "@/lib";
-import Skeleton from "@/components/ui/skeleton";
+import Skeleton from "@/components/ui/skeleton/MpbSkeleton";
 
-const LinkStyle = cn(`z-10 inline-flex items-center rounded-md  
-                    px-4 py-2 font-medium text-gray-700 border border-gray-300 bg-white hover:border-green-500`);
+const LinkStyle = `z-10 inline-flex items-center rounded-md  
+                    px-4 py-2 font-medium text-gray-700 border border-gray-300 bg-white hover:border-green-500`;
 
-export default function pagination({ table, isLoading, totalRecords }: any) {
+interface IProps {
+    isLoading: boolean | undefined;
+    totalRecords: number;
+    pageSizeOptions: number[];
+    pageSize: number;
+    setPageSize: (updater: Updater<number>) => void;
+    setPageIndex: (updater: Updater<number>) => void;
+    getPageCount: () => number;
+}
+
+export default function pagination({
+    isLoading,
+    totalRecords,
+    pageSizeOptions,
+    pageSize,
+    setPageSize,
+    setPageIndex,
+    getPageCount,
+}: IProps) {
     return (
         <div className="flex flex-col items-center justify-center gap-y-3 md:flex-row md:justify-between md:gap-y-0">
             <div className="flex flex-col lg:flex-row">
@@ -15,14 +34,14 @@ export default function pagination({ table, isLoading, totalRecords }: any) {
                 <div className="cursor-pointer rounded-[4px]  focus:border-none focus:outline-none ">
                     <select
                         className="border-nonefocus:outline-0 hover:cursor-pointer "
-                        value={table.getState().pagination.pageSize}
+                        value={pageSize}
                         onChange={(e) => {
-                            table.setPageSize(Number(e.target.value));
+                            setPageSize(Number(e.target.value));
                         }}
                     >
-                        {[5, 10, 15, 20].map((pageSize) => (
-                            <option key={pageSize} value={pageSize}>
-                                {pageSize}
+                        {pageSizeOptions?.map((size: number) => (
+                            <option key={size} value={size}>
+                                {size}
                             </option>
                         ))}
                     </select>
@@ -45,18 +64,21 @@ export default function pagination({ table, isLoading, totalRecords }: any) {
                 <ReactPaginate
                     breakLabel="..."
                     nextLabel="next >"
-                    onPageChange={({ selected }) => table.setPageIndex(selected)}
+                    onPageChange={({ selected }) => setPageIndex(selected)}
                     marginPagesDisplayed={2}
                     pageRangeDisplayed={3}
-                    pageCount={table.getPageCount()}
+                    pageCount={getPageCount()}
                     previousLabel="< previous"
                     renderOnZeroPageCount={null}
                     containerClassName="inline-flex items-center space-x-2 rounded-md text-sm"
                     pageClassName={LinkStyle}
-                    previousClassName={LinkStyle}
+                    previousClassName={cn(
+                        LinkStyle,
+                        "disabled:text-gray-200 disabled:bg-gray-300"
+                    )}
                     nextClassName={LinkStyle}
                     breakClassName="hover:text-green-500"
-                    activeClassName="border bg-green-500 text-white"
+                    activeClassName="border-2 border-outline-primary"
                     // breakLinkClassName=""
                     // pageLinkClassName="bg-red-500"
                     // previousLinkClassName=""

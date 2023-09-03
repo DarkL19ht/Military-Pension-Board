@@ -28,7 +28,7 @@ Military Pensions Board – Admin Portal Management
 ## Web URL
 - [Swagger URL demo]()
 - [Swagger URL staging](https://mpb-admin-api.azurewebsites.net/swagger-ui/index.html)
-- [Figma design](https://www.figma.com/file/5fBxAJe5cqnrq1o2KOEjja/e-Pension-Web-Portal(MPB)?type=design&node-id=2-2&mode=design)
+- [Figma design](https://www.figma.com/file/zm27pUSkgjjBSdy2v49ppO/e-Pension-Web-Portal(MPB-1)?type=design&node-id=1-2&mode=design)
 
 ## API baseURL
 - Demo `https://`
@@ -62,9 +62,9 @@ Military Pensions Board – Admin Portal Management
 - [ ] Refresh token implementation
 <!-- Admin Management -->
 - [ ] Create Admin User
-- [ ] Query Admin User
-- [ ] Querying admin table by size, pageNumber
-- [ ] Search on Admin User table
+- [X] Query Admin User
+- [X] Querying admin table by size, pageNumber
+- [ ] Search on Admin User table ***(missing endpoints)***
 - [ ] Edit Admin User
 - [ ] Disable Admin User
 - [ ] Reset Password on admin user

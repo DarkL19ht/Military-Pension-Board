@@ -15,9 +15,9 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from "@/components/ui/table";
-import Pagination from "@/components/pagination";
-import Skeleton from "@/components/ui/skeleton";
+} from "@/components/ui/table/table";
+import Pagination from "@/components/ui/pagination";
+import Skeleton from "@/components/ui/skeleton/MpbSkeleton";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
@@ -27,6 +27,7 @@ interface DataTableProps<TData, TValue> {
     pageCount: number;
     isLoading?: boolean;
     totalRecords: number;
+    pageSizeOptions: number[];
 }
 
 export default function DataTable<TData, TValue>({
@@ -37,6 +38,7 @@ export default function DataTable<TData, TValue>({
     pageCount,
     isLoading,
     totalRecords,
+    pageSizeOptions,
 }: DataTableProps<TData, TValue>) {
     const table = useReactTable({
         data,
@@ -140,9 +142,13 @@ export default function DataTable<TData, TValue>({
             </Table>
             <div className="px-4 pb-4 pt-6">
                 <Pagination
-                    table={table}
                     isLoading={isLoading}
                     totalRecords={totalRecords}
+                    pageSizeOptions={pageSizeOptions}
+                    pageSize={table.getState().pagination.pageSize}
+                    setPageSize={table.setPageSize}
+                    setPageIndex={table.setPageIndex}
+                    getPageCount={table.getPageCount}
                 />
             </div>
         </div>

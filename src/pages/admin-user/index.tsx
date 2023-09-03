@@ -237,6 +237,7 @@ export default function AdminUsersTable() {
                     pageCount={data?.totalPages}
                     totalRecords={data?.totalElements}
                     isLoading={isLoading}
+                    pageSizeOptions={[5, 10, 20, 30, 50]}
                 />
             </div>
             {/* create modal goes here */}

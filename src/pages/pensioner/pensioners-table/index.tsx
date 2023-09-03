@@ -1,6 +1,6 @@
 import { CgMoreVertical } from "react-icons/cg";
 import { Link } from "react-router-dom";
-import Pagination from "@/components/pagination";
+// import Pagination from "@/components/ui/pagination";
 import { pensionersData } from "@/lib/fakers";
 
 export default function Pensioner() {
@@ -131,9 +131,7 @@ export default function Pensioner() {
                         })}
                     </tbody>
                 </table>
-                <div className="w-full py-5">
-                    <Pagination />
-                </div>
+                <div className="w-full py-5">{/* <Pagination /> */}</div>
             </div>
         </div>
     );

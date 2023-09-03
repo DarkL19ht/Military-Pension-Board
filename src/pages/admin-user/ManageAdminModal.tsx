@@ -2,16 +2,28 @@
 import { useForm } from "react-hook-form";
 import { CiUser } from "react-icons/ci";
 import useCreateUser from "@api/user-controller/useCreateUser";
-import MpbModal from "@/components/ui/MpbModal";
+import MpbModal from "@/components/ui/modal/MpbModal";
 import { MpbTextField, MpbButton } from "@/components";
 import MpbReactSelectField from "@/components/@form/MpbReactSelectField";
+// import { useToast } from "@/components/ui/use-toast";
 
 interface IProps {
     isOpen: boolean;
     closeModal: () => void;
 }
 
+interface FormValues {
+    email: string;
+    firstName: string;
+    lastName: string;
+    phone: string;
+    gender: string;
+    roles: string[];
+    username: string;
+}
+
 export default function ManageAdminModal({ isOpen, closeModal }: IProps) {
+    // const { toast } = useToast()
     const {
         control,
         handleSubmit,
@@ -37,6 +49,16 @@ export default function ManageAdminModal({ isOpen, closeModal }: IProps) {
     const handleCreateUser = (values: FormValues) => {
         CreateUser(values);
     };
+
+    // const handleToaster = (e)=> {
+    //     e.preventDefault()
+    //      toast({
+    //          title: "Scheduled: Catch up",
+    //          description: "Friday, February 10, 2023 at 5:57 PM",
+    //          variant: "warning"
+    //      });
+    // }
+
     return (
         <MpbModal
             showDivider={false}

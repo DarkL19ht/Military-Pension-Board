@@ -35,7 +35,7 @@
         "vite.config.ts",
         "tailwind.config.ts",
         "tailwindcss-animate.d.ts",
-        "setupTests.ts",
+        "setupTests.ts"
     ],
     "references": [{ "path": "./tsconfig.node.json" }]
 }

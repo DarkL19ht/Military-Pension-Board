@@ -7,7 +7,7 @@ import { useMediaQuery } from "react-responsive";
 // * React icons
 import { IoIosArrowBack } from "react-icons/io";
 import { HiOutlineHome } from "react-icons/hi";
-import { Users, Cog } from "lucide-react";
+import { Users, Cog, LogOut } from "lucide-react";
 // import { AiOutlineAppstore } from "react-icons/ai";
 // import { BsPerson } from "react-icons/bs";
 // import { HiOutlineDatabase } from "react-icons/hi";
@@ -119,7 +119,7 @@ function Sidebar() {
                 initial={{ x: isTabletMid ? -250 : 0 }}
                 animate={open ? "open" : "closed"}
                 className="text-gray fixed z-[999] h-screen w-[12rem]  max-w-[16rem] 
-                overflow-hidden bg-white shadow-xl md:relative"
+                overflow-hidden bg-sidebar-surface shadow-xl md:relative"
             >
                 {/* logo */}
                 <Link
@@ -137,7 +137,7 @@ function Sidebar() {
                         text-[0.9rem] font-medium scrollbar-thin scrollbar-track-white  scrollbar-thumb-slate-100 md:h-[80%]"
                     >
                         <li>
-                            <NavLink to="dashboard" className="link active">
+                            <NavLink to="dashboard" className="link">
                                 <HiOutlineHome size={20} className="min-w-max" />
                                 <span>Dashboard</span>
                             </NavLink>
@@ -157,14 +157,14 @@ function Sidebar() {
                         )}
                         <li>
                             <NavLink to="/settings" className="link">
-                                <Cog size={20} color="green" className="min-w-max" />
+                                <Cog size={20} className="min-w-max" />
                                 Role Management
                             </NavLink>
                         </li>
                         <li>
                             <NavLink to="admin-management" className="link">
                                 {/* <SlSettings size={23} className="min-w-max" /> */}
-                                <Users size={20} color="green" className="min-w-max" />
+                                <Users size={20} className="min-w-max" />
                                 Admin Management
                             </NavLink>
                         </li>
@@ -172,14 +172,15 @@ function Sidebar() {
                     {/* second  */}
                     {(open || isTabletMid) && (
                         <div className="z-50 my-auto max-h-48  w-full flex-1 whitespace-pre text-sm font-medium ">
-                            <div className="flex items-center justify-between border-y border-slate-300 p-4">
-                                <div>
+                            <div className="flex items-center justify-center border-y border-slate-300 p-4">
+                                {/* <div>
                                     <p>Spark</p>
                                     <small>No-cost $0/month</small>
-                                </div>
-                                <p className="rounded-xl bg-teal-50 px-3 py-1.5 text-xs text-teal-500">
-                                    Upgrade
-                                </p>
+                                </div> */}
+                                <button className="link active rounded-lg bg-teal-50 px-10 py-3 text-sm text-teal-500">
+                                    <LogOut />
+                                    <span>Logout</span>
+                                </button>
                             </div>
                         </div>
                     )}
