@@ -357,7 +357,7 @@ export const Primary = {
 
 ```
 
-```js
+```jsx
 const {
     control,
     handleSubmit,
@@ -379,4 +379,7 @@ FormValues >
         username: "",
     },
 };
+<pre className="hidden">{JSON.stringify(watch(), null, 2)}</pre>
+<pre className="hidden">{JSON.stringify(errors, null, 2)}</pre>
+
 ```
