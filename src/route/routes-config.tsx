@@ -6,8 +6,7 @@ import Login from "@/pages/login";
 import Dashboard from "@/pages/dashboard";
 import Profile from "@/pages/profile";
 import RootLayout from "@/layouts/RootLayout";
-import AdminUsersTable from "@/pages/admin-user/admin-users-table";
-import AddAdminUser from "@/pages/admin-user/create-admin-user";
+import AdminUsers from "@/pages/admin-user";
 import PensionerTable from "@/pages/pensioner/pensioners-table";
 import AddPensioners from "@/pages/pensioner/onboard-pensioner";
 import PensionersProfile from "@/pages/pensioner/pensioners-profile";
@@ -52,15 +51,12 @@ const routeConfig = [
                 ],
             },
             {
-                path: "manage-admin",
+                path: "admin-management",
                 children: [
                     {
-                        path: "view-admin-users",
-                        element: <AdminUsersTable />,
-                    },
-                    {
-                        path: "add-admin-users",
-                        element: <AddAdminUser />,
+                        index: true,
+                        path: "",
+                        element: <AdminUsers />,
                     },
                     {
                         path: "roles",

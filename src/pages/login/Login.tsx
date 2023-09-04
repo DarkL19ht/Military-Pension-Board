@@ -4,7 +4,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import useAuthentication from "@api/user-controller/useAuthentication";
 import Logo from "@/assets/images/logo.png";
 import MpbTextField from "@/components/@form/MpbTextField";
-import { MpbButton } from "@/components/ui/MpbButton";
+import { MpbButton } from "@/components/ui/button/MpbButton";
 import BannerImage from "@/assets/images/soldierimage.jpg";
 
 type FormValues = {
@@ -114,7 +114,6 @@ function Login() {
                                 type="submit"
                                 title="Login"
                                 isLoading={isLoginUser}
-                                variant="default"
                                 size="sm"
                                 fullWidth
                                 onClick={handleSubmit(handleAuthentication)}

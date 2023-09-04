@@ -36,8 +36,7 @@
 
     html {
         @apply font-Montserrat;
-    }
-    */
+    } */
 
     [type="text"],
     [type="email"],
@@ -75,11 +74,11 @@
     } */
 
     .link {
-        @apply flex items-center gap-6 rounded-md p-2.5 font-medium duration-300 md:cursor-pointer;
+        @apply flex items-center gap-6 rounded-md p-2.5 font-medium text-sidebar-link duration-300 md:cursor-pointer;
     }
 
     .active {
-        @apply bg-blue-100 text-blue-600;
+        @apply bg-sidebar-active-link text-sidebar-link-active;
     }
 
     .container-snap {

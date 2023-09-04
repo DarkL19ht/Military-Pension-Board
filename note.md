@@ -142,6 +142,100 @@ export default {
 }
 ```
 
+```jsx
+   /* eslint-disable import/no-extraneous-dependencies */
+// import { Link } from "react-router-dom";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+
+import { cn } from "@/lib";
+
+
+export default function pagination({ table}: any) {
+    return (
+        <div className="flex flex-col items-center justify-center gap-y-3 md:flex-row md:justify-between md:gap-y-0">
+            <div className="flex flex-col lg:flex-row">
+                <span className="self-center px-[5px] text-[14px] font-[600] text-[#000000]">
+                    Show
+                </span>
+                <div className="cursor-pointer rounded-[4px]  focus:border-none focus:outline-none ">
+                    <select
+                        className="border-nonefocus:outline-0 hover:cursor-pointer "
+                        value={table.getState().pagination.pageSize}
+                        onChange={(e) => {
+                            table.setPageSize(Number(e.target.value));
+                        }}
+                    >
+                        {[5, 10, 15, 20].map((pageSize) => (
+                            <option key={pageSize} value={pageSize}>
+                                {pageSize}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+            </div>
+            <div>
+                <span className="text-sm text-gray-400">
+                    {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+                </span>
+            </div>
+            <div className="flex">
+                <nav aria-label="Pagination">
+                    <ul className="inline-flex items-center space-x-2 rounded-md text-sm">
+                        <li>
+                            <button
+                                type="button"
+                                className="inline-flex items-center space-x-2 rounded-md border border-gray-300
+                             bg-white px-4 py-2 font-medium text-gray-500 hover:bg-gray-50"
+                                onClick={() => table.previousPage()}
+                                disabled={!table.getCanPreviousPage()}
+                            >
+                                <ChevronLeft size={18} />
+                            </button>
+                        </li>
+                        {[...Array(table.getPageCount()).keys()].map((item) => {
+                            return (
+                                <li key={item}>
+                                    <button
+                                        type="button"
+                                        aria-current="page"
+                                        className={cn(
+                                            `z-10 inline-flex items-center rounded-md
+                                     px-4 py-2 font-medium text-gray-700`,
+                                            table.getState().pagination.pageIndex === item
+                                                ? "border  bg-green-500 text-white"
+                                                : "border border-gray-300 bg-white"
+                                        )}
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            table.setPageIndex(item);
+                                        }}
+                                    >
+                                        {item + 1}
+                                    </button>
+                                </li>
+                            );
+                        })}
+
+                        <li>
+                            <button
+                                type="button"
+                                className="inline-flex items-center space-x-2 rounded-md border
+                             border-gray-300 bg-white px-4 py-2 font-medium text-gray-500 hover:bg-gray-50"
+                                onClick={() => table.nextPage()}
+                                disabled={!table.getCanNextPage()}
+                            >
+                                <ChevronRight size={18} />
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    );
+}
+
+```
+
 ```ts
 const handleTextInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: "changeRole" });
@@ -150,14 +244,86 @@ const handleTextInput = (e: React.ChangeEvent<HTMLInputElement>) => {
 const [count, setCount] = useState<user[] | null>(null);
 ```
 
-```ts
+## Typescript tutorial
 
+```ts
+// Record utility & satisfies
 type UserCols = "username" | "nickname" | "roles";
 type User = Record<UserCols, string | string[] | undefined>;
 const user = {
     username: "Dave",
     nickname: undefined,
     roles: ["admin", "dev"],
-} satisfies User
+} satisfies User;
 
+//index signature
+interface Incomes {
+    [key: string | number]: number;
+}
+
+// key of
+interface Student {
+    name: string;
+    gpa: number;
+    classes?: number[];
+}
+const student: Student = {
+    name: "Blessing Jane",
+    gpa: 3.5,
+    classes: [100, 200],
+};
+
+for (const key in student) {
+    console.log(`${key}: ${student[key as keyof Student]}`);
+}
+
+Object.keys(student).map((key) => {
+    console.log(student[key as keyof typeof student]);
+});
+
+const logStudent = (student: Student, key: keyof Student): void => {
+    console.log(`student ${key}:${student[key]}`);
+};
+
+type setting = string | number | { [key: string]: setting } | setting[];
+```
+
+```ts
+// currency format for React-Table
+{
+   accessorkey: 'amount',
+   header: () => <div className='text-right'›Amount</div›,
+   cell: ({ row }) =› {
+      const amount = parseFloat (row. getvalue ('amount' ))
+      const formatted = new Intl.NumberFormat('en-US',{
+          style: "currency",
+          currency: "USD"
+      }).format(amount)
+      return <div className='text-right font-medium'›{formatted}</div>
+    }
+
+}
+
+```
+
+```jsx
+<ReactPaginate
+    breakLabel="..."
+    nextLabel="next >"
+    onPageChange={({ selected }) => table.setPageIndex(selected)}
+    marginPagesDisplayed={2}
+    pageRangeDisplayed={3}
+    pageCount={table.getPageCount()}
+    previousLabel="< previous"
+    renderOnZeroPageCount={null}
+    containerClassName="inline-flex items-center space-x-2 rounded-md text-sm"
+    pageClassName={LinkStyle}
+    previousClassName={LinkStyle}
+    nextClassName={LinkStyle}
+    breakClassName="hover:text-green-500"
+    activeClassName="border bg-green-500 text-white"
+    // breakLinkClassName=""
+    // pageLinkClassName="bg-red-500"
+    // previousLinkClassName=""
+/>
 ```

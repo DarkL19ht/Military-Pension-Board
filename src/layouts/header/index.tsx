@@ -18,8 +18,8 @@ function Header() {
     return (
         <div
             // className="sticky top-0 shadow-lg
-            className="flex h-[70px] min-w-max items-center justify-between
-            bg-header px-[25px]"
+            className="bg-header flex h-[70px] min-w-max items-center
+            justify-between px-[25px]"
         >
             <div className="max-w-xs pl-3">
                 <div>
@@ -71,7 +71,7 @@ function Header() {
                             {authState?.user?.lastname}
                         </h4>
                         <p className="text-sm  text-green-600">
-                            {authState.user?.roles[0]}
+                            {authState?.user?.roles?.[0]}
                         </p>
                     </div>
                     <MpbMenu>

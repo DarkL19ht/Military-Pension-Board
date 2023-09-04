@@ -1,6 +1,6 @@
 import { CgMoreVertical } from "react-icons/cg";
 import { Link } from "react-router-dom";
-import Pagination from "@/components/pagination";
+// import Pagination from "@/components/ui/pagination";
 import { pensionersData } from "@/lib/fakers";
 
 export default function Pensioner() {
@@ -48,7 +48,7 @@ export default function Pensioner() {
             <div className="mb-20 w-full overflow-auto rounded-md border border-gray-100 p-5 shadow-md">
                 {/* Table UI */}
                 <table className="w-full table-auto border border-gray-300 text-left font-light">
-                    <thead className="t border-b bg-[#F2FAF5] font-medium">
+                    <thead className="border-b bg-[#F2FAF5] font-medium">
                         <tr className="text-[#00873D]">
                             <th scope="col" className="px-2 py-1 text-center text-sm">
                                 S/N
@@ -131,9 +131,7 @@ export default function Pensioner() {
                         })}
                     </tbody>
                 </table>
-                <div className="w-full py-5">
-                    <Pagination />
-                </div>
+                <div className="w-full py-5">{/* <Pagination /> */}</div>
             </div>
         </div>
     );

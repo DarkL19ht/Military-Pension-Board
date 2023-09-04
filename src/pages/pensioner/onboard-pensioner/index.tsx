@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useReducer } from "react";
-import MpbSweetAlert from "@/components/ui/MpbSweetAlert";
+import MpbSweetAlert from "@/components/ui/sweetalert/MpbSweetAlert";
 import UploadCsvFileModal from "./UploadCsvFileModal";
 import { reducer, initialState } from "./reducer";
 
