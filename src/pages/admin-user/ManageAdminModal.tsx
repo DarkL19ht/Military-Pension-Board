@@ -27,14 +27,7 @@ interface FormValues {
 export default function ManageAdminModal({ isOpen, closeModal }: IProps) {
     const { toast } = useToast();
     const queryClient = useQueryClient();
-
-    const {
-        control,
-        handleSubmit,
-        watch,
-        formState: { errors },
-        reset,
-    } = useForm<FormValues>({
+    const { control, handleSubmit, reset } = useForm<FormValues>({
         mode: "all",
         defaultValues: {
             email: "",
@@ -45,7 +38,9 @@ export default function ManageAdminModal({ isOpen, closeModal }: IProps) {
             username: "",
         },
     });
-
+    /** apiCalls to get roles */
+    const { RoleResponse } = useGetRoles();
+    /** apiCall for create admin user  */
     const { CreateUser, isCreatingUser } = useCreateUser({
         onSuccess: (res) => {
             toast({
@@ -63,17 +58,17 @@ export default function ManageAdminModal({ isOpen, closeModal }: IProps) {
             });
         },
     });
-
-    const { RoleResponse } = useGetRoles();
-
     const handleCreateUser = (values: FormValues) => {
         const requestPayload = {
             ...values,
             roles: values.roles.map((item) => item.value),
         };
+        /** mutate function from useCreateUser */
         CreateUser(requestPayload);
     };
-
+    /**
+     * closeModal and reset form field
+     */
     const handleCloseModal = () => {
         reset();
         closeModal();
@@ -89,9 +84,6 @@ export default function ManageAdminModal({ isOpen, closeModal }: IProps) {
         >
             <div className="px-5 pb-5">
                 <form className="w-full space-y-5">
-                    {/* TODO: remove below */}
-                    <pre className="hidden">{JSON.stringify(watch(), null, 2)}</pre>
-                    <pre className="hidden">{JSON.stringify(errors, null, 2)}</pre>
                     <div className="flex gap-3">
                         <div className="w-1/2">
                             <MpbTextField

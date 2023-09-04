@@ -15,8 +15,8 @@ const ToastViewport = React.forwardRef<
     <ToastPrimitives.Viewport
         ref={ref}
         className={cn(
-            // "fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]",
-            "fixed bottom-0 top-0 z-[100000] flex max-h-screen w-full flex-col-reverse p-4 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]",
+            "fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:right-0 sm:top-14 sm:flex-col md:max-w-[420px]",
+            // "fixed bottom-0 top-0 z-[100000] flex max-h-screen w-full flex-col-reverse p-4 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]",
             className
         )}
         {...props}
@@ -70,7 +70,13 @@ const ToastAction = React.forwardRef<
     <ToastPrimitives.Action
         ref={ref}
         className={cn(
-            "group-[.destructive]:border-muted/40 group-[.destructive]:hover:border-destructive/30 group-[.destructive]:hover:bg-destructive group-[.destructive]:hover:text-destructive-foreground focus:ring-ring group-[.destructive]:focus:ring-destructive inline-flex h-8 shrink-0 items-center justify-center rounded-md border bg-transparent px-3 text-sm font-medium ring-offset-background transition-colors hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+            `group-[.destructive]:border-muted/40 group-[.destructive]:hover:border-destructive/30
+             group-[.destructive]:hover:bg-destructive group-[.destructive]:hover:text-destructive-foreground 
+             focus:ring-ring group-[.destructive]:focus:ring-destructive inline-flex
+              h-8 shrink-0 items-center justify-center rounded-md border
+               bg-transparent px-3 text-sm font-medium ring-offset-background
+                transition-colors hover:bg-secondary focus:outline-none focus:ring-2 
+                focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50`,
             className
         )}
         {...props}

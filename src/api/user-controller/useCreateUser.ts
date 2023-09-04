@@ -3,13 +3,13 @@ import { AuthHTTP } from "@/lib";
 import { UserRequestPayload as Payload } from "@/types/user";
 
 interface IParameters {
-    onError?: () => void;
-    onSuccess?: () => void;
+    onError?: (err: any) => void;
+    onSuccess?: (res: any) => void;
 }
 
 export default function useCreateUser({ onError, onSuccess }: IParameters = {}) {
     const Mutation = useMutation({
-        mutationFn: async (requestPayload: Payload) => {
+        mutationFn: async (requestPayload: Omit<Payload, "status">) => {
             try {
                 const res = await AuthHTTP.post("/api/users", requestPayload);
                 return res;

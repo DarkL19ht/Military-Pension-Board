@@ -14,7 +14,13 @@ const meta: Meta<typeof MpbSweetAlert> = {
         },
         icon: {
             control: "radio",
-            options: ["success_icon", "success_lock_icon", ""],
+            options: [
+                "success_icon",
+                "success_lock_icon",
+                "delete_icon",
+                "warning_icon",
+                "",
+            ],
         },
         bgTitle: {
             control: "select",
@@ -53,6 +59,7 @@ export const OpenSweetAlert: Story = {
         confirmText: "Submit",
         title: "Alert Title",
         className: "",
+        isLoading: false,
     },
 };
 
@@ -65,5 +72,6 @@ export const DisableUserAlert: Story = {
         message: "Are you sure you want to disable this user ?",
         description: "This will reflect on your portal immediately",
         showDivider: false,
+        isLoading: false,
     },
 };

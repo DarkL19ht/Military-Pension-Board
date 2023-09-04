@@ -3,8 +3,8 @@ import { AuthHTTP } from "@/lib";
 import { UserRequestPayload as Payload } from "@/types/user";
 
 interface IParameters {
-    onError?: () => void;
-    onSuccess?: () => void;
+    onError?: (res: any) => void;
+    onSuccess?: (err: any) => void;
 }
 
 export default function useUpdateUser({ onError, onSuccess }: IParameters = {}) {
@@ -17,7 +17,7 @@ export default function useUpdateUser({ onError, onSuccess }: IParameters = {}) 
             id: number;
         }) => {
             try {
-                const res = await AuthHTTP.put(`/api/user/${id}`, requestPayload);
+                const res = await AuthHTTP.put(`/api/users/${id}`, requestPayload);
                 return res;
             } catch (error) {
                 return Promise.reject(error);
