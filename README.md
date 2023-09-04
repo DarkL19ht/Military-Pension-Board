@@ -30,7 +30,7 @@ Military Pensions Board – Admin Portal Management
 
 -   [Swagger URL demo]()
 -   [Swagger URL staging](https://mpb-admin-api.azurewebsites.net/swagger-ui/index.html)
--   [Figma design](<https://www.figma.com/file/5fBxAJe5cqnrq1o2KOEjja/e-Pension-Web-Portal(MPB)?type=design&node-id=2-2&mode=design>)
+-   [Figma design](<https://www.figma.com/file/zm27pUSkgjjBSdy2v49ppO/e-Pension-Web-Portal(MPB-1)?type=design&node-id=1-2&mode=design>)
 
 ## API baseURL
 
@@ -47,27 +47,57 @@ Military Pensions Board – Admin Portal Management
 -   [x] `***React router setup***`
 -   [x] Proteced route
 -   [x] **_`React Hook Form Setup`_**
--   [ ] **_building UI components_**
+-   [x] **_building UI components_**
 -   [x] **_Absolute import_**
 -   [x] Multi-environment setup
 -   [ ] Twin.macro setup nb n nm ,
 -   [ ] Theming customization & setup
 -   [ ] component lazy loading
--   [ ] React Table setup
+-   [x] React Table setup
 -   [x] configure dark mode
 -   [x] lint-stage and husky setup
 -   [ ] change the favicon
 -   [ ] restructure the dashboard layout, sidebar menu
 -   [ ] Svgr setup for build svg icons
 -   [x] **_Login form page UI design_**
--   [ ] **_Login implementation_**
+-   [x] **_Login implementation_**
 -   [x] **_`Dashboard Layout UI design`_**
--   [ ] Create User
+-   [ ] Refresh token implementation
+<!-- Admin Management -->
+-   [ ] Create Admin User
+-   [x] Query Admin User
+-   [x] Querying admin table by size, pageNumber
+-   [ ] Search on Admin User table **_(missing endpoints)_**
+-   [ ] Edit Admin User
+-   [ ] Disable Admin User
+-   [ ] Reset Password on admin user
+<!-- Pensioner Management -->
+-   [ ] Create Pensioner
+-   [ ] Query Pagination
+-   [ ] Query pensioners table by size, pageNumber
+-   [ ] search pensioner table by name etc
+-   [ ] Filtering pensioner table
+-   [ ] Csv upload
+<!-- Role management -->
+-   [ ] Role management UI
+-   [ ] Create role name and description
+-   [ ] Map role to permissions
+-   [ ] Edit role permissions
+    <!-- Verification  -->
+    <!-- Profile -->
+-   [ ] display profile information
+-   [ ] Edit profile information
+-   [ ] change password
+-   [ ]
 
 ## Future Task
 
 -   [ ] Refactor dark mode implementation
 -   [ ] Restructure the navigation (side & header) bar
+
+## Note
+
+-   createdBy is return "1" while UI expect "name" to be displayed
 
 ## Credits
 

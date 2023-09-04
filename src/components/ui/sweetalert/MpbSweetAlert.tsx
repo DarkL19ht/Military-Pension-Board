@@ -1,7 +1,7 @@
 /* eslint-disable react/require-default-props */
-import MpbModal from "./MpbModal";
+import MpbModal from "../modal/MpbModal";
 import { ICON_LIST, cn } from "@/lib";
-import type { IProps as IModal } from "./MpbModal";
+import type { IProps as IModal } from "../modal/MpbModal";
 
 // this contain props for only modal
 type ModalType = Pick<

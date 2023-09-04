@@ -135,7 +135,6 @@ export default function Login() {
                                     type="submit"
                                     title="Login"
                                     isLoading={isLoginUser}
-                                    variant="default"
                                     size="sm"
                                     fullWidth
                                     onClick={handleSubmit(handleAuthentication)}
