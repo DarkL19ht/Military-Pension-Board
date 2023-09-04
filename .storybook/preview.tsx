@@ -1,4 +1,8 @@
+import React from "react";
 import "../src/index.css";
+import { withThemeByDataAttribute } from "@storybook/addon-styling";
+import Toaster from "../src/components/ui/toast/toaster";
+
 
 /** @type { import('@storybook/react').Preview } */
 
@@ -26,6 +30,24 @@ const preview = {
         },
         layout: getLayout("F"),
     },
+    decorators: [
+        withThemeByDataAttribute({
+            themes: {
+                light: "light",
+                dark: "dark",
+            },
+            defaultTheme: "light",
+            attributeName: "data-mode",
+        }),
+        (Story) => {
+            return (
+                <div>
+                    <Story />
+                    <Toaster />
+                </div>
+            );
+        },
+    ],
 };
 
 export default preview;

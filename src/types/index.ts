@@ -11,19 +11,19 @@ export interface InputProps {
     iconSize: number;
 }
 
-export interface UserRequestPayload {
-    created_by?: string;
-    created_on?: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-    password: string;
-    phone: string;
-    roles: number[];
-    status: "DISABLED" | "ENABLED";
-    updated_by?: number;
-    updated_on?: string;
-    username: string;
+export interface IApiResponse<T> {
+    responseCode: string;
+    responseMessage: string;
+    execTime: number;
+    data: {
+        content: T[];
+        page: number;
+        size: number;
+        totalElements: number;
+        totalPages: number;
+        first: boolean;
+        last: boolean;
+    };
 }
 
 export interface IPensioners {

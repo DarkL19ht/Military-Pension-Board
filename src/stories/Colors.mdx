@@ -1,0 +1,59 @@
+{/* Colors.mdx */}
+import { Meta, ColorPalette, ColorItem } from '@storybook/blocks';
+
+<Meta title="Colors" />
+
+<ColorPalette>
+    <ColorItem
+        title="Primary"
+        subtitle="Color shades"
+        colors={{
+            100: " hsla(147, 100%, 21%, 1)",
+            200: "hsla(147, 64%, 38%, 1)",
+            300: "hsla(147, 51%, 61%, 1)",
+            400: "hsla(147, 100%, 85%, 1)",
+        }}
+    />
+    <ColorItem
+        title="Semantic State Color"
+        subtitle=""
+        colors={{
+            Info: "hsla(216, 96%, 60%, 1)",
+            success: "hsla(145, 63%, 42%, 1)",
+            warning: "hsla(44, 94%, 48%, 1)",
+            error: "hsla(0, 72%, 52%, 1)",
+        }}
+    />
+    <ColorItem
+        title="Accent"
+        subtitle="used for highlighting, links and more"
+        colors={{ Main: "hsla(147, 100%, 11%, 1)" }}
+    />
+    <ColorItem
+        title="Click State"
+        subtitle=""
+        colors={{ Main: "hsla(147, 100%, 26%, 1)" }}
+    />
+    <ColorItem
+        title="Neutral"
+        subtitle=""
+        colors={{
+            100: "hsla(220, 50%, 98%, 1)",
+            200: "hsla(218, 40%, 96%, 1)",
+            300: "hsla(220, 13%, 91%, 1)",
+            400: "hsla(0, 1%, 84%, 1)",
+            500: "hsla(0, 0%, 74%, 1)",
+            600: "hsla(211, 19%, 55%, 1)",
+            700: "hsla(0, 8%, 22%, 1)",
+            800: "hsla(221, 39%, 11%, 1)",
+        }}
+    />
+    <ColorItem
+        title="Others"
+        subtitle=""
+        colors={{
+            borderLight: "hsla(210, 38%, 95%, 1)",
+            LightText: "hsla(0, 4%, 32%, 1)",
+        }}
+    />
+</ColorPalette>

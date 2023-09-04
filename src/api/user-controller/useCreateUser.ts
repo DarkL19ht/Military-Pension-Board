@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
-import { HTTP } from "@/lib/httpClient";
-import { UserRequestPayload as Payload } from "@/types";
+import { AuthHTTP } from "@/lib";
+import { UserRequestPayload as Payload } from "@/types/user";
 
 interface IParameters {
     onError?: () => void;
@@ -11,7 +11,7 @@ export default function useCreateUser({ onError, onSuccess }: IParameters = {}) 
     const Mutation = useMutation({
         mutationFn: async (requestPayload: Payload) => {
             try {
-                const res = await HTTP.post("/api/user", requestPayload);
+                const res = await AuthHTTP.post("/api/users", requestPayload);
                 return res;
             } catch (error) {
                 return Promise.reject(error);

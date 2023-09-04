@@ -156,7 +156,7 @@ function Sidebar() {
                             </div>
                         )}
                         <li>
-                            <NavLink to="/settings" className="link">
+                            <NavLink to="/" className="link">
                                 <Cog size={20} className="min-w-max" />
                                 Role Management
                             </NavLink>
@@ -166,6 +166,12 @@ function Sidebar() {
                                 {/* <SlSettings size={23} className="min-w-max" /> */}
                                 <Users size={20} className="min-w-max" />
                                 Admin Management
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/settings" className="link">
+                                <Cog size={20} className="min-w-max" />
+                                Profile
                             </NavLink>
                         </li>
                     </ul>

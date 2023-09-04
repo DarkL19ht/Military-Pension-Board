@@ -2,6 +2,7 @@
 import MpbModal from "../modal/MpbModal";
 import { ICON_LIST, cn } from "@/lib";
 import type { IProps as IModal } from "../modal/MpbModal";
+import { MpbButton } from "../button/MpbButton";
 
 // this contain props for only modal
 type ModalType = Pick<
@@ -62,33 +63,23 @@ export default function MpbSweetAlert({
             size={size}
             closeModal={closeModal}
         >
-            <div className="flex flex-col items-center justify-center gap-5 pt-10">
+            <div className="flex flex-col items-center justify-center gap-3 pt-10">
                 {icon && (
                     <div className={`${animation && "animate-bounce"}`}>
                         {ICON_LIST[icon]}
                     </div>
                 )}
-                {message && (
-                    <h4 className="mb-2 text-base font-medium text-green-500">
-                        {message}
-                    </h4>
-                )}
+                {message && <h4 className="text-base font-medium">{message}</h4>}
                 {description && <p className="text-gray-500">{description}</p>}
-                <div className="flex gap-5">
+                <div className="mb-5 flex gap-5">
                     {showCancelButton && (
-                        <button
-                            type="button"
-                            className="mb-5 rounded-md border border-green-500 px-10 py-2 text-green-500"
-                            onClick={closeModal}
-                        >
-                            cancel
-                        </button>
+                        <MpbButton title="Cancel" variant="cancel" onClick={closeModal} />
                     )}
                     {showConfirmButton && (
                         <button
                             type="button"
                             className={cn(
-                                "mb-5 rounded-md bg-green-600 px-10 py-2 text-white",
+                                "rounded-md bg-green-600 px-10 py-2 text-white",
                                 className
                             )}
                             onClick={onConfirm}
