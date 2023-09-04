@@ -1,15 +1,31 @@
+import { UserRequestPayload } from "@/types/user";
+
 type State = {
     isResetPassword: boolean;
     isDisableUser: boolean;
-    isChangeRole: boolean;
     isNewUser: boolean;
+    isEdit: boolean;
+    rowData: UserRequestPayload | any;
+};
+
+const FormValues = {
+    email: "",
+    firstName: "",
+    lastName: "",
+    phone: "",
+    roles: [],
+    username: "",
+    status: "",
 };
 
 export const initialState: State = {
     isResetPassword: false,
     isDisableUser: false,
-    isChangeRole: false,
     isNewUser: false,
+    isEdit: false,
+    rowData: {
+        ...FormValues,
+    },
 };
 
 export const enum ReducerActionType {
@@ -19,31 +35,31 @@ export const enum ReducerActionType {
     // Disable user
     OPEN_DISABLE_MODAL = "openDisableModal",
     CLOSE_DISABLE_MODAL = "closeDisableModal",
-    // Change role
-    OPEN_CHANGE_ROLE_MODAL = "openChangeRoleModal",
-    CLOSE_CHANGE_ROLE_MODAL = "closeChangeRoleModal",
     // Add new user
     OPEN_ADD_NEW_USER__MODAL = "openAddNewUserModal",
     CLOSE_ADD_NEW_USER__MODAL = "closeAddNewUserModal",
+    //
+    SET_FORM_DATA = "setFormData",
+    SET_IS_EDIT = "setIsEdit",
 }
 
 type Action =
     // Reset password action type
-    | { type: ReducerActionType.OPEN_RESET_MODAL } // {type : "openResetModal"}
+    | { type: ReducerActionType.OPEN_RESET_MODAL; payload: UserRequestPayload } // {type : "openResetModal"}
     | { type: ReducerActionType.CLOSE_RESET_MODAL }
     // Disable user action type
-    | { type: ReducerActionType.OPEN_DISABLE_MODAL }
+    | { type: ReducerActionType.OPEN_DISABLE_MODAL; payload: UserRequestPayload }
     | { type: ReducerActionType.CLOSE_DISABLE_MODAL }
-    // Change role action type
-    | { type: ReducerActionType.OPEN_CHANGE_ROLE_MODAL }
-    | { type: ReducerActionType.CLOSE_CHANGE_ROLE_MODAL }
     // Add new user action type
     | { type: ReducerActionType.OPEN_ADD_NEW_USER__MODAL }
-    | { type: ReducerActionType.CLOSE_ADD_NEW_USER__MODAL };
+    | { type: ReducerActionType.CLOSE_ADD_NEW_USER__MODAL }
+    //
+    | { type: ReducerActionType.SET_IS_EDIT }
+    | { type: ReducerActionType.SET_FORM_DATA; payload: UserRequestPayload };
 
 export const reducer = (state: State, action: Action): typeof initialState => {
-    const { type } = action;
-    switch (type) {
+    switch (action.type) {
+        // ADD NEW ADMIN USER
         case ReducerActionType.OPEN_ADD_NEW_USER__MODAL:
             return {
                 ...state,
@@ -53,36 +69,45 @@ export const reducer = (state: State, action: Action): typeof initialState => {
             return {
                 ...state,
                 isNewUser: false,
+                isEdit: false,
+                rowData: FormValues,
             };
+        // RESET PASSWORD
         case ReducerActionType.OPEN_RESET_MODAL:
             return {
                 ...state,
                 isResetPassword: true,
+                rowData: action.payload,
             };
         case ReducerActionType.CLOSE_RESET_MODAL:
             return {
                 ...state,
                 isResetPassword: false,
+                rowData: FormValues,
             };
+        // DISABLE USER
         case ReducerActionType.OPEN_DISABLE_MODAL:
             return {
                 ...state,
                 isDisableUser: true,
+                rowData: action.payload,
             };
         case ReducerActionType.CLOSE_DISABLE_MODAL:
             return {
                 ...state,
                 isDisableUser: false,
+                rowData: FormValues,
             };
-        case ReducerActionType.OPEN_CHANGE_ROLE_MODAL:
+        // EDIT USER
+        case ReducerActionType.SET_IS_EDIT:
             return {
                 ...state,
-                isChangeRole: true,
+                isEdit: true,
             };
-        case ReducerActionType.CLOSE_CHANGE_ROLE_MODAL:
+        case ReducerActionType.SET_FORM_DATA:
             return {
                 ...state,
-                isChangeRole: false,
+                rowData: action.payload,
             };
         default:
             return state;
