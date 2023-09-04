@@ -1,6 +1,6 @@
 import { useState, Fragment } from "react";
 import { RadioGroup } from "@headlessui/react";
-import MpbModal from "@/components/ui/MpbModal";
+import MpbModal from "@/components/ui/modal/MpbModal";
 import { getClassNames } from "@/lib";
 
 interface IProps {

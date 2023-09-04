@@ -24,6 +24,6 @@ const pensionersData = new Array(50)
     .fill(null)
     .map((_, index) => getPensioners(index + 1));
 
-const adminData = new Array(10).fill(null).map((_, index) => getAdmins(index + 1));
+const adminData = new Array(15).fill(null).map((_, index) => getAdmins(index + 1));
 
 export { pensionersData, adminData };
