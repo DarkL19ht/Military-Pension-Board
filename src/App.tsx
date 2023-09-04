@@ -1,7 +1,7 @@
 // import React from "react";
 import RouteRenderer from "./route/route-renderer";
 import { ReactQueryProvider, ReactReduxProvider, ThemeProvider } from "./providers";
-import Toaster from "@/components/ui/toaster";
+import Toaster from "@/components/ui/toast/toaster";
 
 export default function App() {
     return (

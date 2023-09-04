@@ -6,6 +6,9 @@ export const mpbPlugin = plugin(
     function ({ addBase }) {
         addBase({
             ":root": {
+                "--background": "147, 100%, 26%", // hsl(0 0% 100%)
+                "--foreground": "220, 100%, 98%", // hsl(224 71.4% 4.1%)
+
                 "--mpb-color-primary": "147, 100%, 26%", // hsl(147, 100%, 26%)
                 "--mpb-color-primary-100": "147, 100%, 21%", // hsla(147, 100%, 21%)
                 "--mpb-color-primary-200": "147, 64%, 38%", // hsla(147, 64%, 38%)
@@ -18,19 +21,24 @@ export const mpbPlugin = plugin(
                 "--mpb-color-info": "0, 72%, 52%", // hsla(216, 96%, 60%)
                 "--mpb-color-accent": "147, 100%, 11%", // hsla(147, 100%, 11%)
                 "--mpb-color-black": "0, 0%, 0%", // hsla(0, 0%, 0%, 1)
-                "--mpb-color-white": "0, 0%, 100%", // hsla(100, 100%, 100%, 1);
+                "--mpb-color-white": "100, 100%, 100%", // hsla(100, 100%, 100%, 1);
                 "--mpb-color-white-100": "220, 50%, 98%", // background: hsla(220, 50%, 98%);
                 "--mpb-color-neutral-100": "220, 50%, 98%", // background: hsla(220, 50%, 98%);
                 "--mpb-color-neutral-200": "218, 40%, 96%", // background: hsla(218, 40%, 96%, 1);
                 "--mpb-color-neutral-300": "220, 13%, 91%", // background: hsla(220, 13%, 91%, 1);
-                "--mpb-color-neutral-400": "0, 72%, 52%", // background: hsla(0, 1%, 84%, 1);
+                "--mpb-color-neutral-400": "0, 1%, 84%, 1", // background: hsla(0, 1%, 84%, 1);
                 "--mpb-color-neutral-500": "0, 0%, 74%", // background: hsla(0, 0%, 74%, 1);
                 "--mpb-color-neutral-600": "211, 19%, 55%", // background: hsla(211, 19%, 55%, 1);
-                "--mpb-color-neutral-700": "0, 72%, 52%", // background: hsla(0, 8%, 22%, 1);
+                "--mpb-color-neutral-700": "0, 8%, 22%, 1", // background: hsla(0, 8%, 22%, 1);
                 "--mpb-color-neutral-800": "221, 39%, 11%", // background: hsla(221, 39%, 11%, 1);
                 "--mpb-color-neutral-input": "220 13% 91%", // hsl(220 13% 91%)
                 "--radius": "0.75rem",
                 "--input": "0.75rem",
+            },
+            ".dark": {
+                "--background": "224 71.4% 4.1%", // hsl(224 71.4% 4.1%)
+                "--foreground": "210 20% 98%", // hsl(210 20% 98%)
+                "--mpb-color-primary": "221, 39%, 11%", //  background: hsla(221, 39%, 11%, 1);
             },
         });
 
@@ -66,6 +74,8 @@ export const mpbPlugin = plugin(
                     Montserrat: "Montserrat",
                 },
                 colors: {
+                    background: "hsl(var(--background))",
+                    foreground: "hsl(var(--foreground))",
                     primary: {
                         DEFAULT: "hsl(var(--mpb-color-primary))",
                         foreground: "hsl(var(--mpb-color-white))",
@@ -97,7 +107,7 @@ export const mpbPlugin = plugin(
                         primary: "hsl(var(--mpb-color-white))",
                         secondary: "hsl(var(--mpb-color-white))",
                         warning: "hsl(var(--mpb-color-white))",
-                        cancel: "hsl(var(--mpb-color-black))",
+                        cancel: "hsl(var(--mpb-color-neutral-700))",
                         disabled: "hsl(var(--mpb-color-white))",
                     },
                     sidebar: {
@@ -123,7 +133,7 @@ export const mpbPlugin = plugin(
                         secondary: "hsl(var(--mpb-color-secondary))",
                         info: "hsl(var(--mpb-color-info))",
                         warning: "hsl(var(--mpb-color-warning))",
-                        cancel: "hsl(var(--mpb-color-neutral-500))",
+                        cancel: "hsl(var(--mpb-color-neutral-400))",
                         disabled: "hsl(var(--mpb-color-neutral-400))",
                         clicked: "hsl(var(--mpb-color-primary-100))",
                         outline: "hsl(var(--mpb-color-white))",

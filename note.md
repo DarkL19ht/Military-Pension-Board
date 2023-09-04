@@ -327,3 +327,56 @@ type setting = string | number | { [key: string]: setting } | setting[];
     // previousLinkClassName=""
 />
 ```
+
+```js
+This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/react/writing-docs/autodocs
+More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
+Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/react/configure/story-layout
+More on how to position stories at: https://storybook.js.org/docs/react/configure/story-layout
+More on argTypes: https://storybook.js.org/docs/react/api/argtypes
+More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
+
+export default {
+    title: "Example/Button",
+    component: Button,
+    parameters: {
+        layout: "centered",
+    },
+    tags: ["autodocs"],
+    argTypes: {
+        backgroundColor: { control: "color" },
+    },
+};
+
+export const Primary = {
+    args: {
+        primary: true,
+        label: "Button",
+    },
+};
+
+```
+
+```js
+const {
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors, isValid, isDirty },
+    formState: { errors },
+    clearErrors,
+    reset,
+} = useForm <
+FormValues >
+{
+    mode: "all",
+    defaultValues: {
+        email: "",
+        firstName: "",
+        lastName: "",
+        phone: "",
+        roles: [],
+        username: "",
+    },
+};
+```

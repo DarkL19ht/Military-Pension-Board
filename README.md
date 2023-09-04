@@ -96,6 +96,14 @@ Military Pensions Board – Admin Portal Management
 -   [ ] Restructure the navigation (side & header) bar
 
 ## Note
+<<<<<<< HEAD
+=======
+- createdBy is return "1" while UI expect "name" to be displayed
+- The getRole endpoints is paginated which is fine but when using the roles in a select 
+dropdown field, it is expected that all role should be fetch. The usual convention is to pass "size=0" to get all roles but
+that's not working.  so what is the queryParams to be pass to get all
+roles. 
+>>>>>>> 83defcbe07203c30848de702e8425294cabee38e
 
 -   createdBy is return "1" while UI expect "name" to be displayed
 

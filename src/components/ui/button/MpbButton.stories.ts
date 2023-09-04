@@ -40,6 +40,8 @@ export const Primary: Story = {
         fullWidth: false,
         title: "Submit",
         disabled: false,
+        isLoading: false,
+        loadingText: "Please wait",
     },
 };
 
@@ -67,5 +69,17 @@ export const Disabled: Story = {
         fullWidth: true,
         title: "Submit",
         disabled: true,
+    },
+};
+
+export const Loading: Story = {
+    args: {
+        variant: "primary",
+        fullWidth: false,
+        title: "Submit",
+        disabled: false,
+        isLoading: true,
+        loadingText: "Please wait",
+        className: "",
     },
 };

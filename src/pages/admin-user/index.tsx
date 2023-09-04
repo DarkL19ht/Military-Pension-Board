@@ -10,24 +10,12 @@ import { PaginationState, ColumnDef } from "@tanstack/react-table";
 // Table
 import useGetUsers from "@api/user-controller/useGetUsers";
 import DataTable from "./DataTable";
-// import { adminData } from "@/lib/fakers";
 import ResetPasswordModal from "./ResetPasswordModal";
 import ChangeRoleModal from "./ChangeRoleModal";
 import ManageAdminModal from "./ManageAdminModal";
 import { MpbSweetAlert as DisableUserModal, MpbButton } from "@/components";
 import { reducer, initialState, ReducerActionType } from "./reducer";
-
-type Role = {
-    id: number;
-    name: string;
-    description: string;
-    authorized: boolean;
-    status: "DISABLED";
-    createdOn: string;
-    createdBy: number;
-    updatedOn: string;
-    updatedBy: number;
-};
+import appConfig from "@/config";
 
 export type Admin = {
     id: number;
@@ -43,6 +31,18 @@ export type Admin = {
     updatedOn: string;
     updatedBy: number;
     roles: Role[];
+};
+
+type Role = {
+    id: number;
+    name: string;
+    description: string;
+    authorized: boolean;
+    status: "DISABLED";
+    createdOn: string;
+    createdBy: number;
+    updatedOn: string;
+    updatedBy: number;
 };
 
 const getStatus = (status: string): string => {
@@ -149,7 +149,7 @@ export default function AdminUsersTable() {
     const { isResetPassword, isDisableUser, isChangeRole, isNewUser } = state;
     const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
         pageIndex: 0,
-        pageSize: 5,
+        pageSize: appConfig.defaultPageSize,
     });
 
     const fetchDataOptions = {
@@ -172,22 +172,17 @@ export default function AdminUsersTable() {
     return (
         <div className="w-full px-5">
             <div className=" flex w-full items-center justify-between py-3">
+                {/* TODO: refactor this to a breadcrumb components */}
                 <nav aria-label="breadcrumb" className="text-base text-gray-500">
                     <ol className="inline-flex items-center space-x-2 py-2 text-sm font-medium">
                         <li className="inline-flex items-center">
-                            <Link
-                                to="/"
-                                className="text-secondary-500 hover:text-secondary-600"
-                            >
+                            <Link to="/" className="">
                                 Dashboard
                             </Link>
                         </li>
                         <li className="inline-flex items-center space-x-2">
                             <span className="text-secondary-400">/</span>
-                            <Link
-                                to="/admin-management"
-                                className="text-secondary-500 hover:text-secondary-600"
-                            >
+                            <Link to="/admin-management" className="">
                                 Admin users
                             </Link>
                         </li>
@@ -202,6 +197,7 @@ export default function AdminUsersTable() {
                 <div className="flex justify-between py-5">
                     <div className="w-[30%] max-w-sm">
                         <div className="group relative">
+                            {/* Refactor this to a SearchInput components */}
                             <input
                                 type="text"
                                 id="example9"

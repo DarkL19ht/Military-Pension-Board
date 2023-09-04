@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
-import { HTTP } from "@/lib/httpClient";
-import { UserRequestPayload as Payload } from "@/types";
+import { AuthHTTP } from "@/lib";
+import { UserRequestPayload as Payload } from "@/types/user";
 
 interface IParameters {
     onError?: () => void;
@@ -17,7 +17,7 @@ export default function useUpdateUser({ onError, onSuccess }: IParameters = {}) 
             id: number;
         }) => {
             try {
-                const res = await HTTP.put(`/api/user/${id}`, requestPayload);
+                const res = await AuthHTTP.put(`/api/user/${id}`, requestPayload);
                 return res;
             } catch (error) {
                 return Promise.reject(error);

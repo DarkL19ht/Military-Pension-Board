@@ -6,7 +6,7 @@ export default function Dashboard() {
         <div className="flex flex-col gap-3 bg-[#eff0f6] px-[25px] pb-5 pt-[25px]">
             <div className="flex items-center justify-between">
                 <h1>Hello, Olayinka 👋</h1>
-                <MpbButton title="Add Pensioners" variant="default" size="sm" />
+                <MpbButton title="Add Pensioners" variant="primary" size="sm" />
             </div>
             <div>
                 <div className=" grid grid-cols-4 gap-3 ">

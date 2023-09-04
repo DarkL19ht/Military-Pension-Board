@@ -8,7 +8,7 @@ import LoadingSpinner from "@/assets/icons/LoadingSpinner";
 
 const buttonVariants = cva(
     `inline-flex items-center justify-center rounded-md text-sm 
-    font-medium ring-offset-background 
+    font-medium ring-offset-background outline-none
     transition-colors focus-visible:outline-none 
     focus-visible:ring-2 focus-visible:ring-ring 
     focus-visible:ring-offset-2
@@ -43,6 +43,13 @@ const buttonVariants = cva(
                 true: "disabled:cursor-not-allowed disabled:bg-gray-300 disabled:opacity-100 ",
             },
         },
+        compoundVariants: [
+            {
+                variant: "primary",
+                disabled: true,
+                class: "disabled:bg-green-500",
+            },
+        ],
         defaultVariants: {
             variant: "primary",
             size: "default",
