@@ -166,7 +166,7 @@ export default function Profile() {
                 </div>
             </div>
             <div className="mb-20 ml-20 mt-9 w-full rounded-md border border-gray-100 px-[3.81rem] py-5 pt-[2rem] shadow-md sm:w-[60%]">
-                <pre className="hiddens">{JSON.stringify(watch(), null, 2)}</pre>
+                <pre className="hidden">{JSON.stringify(watch(), null, 2)}</pre>
                 <pre className="hidden">{JSON.stringify(errors, null, 2)}</pre>
                 <form className="w-full max-w-2xl">
                     <p className="mb-10 mt-8 pr-[1.25rem] text-3xl font-semibold text-[#239F5B]">
@@ -177,6 +177,7 @@ export default function Profile() {
                             <MpbTextField
                                 label="Old password"
                                 name="oldpassword"
+                                placeholder="*********************"
                                 type="text"
                                 control={control}
                                 rules={{
@@ -194,6 +195,7 @@ export default function Profile() {
                                 <MpbTextField
                                     label="New password"
                                     name="password"
+                                    placeholder="*********************"
                                     type="text"
                                     control={control}
                                     rules={{
@@ -210,6 +212,7 @@ export default function Profile() {
                                 <MpbTextField
                                     label="Confirm password"
                                     name="confirmpassword"
+                                    placeholder="*********************"
                                     type="text"
                                     control={control}
                                     rules={{
