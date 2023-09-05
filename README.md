@@ -28,16 +28,16 @@ Military Pensions Board – Admin Portal Management
 
 ## Web URL
 
--   [Swagger URL demo]()
+-   [Swagger URL demo](https://demo.etranzact.com/mpb/swagger-ui.html#/)
 -   [Swagger URL staging](https://mpb-admin-api.azurewebsites.net/swagger-ui/index.html)
 -   [Figma design](<https://www.figma.com/file/zm27pUSkgjjBSdy2v49ppO/e-Pension-Web-Portal(MPB-1)?type=design&node-id=1-2&mode=design>)
 
 ## API baseURL
 
--   Demo `https://`
+-   Demo `http://demo.etranzact.com/mpb`
 -   Production `https://`
 
-## Pending Tasks
+## Pending Essential Tasks
 
 -   [x] **_Eslint & Prettier setup_**
 -   [x] **_`Redux toolkit & Redux persist setup`_**
@@ -51,61 +51,70 @@ Military Pensions Board – Admin Portal Management
 -   [x] **_Absolute import_**
 -   [x] Multi-environment setup
 -   [ ] Twin.macro setup nb n nm ,
--   [ ] Theming customization & setup
+-   [ ] Theming customization & setup **_`special attention`_**
 -   [ ] component lazy loading
 -   [x] React Table setup
 -   [x] configure dark mode
 -   [x] lint-stage and husky setup
 -   [ ] change the favicon
+-   [ ] simple backdrop components
+-   [ ] Search Input components with Debounce
 -   [ ] restructure the dashboard layout, sidebar menu
 -   [ ] Svgr setup for build svg icons
+-   [X] setup React Storybook for documentation
 -   [x] **_Login form page UI design_**
 -   [x] **_Login implementation_**
 -   [x] **_`Dashboard Layout UI design`_**
--   [ ] Refresh token implementation
+-   [ ] Refresh token implementation **_missing endpoints_**
+  
 <!-- Admin Management -->
--   [ ] Create Admin User
+-   [x] Create Admin User
 -   [x] Query Admin User
 -   [x] Querying admin table by size, pageNumber
--   [ ] Search on Admin User table **_(missing endpoints)_**
--   [ ] Edit Admin User
--   [ ] Disable Admin User
--   [ ] Reset Password on admin user
-<!-- Pensioner Management -->
--   [ ] Create Pensioner
--   [ ] Query Pagination
--   [ ] Query pensioners table by size, pageNumber
+-   [ ] Search on Admin User table `missing endpoints`
+-   [x] Edit Admin User
+-   [x] Disable Admin User
+-   [ ] Reset Password on admin user `missing endpoints`
+    <!-- Pensioner Management  -->
+    `Tuesday/ wednesday`
+-   [ ] Create Pensioner `endpoints not working`
+-   [ ] Query pensioners table by size, pageNumber `endpoint not working`
 -   [ ] search pensioner table by name etc
--   [ ] Filtering pensioner table
+-   [ ] Filtering pensioner table **_special attention_**
 -   [ ] Csv upload
 <!-- Role management -->
 -   [ ] Role management UI
 -   [ ] Create role name and description
 -   [ ] Map role to permissions
 -   [ ] Edit role permissions
-    <!-- Verification  -->
-    <!-- Profile -->
+<!-- Verification  -->
+-   [ ] Query verification table
+-   [ ] Search verification table
+-   [ ] Filtering verication table
+<!-- Profile -->
+` Fatima & hope - Wednesday`
 -   [ ] display profile information
 -   [ ] Edit profile information
 -   [ ] change password
--   [ ]
+-   [ ] Forget password **_`missing endpoint`_**
 
 ## Future Task
 
 -   [ ] Refactor dark mode implementation
 -   [ ] Restructure the navigation (side & header) bar
+-   [ ] Change the profile sidebar icon
+-   [ ] Application theming
+-   [ ] Ensuring consistency in spacing, fontsize, title etc
+  
 
 ## Note
-<<<<<<< HEAD
-=======
-- createdBy is return "1" while UI expect "name" to be displayed
-- The getRole endpoints is paginated which is fine but when using the roles in a select 
-dropdown field, it is expected that all role should be fetch. The usual convention is to pass "size=0" to get all roles but
-that's not working.  so what is the queryParams to be pass to get all
-roles. 
->>>>>>> 83defcbe07203c30848de702e8425294cabee38e
 
--   createdBy is return "1" while UI expect "name" to be displayed
+-   createdBy is returning "1" while UI expect "name" to be displayed
+-   The getRole endpoints is paginated which is fine but when using the roles in a select
+    dropdown field, it is expected that all role should be fetch. The usual convention is to pass "size=0" to get all roles but that's not working. so what is the queryParams to be pass to get all
+    roles.
+-   After successfully updating a user profile page, there is no way to invalidate the endpoint, to get the updated user information
+-
 
 ## Credits
 

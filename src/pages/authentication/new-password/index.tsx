@@ -6,17 +6,13 @@ import { useForm } from "react-hook-form";
 import BannerImage from "@/assets/images/logo.png";
 import securityIcon from "../../../../public/cardicons/icon-security.svg";
 import MpbTextField from "@/components/@form/MpbTextField";
-import { UserRequestPayload } from "@/types/user";
 import MpbSweetAlert from "@/components/ui/sweetalert/MpbSweetAlert";
-// import { reducer, initialState } from "../../../redux/reducers";
 
-// TODO: this type definition is wrong
-// pick properties that does not exist on USerRequestPayload
-interface FormValues
-    extends Pick<
-        UserRequestPayload,
-        "defaultPassword" | "newPassword" | "confirmPassword"
-    > {}
+interface FormValues {
+    defaultPassword: string;
+    newPassword: string;
+    confirmPassword: string;
+}
 
 function NewPassword() {
     const [open, setOpen] = useState(false);

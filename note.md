@@ -395,3 +395,22 @@ FormValues >
     </button>
 </div>
 ```
+```jsx
+
+export const useFetchUser = (userID: string | undefined) => {
+    return useQuery([users.fetchUser, userID],
+        (): Promise<User> => axios.get(`https://jsonplaceholder.typicode.com/users/${userID}`)
+            .then(response => response.data))
+}
+export const useFetchUser = (userID: string | undefined) => {
+    return useQuery([users.fetchUser, userID],
+        () => axios.get<User>(`https://jsonplaceholder.typicode.com/users/${userID}`)
+            .then(response => response.data))
+}
+export const useFetchUser = (userID: string | undefined) => {
+    return useQuery<User, Error>([users.fetchUser, userID],
+        () => axios.get(`https://jsonplaceholder.typicode.com/users/${userID}`)
+            .then(response => response.data))
+}
+
+```

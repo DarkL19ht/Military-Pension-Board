@@ -28,21 +28,6 @@ interface FormValues {
     }[];
 }
 
-const ranks = [
-    {
-        label: "View Reports",
-        value: "View Reports",
-    },
-    {
-        label: "Onboard Pensioners",
-        value: "Onboard Pensioners",
-    },
-    {
-        label: "View Permissions Information",
-        value: "View Permissions Information",
-    },
-];
-
 const initialFormValues = {
     accountNo: "",
     bankCode: "",
@@ -93,9 +78,16 @@ export default function Pensioner() {
                         <span>
                             You can add a maximum of three(3) pensioners manually or click
                             here to{" "}
-                            <button className="text-green-500 hover:underline">
-                                Upload CSV
-                            </button>{" "}
+                            <MpbButton
+                                title="Upload CSV"
+                                variant="link"
+                                className="text-base"
+                                onClick={() => {
+                                    runDispatch({
+                                        type: ReducerActionType.OPEN_UPLOAD_CSV_MODAL,
+                                    });
+                                }}
+                            />
                             to add more.
                         </span>
                     </div>
@@ -179,7 +171,7 @@ export default function Pensioner() {
                                         <div className="w-full md:w-1/2">
                                             <MpbTextField
                                                 label="Phone number"
-                                                name={`dataFields.${index}.phoneNumber`}
+                                                name={`dataFields.${index}.phone`}
                                                 placeholder="Enter Phone Number"
                                                 type="number"
                                                 icon={<CiUser size={20} />}
@@ -235,8 +227,7 @@ export default function Pensioner() {
                                                 label="Bank"
                                                 control={control}
                                                 name={`dataFields.${index}.bankCode`}
-                                                options={ranks}
-                                                isMulti
+                                                options={[]}
                                                 rules={{
                                                     required: {
                                                         value: true,
@@ -248,7 +239,7 @@ export default function Pensioner() {
                                         <div className="w-full md:w-1/2">
                                             <MpbTextField
                                                 label="Account Number"
-                                                name={`dataFields.${index}.accountNumber`}
+                                                name={`dataFields.${index}.accountNo`}
                                                 type="number"
                                                 icon={<CiUser size={20} />}
                                                 control={control}
@@ -285,7 +276,6 @@ export default function Pensioner() {
                                                 control={control}
                                                 name={`dataFields.${index}.rank`}
                                                 options={[]}
-                                                isMulti
                                                 rules={{
                                                     required: {
                                                         value: true,
@@ -348,11 +338,16 @@ export default function Pensioner() {
                 showDivider={false}
             />
             <MaxLimitManualModal
-                onConfirm={() => undefined}
                 isOpen={hasReachedLimit}
                 closeModal={() =>
                     runDispatch({ type: ReducerActionType.CLOSE_LIMIT__MODAL })
                 }
+                onConfirm={() => {
+                    runDispatch({
+                        type: ReducerActionType.OPEN_UPLOAD_CSV_MODAL,
+                    });
+                    runDispatch({ type: ReducerActionType.CLOSE_LIMIT__MODAL });
+                }}
                 message="Maximum number reached"
                 description={
                     <p className="px-5 text-center">
