@@ -49,5 +49,5 @@ export default function LineChart() {
             },
         ],
     };
-    return <Line className="w-1" options={options} data={data} />;
+    return <Line className="m-auto h-full w-full" options={options} data={data} />;
 }

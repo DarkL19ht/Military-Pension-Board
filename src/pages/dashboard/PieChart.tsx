@@ -27,5 +27,5 @@ export const data = {
 };
 
 export function PieChart() {
-    return <Pie data={data} />;
+    return <Pie className="mx-auto md:mx-1" data={data} />;
 }

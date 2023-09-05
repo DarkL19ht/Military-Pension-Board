@@ -10,7 +10,7 @@ import Pensionerslist from "./pensioners/pensionersList";
 export default function Dashboard() {
     return (
         <>
-            <div className="flex flex-col gap-3 bg-[#eff0f6] px-[25px] pb-5 pt-[25px]">
+            <div className="flex flex-col gap-2 bg-[#eff0f6] px-[25px] pb-5 pt-[25px]">
                 <div className="flex items-center justify-between">
                     <h1>Hello, Olayinka 👋</h1>
                     <MpbButton title="Add Pensioners" variant="primary" size="sm" />
@@ -56,19 +56,19 @@ export default function Dashboard() {
 
                 {/*  */}
             </div>
-            <div className="mt-3 flex max-w-full justify-center">
-                <div className="mx-4 mb-20 w-4/6 overflow-auto rounded-md border border-gray-100 p-2 shadow-md">
+            <div className="mt-3 max-w-full justify-center sm:flex">
+                <div className="w-6/6 mx-4 mb-20 overflow-auto rounded-md border border-gray-100 p-2 pr-10 shadow-md md:w-4/6">
                     <LineChart />
                 </div>
-                <div className="mx-4 mb-20 w-2/6 overflow-auto rounded-md border border-gray-100 p-2 shadow-md">
+                <div className="w-6/6 mx-4 mb-20 overflow-auto rounded-md border border-gray-100 p-2 shadow-md md:w-2/6">
                     <PieChart />
                 </div>
             </div>
-            <div className="flex max-w-full justify-center">
-                <div className="w-4/6">
+            <div className="max-w-full justify-center pr-3 md:flex">
+                <div className="w-6/6 md:w-3/6 lg:w-4/6">
                     <PensionersTable />
                 </div>
-                <div className="w-2/6">
+                <div className="w-6/6 md:w-3/6 lg:w-2/6">
                     <Pensionerslist />
                 </div>
             </div>

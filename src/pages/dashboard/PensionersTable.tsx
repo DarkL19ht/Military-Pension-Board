@@ -35,7 +35,10 @@ export default function PensionersTable() {
                 <table className="w-full table-auto border border-gray-300 text-left font-light">
                     <thead className="border-b bg-[#F2FAF5] font-medium">
                         <tr className="text-[#00873D]">
-                            <th scope="col" className="px-2 py-1 text-center text-sm">
+                            <th
+                                scope="col"
+                                className="hidden px-2 py-1 text-center text-sm"
+                            >
                                 S/N
                             </th>
 
@@ -64,7 +67,7 @@ export default function PensionersTable() {
                         {pensionersDashboardData?.map((item) => {
                             return (
                                 <tr className="border-b" key={item.id}>
-                                    <td className="whitespace-nowrap px-2 py-1 text-center text-xs font-medium">
+                                    <td className="hidden whitespace-nowrap px-2 py-1 text-center text-xs font-medium">
                                         {item.id}
                                     </td>
 
