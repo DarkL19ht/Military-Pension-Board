@@ -15,7 +15,7 @@ export default function useUpdateUser({ onError, onSuccess }: IParameters = {}) 
             id,
             requestMethod,
         }: {
-            requestPayload: Payload | Omit<Payload, "status"> | any;
+            requestPayload: Payload | Omit<Payload, "status"> | any; // TODO: remove any type and put the righ one
             id: number;
             requestMethod: RequestMethod;
         }) => {

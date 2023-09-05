@@ -10,6 +10,7 @@ interface IParameters {
     size?: number | undefined;
     page?: number | undefined;
 }
+
 export default function useGetRoles({ size = 1_000, page }: IParameters = {}) {
     const { data = [], isLoading } = useQuery({
         queryKey: [queryKeys.GET_ROLES, { size, page }],
