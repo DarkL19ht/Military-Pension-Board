@@ -6,22 +6,22 @@ import { useForm } from "react-hook-form";
 import BannerImage from "@/assets/images/logo.png";
 import securityIcon from "../../../../public/cardicons/icon-security.svg";
 import MpbTextField from "@/components/@form/MpbTextField";
-import { UserRequestPayload } from "@/types/user";
+import { ResetPasswordRequestPayload } from "@/types/passwordRecovery";
 import MpbSweetAlert from "@/components/ui/sweetalert/MpbSweetAlert";
 // import { reducer, initialState } from "../../../redux/reducers";
 
 interface FormValues
     extends Pick<
-        UserRequestPayload,
-        "defaultPassword" | "newPassword" | "confirmPassword"
+        ResetPasswordRequestPayload,
+        "confirmPassword" | "oldPassword" | "password"
     > {}
 
 function NewPassword() {
     const [open, setOpen] = useState(false);
     const { control } = useForm<FormValues>({
         defaultValues: {
-            defaultPassword: "",
-            newPassword: "",
+            oldPassword: "",
+            password: "",
             confirmPassword: "",
         },
     });
@@ -66,7 +66,7 @@ function NewPassword() {
                             <div className="mb-6">
                                 <MpbTextField
                                     label="Default Password"
-                                    name="password"
+                                    name="oldPassword"
                                     type="password"
                                     icon={<CiLock size={20} />}
                                     control={control}
@@ -81,7 +81,7 @@ function NewPassword() {
                             <div className="mb-6">
                                 <MpbTextField
                                     label="New Password"
-                                    name="newPassword"
+                                    name="password"
                                     type="password"
                                     icon={<CiLock size={20} />}
                                     control={control}
