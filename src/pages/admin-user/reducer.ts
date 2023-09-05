@@ -1,13 +1,5 @@
 import { UserRequestPayload } from "@/types/user";
 
-type State = {
-    isResetPassword: boolean;
-    isDisableUser: boolean;
-    isNewUser: boolean;
-    isEdit: boolean;
-    rowData: UserRequestPayload | any;
-};
-
 const FormValues = {
     email: "",
     firstName: "",
@@ -18,7 +10,13 @@ const FormValues = {
     status: "",
 };
 
-export const initialState: State = {
+export const initialState: {
+    isResetPassword: boolean;
+    isDisableUser: boolean;
+    isNewUser: boolean;
+    isEdit: boolean;
+    rowData: UserRequestPayload | any;
+} = {
     isResetPassword: false,
     isDisableUser: false,
     isNewUser: false,
@@ -57,7 +55,10 @@ type Action =
     | { type: ReducerActionType.SET_IS_EDIT }
     | { type: ReducerActionType.SET_FORM_DATA; payload: UserRequestPayload };
 
-export const reducer = (state: State, action: Action): typeof initialState => {
+export const reducer = (
+    state: typeof initialState,
+    action: Action
+): typeof initialState => {
     switch (action.type) {
         // ADD NEW ADMIN USER
         case ReducerActionType.OPEN_ADD_NEW_USER__MODAL:

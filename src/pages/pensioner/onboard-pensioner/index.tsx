@@ -1,258 +1,374 @@
-import { Link } from "react-router-dom";
 import { useReducer } from "react";
-import MpbSweetAlert from "@/components/ui/sweetalert/MpbSweetAlert";
+import { useForm, useFieldArray } from "react-hook-form";
+import { ChevronLeft, Plus, Trash2 } from "lucide-react";
+import { CiUser } from "react-icons/ci";
 import UploadCsvFileModal from "./UploadCsvFileModal";
-import { reducer, initialState } from "./reducer";
+import { reducer, initialState, ReducerActionType } from "./reducer";
+import {
+    MpbSweetAlert as RegistraionSuccessModal,
+    MpbSweetAlert as MaxLimitManualModal,
+    MpbTextField,
+    MpbButton,
+} from "@/components";
+import MpbReactSelectField from "@/components/@form/MpbReactSelectField";
+import appConfig from "@/config";
+
+interface FormValues {
+    dataFields: {
+        accountNo: string;
+        bankCode: string;
+        bvn: string;
+        email: string;
+        firstName: string;
+        lastName: string;
+        otherName: string;
+        phone: string;
+        rank: number;
+        serviceNo: string;
+    }[];
+}
+
+const ranks = [
+    {
+        label: "View Reports",
+        value: "View Reports",
+    },
+    {
+        label: "Onboard Pensioners",
+        value: "Onboard Pensioners",
+    },
+    {
+        label: "View Permissions Information",
+        value: "View Permissions Information",
+    },
+];
+
+const initialFormValues = {
+    accountNo: "",
+    bankCode: "",
+    bvn: "",
+    email: "",
+    firstName: "",
+    lastName: "",
+    otherName: "",
+    phone: "",
+    rank: 0,
+    serviceNo: "",
+};
 
 export default function Pensioner() {
     const [state, runDispatch] = useReducer(reducer, initialState);
-    const { isRegSuccess, isUploadCsv } = state;
+    const { isRegSuccess, isUploadCsv, hasReachedLimit } = state;
+    const {
+        control,
+        // handleSubmit,
+        // watch
+    } = useForm<FormValues>({
+        mode: "all",
+        defaultValues: {
+            dataFields: [{ ...initialFormValues }],
+        },
+    });
 
+    const { fields, append, remove } = useFieldArray({
+        control,
+        name: "dataFields",
+    });
+
+    // const handlePensionerForm = (values: FormValues) => {
+
+    // };
     return (
-        <div className="mx-auto w-[95%] md:w-[90%]">
-            <div className="mb-2 flex w-full items-center justify-between py-3">
-                {/* Breacrumb */}
-                <nav aria-label="breadcrumb">
-                    <ol className="inline-flex items-center space-x-2 py-2 text-xs font-medium">
-                        <li className="inline-flex items-center">
-                            <Link
-                                to="/"
-                                className="text-secondary-500 hover:text-secondary-600"
-                            >
-                                Dashboard
-                            </Link>
-                        </li>
-                        <li className="inline-flex items-center space-x-2">
-                            <span className="text-secondary-400">/</span>
-                            <Link
-                                to="/"
-                                className="text-secondary-500 hover:text-secondary-600 text-xs text-[#00873D]"
-                            >
-                                Onboarding Pensioners
-                            </Link>
-                        </li>
-                    </ol>
-                </nav>
-            </div>
-            <div className="w-full text-center font-latoBold text-[1.5rem] font-[600]">
-                Onboarding Pensioners form
-            </div>
-            <div className="flex w-full justify-end py-2.5">
-                <button
-                    type="button"
-                    className="rounded-md bg-green-700 px-4 py-1.5 text-xs text-white"
-                    onClick={() => runDispatch({ type: "openUploadCsvModal" })}
-                >
-                    Upload csv files
-                </button>
+        <div className="w-[95%] pl-14 md:w-[75%]">
+            <div className="my-5 flex gap-1">
+                <ChevronLeft />
+                <h4>Back to pensioner verification</h4>
             </div>
             <div className="mb-20 w-full overflow-auto rounded-md border border-gray-100 p-5 shadow-md">
-                <div className="py-6 text-base text-[#006C31]">
-                    You can manually fill only 3 forms
+                <div className="mb-5 flex flex-col gap-2 py-6">
+                    <h4 className="text-2xl font-medium text-gray-600">
+                        New Pensioners Form
+                    </h4>
+                    <div className="text-gray-500">
+                        <span>
+                            You can add a maximum of three(3) pensioners manually or click
+                            here to{" "}
+                            <button className="text-green-500 hover:underline">
+                                Upload CSV
+                            </button>{" "}
+                            to add more.
+                        </span>
+                    </div>
                 </div>
                 <div>
-                    <form className="w-full">
-                        <div className=" mb-4 flex w-full flex-wrap justify-between">
-                            <div className="w-full px-3 md:w-1/2">
-                                <label
-                                    className="block pb-1 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
-                                    htmlFor="first-name"
+                    {/* TODO: user correct icon for each field */}
+                    {/* <pre>{JSON.stringify(watch(), null, 2)}</pre> */}
+                    <form>
+                        {fields.map((field, index) => {
+                            return (
+                                <div
+                                    key={field.id}
+                                    className="mb-5 flex w-full flex-col gap-5"
                                 >
-                                    First name
-                                </label>
-                                <input
-                                    className="mb-2 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
-                                    id="first-name"
-                                    type="text"
-                                    placeholder="first name"
-                                />
-                            </div>
-                            <div className="w-full px-3 md:w-1/2">
-                                <label
-                                    className="block pb-1 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
-                                    htmlFor="last-name"
-                                >
-                                    Last name
-                                </label>
-                                <input
-                                    className="mb-2 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
-                                    id="last-name"
-                                    type="text"
-                                    placeholder="last name"
-                                />
-                            </div>
-                        </div>
-                        <div className=" mb-4 flex w-full flex-wrap justify-between">
-                            <div className=" w-full px-3 md:w-1/2">
-                                <label
-                                    className="block pb-1 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
-                                    htmlFor="first-name"
-                                >
-                                    Date of Birth
-                                </label>
-                                <input
-                                    className="mb-2 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
-                                    id="date"
-                                    type="date"
-                                    placeholder=""
-                                />
-                            </div>
-                            <div className="w-full px-3 md:w-1/2">
-                                <label
-                                    className="block pb-1 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
-                                    htmlFor="last-name"
-                                >
-                                    Phone Number
-                                </label>
-                                <input
-                                    className="mb-2 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
-                                    id="phone-number"
-                                    type="text"
-                                    placeholder="phone-number"
-                                />
-                            </div>
-                        </div>
-                        <div className=" mb-4 flex w-full flex-wrap justify-between">
-                            <div className="w-full px-3 md:w-1/2">
-                                <label
-                                    className="block pb-1 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
-                                    htmlFor="first-name"
-                                >
-                                    Service ID
-                                </label>
-                                <input
-                                    className="mb-2 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
-                                    id="service-id"
-                                    type="text"
-                                    placeholder="Enter service ID "
-                                />
-                            </div>
-                            <div className="w-full px-3 md:w-1/2">
-                                <label
-                                    className="block pb-2 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
-                                    htmlFor="rank"
-                                >
-                                    Rank
-                                </label>
-                                <div className="relative">
-                                    <select
-                                        className="block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 pr-8 leading-tight text-gray-700 placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
-                                        id="rank"
-                                    >
-                                        <option>Colonel</option>
-                                        <option>Colonel</option>
-                                        <option>Colonel</option>
-                                    </select>
-                                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                                        <svg
-                                            className="h-4 w-4 fill-current"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 20 20"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className=" mb-4 flex w-full flex-wrap justify-between">
-                            <div className="w-full px-3 md:w-1/2">
-                                <label
-                                    className="block pb-1 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
-                                    htmlFor="first-name"
-                                >
-                                    Account Number
-                                </label>
-                                <input
-                                    className="mb-2 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
-                                    id="service-id"
-                                    type="text"
-                                    placeholder="Enter account number"
-                                />
-                            </div>
-                            <div className="w-full px-3 md:w-1/2">
-                                <label
-                                    className="block pb-1 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
-                                    htmlFor="last-name"
-                                >
-                                    Email Address
-                                </label>
-                                <input
-                                    className="mb-2 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
-                                    id="email"
-                                    type="email"
-                                    placeholder="Enter email"
-                                />
-                            </div>
-                        </div>
-                        <div className=" mb-4 flex w-full flex-wrap justify-between">
-                            <div className="w-full px-3  md:w-full">
-                                <label
-                                    className="block pb-1 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
-                                    htmlFor="first-name"
-                                >
-                                    Bank Verification Number(BVN)
-                                </label>
-                                <input
-                                    className="mb-2 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
-                                    id="service-id"
-                                    type="text"
-                                    placeholder="Enter BVN"
-                                />
-                            </div>
-                        </div>
-                        <div className=" mb-4 flex w-full flex-wrap justify-between">
-                            <div className=" w-full px-3  md:w-full">
-                                <label
-                                    className="block pb-1 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
-                                    htmlFor="first-name"
-                                >
-                                    Addresss
-                                </label>
-                                <input
-                                    className="mb-2 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
-                                    id="service-id"
-                                    type="text"
-                                    placeholder="Enter residential address"
-                                />
-                            </div>
-                        </div>
-                        <div className="flex w-full justify-end py-2.5">
-                            <button
-                                type="button"
-                                className="rounded-md bg-green-700 px-4 py-1.5 text-xs text-white"
-                            >
-                                Add
-                            </button>
-                        </div>
+                                    {index > 0 && <hr className="h-1 bg-green-600 " />}
 
+                                    <div className="mb-5 flex items-center justify-between">
+                                        <h4 className="text-green-600">
+                                            Form {index + 1}
+                                        </h4>
+                                        {index > 0 && (
+                                            <button
+                                                type="button"
+                                                onClick={() => remove(index)}
+                                            >
+                                                <Trash2 size={20} color="red" />
+                                            </button>
+                                        )}
+                                    </div>
+
+                                    <div className="flex gap-3">
+                                        <div className="w-full md:w-1/2">
+                                            <MpbTextField
+                                                label="First name"
+                                                name={`dataFields.${index}.firstName`}
+                                                type="text"
+                                                icon={<CiUser size={20} />}
+                                                control={control}
+                                                rules={{
+                                                    required: {
+                                                        value: true,
+                                                        message: "First name is required",
+                                                    },
+                                                }}
+                                            />
+                                        </div>
+                                        <div className="w-full md:w-1/2">
+                                            <MpbTextField
+                                                label="Last name"
+                                                name={`dataFields.${index}.lastName`}
+                                                type="text"
+                                                icon={<CiUser size={20} />}
+                                                control={control}
+                                                rules={{
+                                                    required: {
+                                                        value: true,
+                                                        message: "Last name is required",
+                                                    },
+                                                }}
+                                            />
+                                        </div>
+                                    </div>
+                                    {/*  */}
+                                    <div className="flex gap-3">
+                                        <div className=" w-full md:w-1/2">
+                                            <MpbTextField
+                                                label="Other Name"
+                                                name={`dataFields.${index}.otherName`}
+                                                type="text"
+                                                icon={<CiUser size={20} />}
+                                                control={control}
+                                                rules={{
+                                                    required: {
+                                                        value: true,
+                                                        message: "Other name is required",
+                                                    },
+                                                }}
+                                                // asterik={false}
+                                            />
+                                        </div>
+                                        <div className="w-full md:w-1/2">
+                                            <MpbTextField
+                                                label="Phone number"
+                                                name={`dataFields.${index}.phoneNumber`}
+                                                placeholder="Enter Phone Number"
+                                                type="number"
+                                                icon={<CiUser size={20} />}
+                                                control={control}
+                                                rules={{
+                                                    required: {
+                                                        value: true,
+                                                        message:
+                                                            "Phone number is required",
+                                                    },
+                                                }}
+                                            />
+                                        </div>
+                                    </div>
+                                    {/*  */}
+                                    <div className="flex gap-3">
+                                        <div className="w-full md:w-1/2">
+                                            <MpbTextField
+                                                label="Email Address"
+                                                name={`dataFields.${index}.email`}
+                                                type="text"
+                                                icon={<CiUser size={20} />}
+                                                control={control}
+                                                rules={{
+                                                    required: {
+                                                        value: true,
+                                                        message:
+                                                            "Email address is required",
+                                                    },
+                                                }}
+                                            />
+                                        </div>
+                                        <div className="w-full md:w-1/2">
+                                            <MpbTextField
+                                                label="Bank Verification Number(BVN)"
+                                                name={`dataFields.${index}.bvn`}
+                                                type="number"
+                                                icon={<CiUser size={20} />}
+                                                control={control}
+                                                rules={{
+                                                    required: {
+                                                        value: true,
+                                                        message: "Service ID is required",
+                                                    },
+                                                }}
+                                            />
+                                        </div>
+                                    </div>
+                                    {/*  */}
+                                    <div className="flex gap-3">
+                                        <div className="w-full md:w-1/2">
+                                            <MpbReactSelectField
+                                                label="Bank"
+                                                control={control}
+                                                name={`dataFields.${index}.bankCode`}
+                                                options={ranks}
+                                                isMulti
+                                                rules={{
+                                                    required: {
+                                                        value: true,
+                                                        message: "Please select a bank",
+                                                    },
+                                                }}
+                                            />
+                                        </div>
+                                        <div className="w-full md:w-1/2">
+                                            <MpbTextField
+                                                label="Account Number"
+                                                name={`dataFields.${index}.accountNumber`}
+                                                type="number"
+                                                icon={<CiUser size={20} />}
+                                                control={control}
+                                                rules={{
+                                                    required: {
+                                                        value: true,
+                                                        message:
+                                                            "Account number is required",
+                                                    },
+                                                }}
+                                            />
+                                        </div>
+                                    </div>
+                                    {/*  */}
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-full md:w-1/2">
+                                            <MpbTextField
+                                                label="Service ID"
+                                                name={`dataFields.${index}.serviceNo`}
+                                                type="text"
+                                                icon={<CiUser size={20} />}
+                                                control={control}
+                                                rules={{
+                                                    required: {
+                                                        value: true,
+                                                        message: "Service ID is required",
+                                                    },
+                                                }}
+                                            />
+                                        </div>
+                                        <div className="w-full md:w-1/2">
+                                            <MpbReactSelectField
+                                                label="Rank"
+                                                control={control}
+                                                name={`dataFields.${index}.rank`}
+                                                options={[]}
+                                                isMulti
+                                                rules={{
+                                                    required: {
+                                                        value: true,
+                                                        message: "Please choose a rank",
+                                                    },
+                                                }}
+                                            />
+                                        </div>
+                                    </div>
+                                    {/*  */}
+                                </div>
+                            );
+                        })}
+                        <div className="flex w-full justify-end py-2.5">
+                            <MpbButton
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    if (
+                                        fields.length ===
+                                        appConfig.maxLimitForManualPensionerForm
+                                    ) {
+                                        runDispatch({
+                                            type: ReducerActionType.OPEN_LIMIT_MODAL,
+                                        });
+                                    } else {
+                                        append({ ...initialFormValues });
+                                    }
+                                }}
+                                title="Add New Pensioner"
+                                icon={<Plus />}
+                            />
+                        </div>
                         <div className="flex justify-center">
-                            <button
+                            <MpbButton
+                                variant="outline-primary"
                                 type="button"
-                                className="mt-[50px] inline-flex h-[40px] w-[70%] items-center justify-center 
-                                rounded-lg border-2 border-[#00873D] bg-[#ffffff] px-8 py-5 text-[#00873D]"
                                 onClick={() =>
-                                    runDispatch({ type: "openRegSuccessModal" })
+                                    runDispatch({
+                                        type: ReducerActionType.OPEN_REG_SUCCESS_MODAL,
+                                    })
                                 }
-                            >
-                                Submit
-                            </button>
+                                title="Submit"
+                                className="my-5 w-3/5"
+                            />
                         </div>
                     </form>
                 </div>
             </div>
-            {/* success modal */}
-            <MpbSweetAlert
+
+            <RegistraionSuccessModal
                 onConfirm={() => undefined}
                 isOpen={isRegSuccess}
-                closeModal={() => runDispatch({ type: "closeRegSuccessModal" })}
+                closeModal={() =>
+                    runDispatch({ type: ReducerActionType.CLOSE_REG_SUCCESS_MODAL })
+                }
                 message="Registration Successful"
                 description="Your registration has been sent to the super admin"
                 icon="success_icon"
                 confirmText="Done"
                 showDivider={false}
             />
+            <MaxLimitManualModal
+                onConfirm={() => undefined}
+                isOpen={hasReachedLimit}
+                closeModal={() =>
+                    runDispatch({ type: ReducerActionType.CLOSE_LIMIT__MODAL })
+                }
+                message="Maximum number reached"
+                description={
+                    <p className="px-5 text-center">
+                        You can add a maximum of three(3) pensioners manually. Kindly,
+                        upload a CSV to add more.
+                    </p>
+                }
+                icon="warning_icon"
+                confirmText="Upload CSV"
+                showDivider={false}
+            />
             <UploadCsvFileModal
                 isOpen={isUploadCsv}
-                closeModal={() => runDispatch({ type: "closeUploadCsvModal" })}
+                closeModal={() =>
+                    runDispatch({ type: ReducerActionType.CLOSE_UPLOAD_CSV_MODAL })
+                }
             />
         </div>
     );

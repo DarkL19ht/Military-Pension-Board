@@ -65,6 +65,7 @@ export interface ButtonProps
     isLoading?: boolean;
     loadingText?: string;
     disabled?: boolean;
+    icon?: any;
 }
 
 const MpbButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -78,6 +79,7 @@ const MpbButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
             disabled,
             isLoading = false,
             loadingText = "Please wait",
+            icon = "",
             asChild = false,
             ...props
         },
@@ -105,7 +107,10 @@ const MpbButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
                         </div>
                     </div>
                 ) : (
-                    <span>{title}</span>
+                    <div className="flex items-center gap-1">
+                        {icon}
+                        <span>{title}</span>
+                    </div>
                 )}
             </Comp>
         );

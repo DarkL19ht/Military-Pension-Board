@@ -7,12 +7,12 @@ interface IParameters {
     pageNumber?: number;
 }
 
-export default function useGetRanks({ size, pageNumber }: IParameters = {}) {
+export default function useGetBanks({ size, pageNumber }: IParameters = {}) {
     const result = useQuery({
-        queryKey: [queryKeys.GET_RANKS, { size, pageNumber }],
+        queryKey: [queryKeys.GET_BANKS, { size, pageNumber }],
         queryFn: async () => {
             try {
-                const res = await AuthHTTP.get("/api/ranks/", {
+                const res = await AuthHTTP.get("/api/banks/", {
                     params: {
                         size,
                         number: pageNumber,

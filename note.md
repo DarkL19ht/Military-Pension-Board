@@ -383,3 +383,15 @@ FormValues >
 <pre className="hidden">{JSON.stringify(errors, null, 2)}</pre>
 
 ```
+
+```jsx
+<div className="flex w-full justify-end py-2.5">
+    <button
+        type="button"
+        className="rounded-md bg-green-700 px-4 py-1.5 text-xs text-white"
+        onClick={() => runDispatch({ type: "openUploadCsvModal" })}
+    >
+        Upload csv files
+    </button>
+</div>
+```
