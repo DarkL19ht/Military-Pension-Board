@@ -8,7 +8,6 @@ import securityIcon from "../../../../public/cardicons/icon-security.svg";
 import MpbTextField from "@/components/@form/MpbTextField";
 import { ResetPasswordRequestPayload } from "@/types/passwordRecovery";
 import MpbSweetAlert from "@/components/ui/sweetalert/MpbSweetAlert";
-// import { reducer, initialState } from "../../../redux/reducers";
 
 interface FormValues
     extends Pick<
