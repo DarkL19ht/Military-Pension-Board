@@ -11,6 +11,8 @@ import PensionersProfile from "@/pages/pensioner/pensioners-profile";
 import ProtectedRoute from "./protected-route";
 import PublicRoute from "./public-route";
 import AddRole from "@/pages/role/create-role";
+import RecoveryMail from "@/pages/Password-recovery/recovery-mail";
+import NewPassword from "@/pages/Password-recovery/new-password";
 
 const routeConfig = [
     {
@@ -18,6 +20,22 @@ const routeConfig = [
         element: (
             <PublicRoute>
                 <Login />
+            </PublicRoute>
+        ),
+    },
+    {
+        path: "/recovery-mail",
+        element: (
+            <PublicRoute>
+                <RecoveryMail />
+            </PublicRoute>
+        ),
+    },
+    {
+        path: "/new-password",
+        element: (
+            <PublicRoute>
+                <NewPassword />
             </PublicRoute>
         ),
     },
