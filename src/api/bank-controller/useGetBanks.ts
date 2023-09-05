@@ -7,16 +7,15 @@ interface IParameters {
     pageNumber?: number;
 }
 
-export default function useGetUsers({ size, pageNumber }: IParameters = {}) {
+export default function useGetBanks({ size, pageNumber }: IParameters = {}) {
     const result = useQuery({
-        queryKey: [queryKeys.GET_USERS, { size, pageNumber }],
+        queryKey: [queryKeys.GET_BANKS, { size, pageNumber }],
         queryFn: async () => {
             try {
-                const res = await AuthHTTP.get("/api/users", {
+                const res = await AuthHTTP.get("/api/banks/", {
                     params: {
                         size,
                         number: pageNumber,
-                        sort: true,
                     },
                 });
                 return res?.data?.data;

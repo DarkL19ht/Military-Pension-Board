@@ -1,19 +1,13 @@
 /* eslint-disable react/require-default-props */
 import MpbModal from "../modal/MpbModal";
-import { ICON_LIST, cn } from "@/lib";
+import { ICON_LIST } from "@/lib";
 import type { IProps as IModal } from "../modal/MpbModal";
+import { MpbButton } from "../button/MpbButton";
 
 // this contain props for only modal
 type ModalType = Pick<
     IModal,
-    | "isOpen"
-    | "size"
-    | "closeModal"
-    | "backdrop"
-    | "showCloseButton"
-    | "bgTitle"
-    | "title"
-    | "showDivider"
+    "isOpen" | "size" | "closeModal" | "backdrop" | "bgTitle" | "title" | "showDivider"
 >;
 
 // This contain props for only sweetalert
@@ -21,12 +15,14 @@ interface ISweetAlert {
     onConfirm: () => void;
     message: string;
     animation?: boolean;
-    icon?: "success_icon" | "success_lock_icon" | "";
+    icon?: "success_icon" | "success_lock_icon" | "delete_icon" | "warning_icon" | "";
     description?: string;
     confirmText?: string;
     showConfirmButton?: boolean;
+    showCloseButton?: boolean;
     showCancelButton?: boolean;
     className?: string;
+    isLoading?: boolean;
 }
 
 // this contain props for both modal and sweetalert
@@ -46,6 +42,7 @@ export default function MpbSweetAlert({
     showConfirmButton = true,
     showCancelButton = false,
     showDivider = true,
+    isLoading = false,
     bgTitle = "default",
     confirmText = "",
     title = "",
@@ -62,39 +59,34 @@ export default function MpbSweetAlert({
             size={size}
             closeModal={closeModal}
         >
-            <div className="flex flex-col items-center justify-center gap-5 pt-10">
+            <div className="flex flex-col items-center justify-center gap-3 pt-5">
                 {icon && (
                     <div className={`${animation && "animate-bounce"}`}>
                         {ICON_LIST[icon]}
                     </div>
                 )}
-                {message && (
-                    <h4 className="mb-2 text-base font-medium text-green-500">
-                        {message}
-                    </h4>
-                )}
+                {message && <h4 className="text-base font-medium">{message}</h4>}
                 {description && <p className="text-gray-500">{description}</p>}
-                <div className="flex gap-5">
+                <div className="my-5 flex gap-5">
                     {showCancelButton && (
-                        <button
-                            type="button"
-                            className="mb-5 rounded-md border border-green-500 px-10 py-2 text-green-500"
+                        <MpbButton
+                            title="Cancel"
+                            variant="cancel"
                             onClick={closeModal}
-                        >
-                            cancel
-                        </button>
+                            className="px-10"
+                            disabled={isLoading}
+                        />
                     )}
                     {showConfirmButton && (
-                        <button
-                            type="button"
-                            className={cn(
-                                "mb-5 rounded-md bg-green-600 px-10 py-2 text-white",
-                                className
-                            )}
+                        <MpbButton
+                            title={confirmText}
+                            variant="primary"
                             onClick={onConfirm}
-                        >
-                            {confirmText}
-                        </button>
+                            className={className}
+                            isLoading={isLoading}
+                            disabled={isLoading}
+                            type="submit"
+                        />
                     )}
                 </div>
             </div>

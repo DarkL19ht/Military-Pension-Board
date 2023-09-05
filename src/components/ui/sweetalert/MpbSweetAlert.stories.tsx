@@ -14,7 +14,13 @@ const meta: Meta<typeof MpbSweetAlert> = {
         },
         icon: {
             control: "radio",
-            options: ["success_icon", "success_lock_icon", ""],
+            options: [
+                "success_icon",
+                "success_lock_icon",
+                "delete_icon",
+                "warning_icon",
+                "",
+            ],
         },
         bgTitle: {
             control: "select",
@@ -36,7 +42,7 @@ type Story = StoryObj<typeof MpbSweetAlert>;
 
 export const OpenSweetAlert: Story = {
     args: {
-        isOpen: false,
+        isOpen: true,
         closeModal: action("close sweetalert button clicked"),
         onConfirm: action("confirm sweetalert button clicked"),
         message: "Are you sure of this action ?",
@@ -53,5 +59,19 @@ export const OpenSweetAlert: Story = {
         confirmText: "Submit",
         title: "Alert Title",
         className: "",
+        isLoading: false,
+    },
+};
+
+export const DisableUserAlert: Story = {
+    args: {
+        isOpen: true,
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmText: "Disable",
+        message: "Are you sure you want to disable this user ?",
+        description: "This will reflect on your portal immediately",
+        showDivider: false,
+        isLoading: false,
     },
 };
