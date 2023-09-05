@@ -125,7 +125,7 @@ export default function Login() {
                                     />
                                 </div>
                                 {/* TODO: change the Link to div */}
-                                <Link to="/dashboard" className="text-sm">
+                                <Link to="/recovery-mail" className="text-sm">
                                     Forgot password?{" "}
                                     <span className="text-[#00873D]">Reset here</span>
                                 </Link>

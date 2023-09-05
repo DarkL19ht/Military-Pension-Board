@@ -104,7 +104,7 @@ function Login() {
                             </div>
 
                             {/* TODO: change the Link to div */}
-                            <Link to="/dashboard" className="">
+                            <Link to="/recovery-mail" className="">
                                 Forgot password?{" "}
                                 <span className="text-[#00873D]">Reset here</span>
                             </Link>
