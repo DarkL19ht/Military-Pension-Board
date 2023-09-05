@@ -1,7 +1,4 @@
 import { Navigate } from "react-router-dom";
-import Pensionerslist from "@/pages/pensioners/Pensionerslist";
-import Roles from "@/pages/roles/Roles";
-// import React from "react";
 import Login from "@/pages/login";
 import Dashboard from "@/pages/dashboard";
 import Profile from "@/pages/profile";
@@ -57,14 +54,6 @@ const routeConfig = [
                         index: true,
                         path: "",
                         element: <AdminUsers />,
-                    },
-                    {
-                        path: "roles",
-                        element: <Roles />,
-                    },
-                    {
-                        path: "pensioners",
-                        element: <Pensionerslist />,
                     },
                 ],
             },

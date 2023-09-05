@@ -12,6 +12,16 @@ const getPensioners = (id: number) => ({
     status: "Completed",
 });
 
+const getDashboardPensioners = (id: number) => ({
+    id,
+    pensionersName: "Andrew Josephine",
+    serviceID: "20NA/62/2913",
+    rank: "Staff sergeant",
+    status: "Completed",
+
+    verificationDate: "03/06/2023",
+});
+
 const getAdmins = (id: number) => ({
     id,
     username: "olayinka.ibrahim",
@@ -26,4 +36,8 @@ const pensionersData = new Array(50)
 
 const adminData = new Array(15).fill(null).map((_, index) => getAdmins(index + 1));
 
-export { pensionersData, adminData };
+const pensionersDashboardData = new Array(6)
+    .fill(null)
+    .map((_, index) => getDashboardPensioners(index + 1));
+
+export { pensionersData, adminData, pensionersDashboardData };
