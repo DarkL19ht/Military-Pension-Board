@@ -18,7 +18,7 @@ function RecoveryMail() {
 
     return (
         <div className="grid h-screen grid-cols-1 md:grid-cols-3">
-            <div className="col-span-1 flex h-screen items-center justify-center bg-[#00873D] md:col-span-1">
+            <div className="col-span-1 hidden h-screen items-center justify-center bg-[#00873D] md:col-span-1 md:flex ">
                 <img src={securityIcon} alt="svg-img" className="h-full w-[300px]" />
             </div>
             <div className="col-span-1 h-screen bg-[#FFFFFF] md:col-span-2">
@@ -30,7 +30,7 @@ function RecoveryMail() {
                     </div>
                     <div className="">Having troubles? Get help</div>
                 </div>
-                <div className="flex items-center justify-center lg:py-[3rem]">
+                <div className="flex h-[80%] items-center justify-center">
                     <div className="mx-auto rounded-md bg-[#ffffff] p-4  sm:w-3/5 lg:w-3/5">
                         <div className="mb-[3rem] flex items-center justify-between py-6">
                             <Link to="/">
@@ -41,7 +41,7 @@ function RecoveryMail() {
                             </div>
                         </div>
                         <form className="">
-                            <div className="mb-20">
+                            <div className="mb-10">
                                 <MpbTextField
                                     label="Email Address"
                                     name="email"

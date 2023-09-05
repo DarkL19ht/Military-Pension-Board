@@ -1,7 +1,7 @@
 // import React from "react";
 import { render } from "@testing-library/react";
 // import { describe, it } from "vitest";
-import Login from "@/pages/login/Login";
+import Login from "@/pages/authentication/login/Login";
 
 describe("App", () => {
     it("Renders hello world", () => {
