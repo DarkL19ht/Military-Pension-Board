@@ -1,9 +1,29 @@
+import { useForm } from "react-hook-form";
+import MpbTextField from "@/components/@form/MpbTextField";
+import { MpbButton } from "@/components/ui/button/MpbButton";
 import ProfilePics from "@/assets/images/profilepics.png";
 
+type FormValues = {
+    oldPassword: string;
+    password: string;
+    confirmPassword: string;
+};
+
 export default function Profile() {
+    const {
+        control,
+        watch,
+        formState: { errors },
+    } = useForm<FormValues>({
+        mode: "all",
+        defaultValues: {
+            oldpassword: "",
+            newpassword: "",
+            confirmpassword: "",
+        },
+    });
+
     return (
-        // <div className="h-[90vh] overflow-hidden">
-        // h-full overflow-y-scroll
         <div className="w-full overflow-auto ">
             <div className="mb-20 ml-20 mt-9 w-full rounded-md border border-gray-100 px-[3.81rem] py-5 pt-[2rem] shadow-md sm:w-[60%]">
                 <div className="mt-1">
@@ -151,61 +171,72 @@ export default function Profile() {
                 </div>
             </div>
             <div className="mb-20 ml-20 mt-9 w-full rounded-md border border-gray-100 px-[3.81rem] py-5 pt-[2rem] shadow-md sm:w-[60%]">
+                <pre className="hidden">{JSON.stringify(watch(), null, 2)}</pre>
+                <pre className="hidden">{JSON.stringify(errors, null, 2)}</pre>
                 <form className="w-full max-w-2xl">
                     <p className="mb-10 mt-8 pr-[1.25rem] text-3xl font-semibold text-[#239F5B]">
                         Change password
                     </p>
-                    <div className="-mx-3 mb-3 w-full px-3 md:mb-0 md:w-1/2">
-                        <label
-                            className="block pb-1 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
-                            htmlFor="old-password"
-                        >
-                            Old password
-                        </label>
-                        <input
-                            className="mb-2 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
-                            id="old password"
-                            type="password"
-                            placeholder="*********************"
-                        />
+                    <div className="mb-5 w-full md:mb-0 md:w-1/2">
+                        <div className="mb-5">
+                            <MpbTextField
+                                label="Old password"
+                                name="oldpassword"
+                                type="text"
+                                control={control}
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: "Old password is required",
+                                    },
+                                }}
+                            />
+                        </div>
                     </div>
                     <div className="-mx-3 mb-1 flex flex-wrap">
                         <div className="mb-3 w-full px-3 md:mb-0 md:w-1/2">
-                            <label
-                                className="block pb-2 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
-                                htmlFor="new password"
-                            >
-                                New password
-                            </label>
-                            <input
-                                className="mb-3 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
-                                id="new-password"
-                                type="password"
-                                placeholder="*****************"
-                            />
+                            <div className="mb-5">
+                                <MpbTextField
+                                    label="New password"
+                                    name="newpassword"
+                                    type="text"
+                                    control={control}
+                                    rules={{
+                                        required: {
+                                            value: true,
+                                            message: "New password is required",
+                                        },
+                                    }}
+                                />
+                            </div>
                         </div>
                         <div className="w-full px-3 md:w-1/2">
-                            <label
-                                className="block pb-2 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
-                                htmlFor="confirm-password"
-                            >
-                                Confirm password
-                            </label>
-                            <input
-                                className="mb-3 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
-                                id="confirm-password"
-                                type="password"
-                                placeholder="*****************"
-                            />
+                            <div className="mb-5">
+                                <MpbTextField
+                                    label="Confirm password"
+                                    name="confirmpassword"
+                                    type="text"
+                                    control={control}
+                                    rules={{
+                                        required: {
+                                            value: true,
+                                            message: "Confirm password is required",
+                                        },
+                                    }}
+                                />
+                            </div>
                         </div>
                     </div>
                     <div className="flex justify-center">
-                        <button
-                            type="button"
-                            className="mt-[50px] inline-flex h-[40px] w-64 items-center justify-center rounded-lg bg-[#00873D] px-10 py-6 text-[#ffffff]"
-                        >
-                            Save changes
-                        </button>
+                        <div className="mt-8">
+                            <MpbButton
+                                type="submit"
+                                title="Save changes"
+                                size="sm"
+                                fullWidth
+                                // disabled={!isDirty || !isValid}
+                            />
+                        </div>
                     </div>
                 </form>
             </div>
