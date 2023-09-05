@@ -37,3 +37,9 @@ type Role = {
     updatedOn: string;
     updatedBy: number;
 };
+
+export interface UserChangePassword {
+    confirmPassword: string;
+    oldPassword: string;
+    password: string;
+}
