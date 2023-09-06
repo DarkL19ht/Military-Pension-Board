@@ -1,23 +1,16 @@
-import { useController, UseControllerProps, Control } from "react-hook-form";
-// import { IconType } from "react-icons";
+import { useController, UseControllerProps } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
 import { cn } from "@/lib";
 
-interface InputProps<
-    TFieldValues extends FieldValues = FieldValues,
-    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-> {
-    name: TName;
+interface InputProps extends UseControllerProps {
     label?: string;
-    name: string;
     type: string;
-    asterik: boolean;
-    icon?: IconType;
+    // asterik: boolean;
+    icon?: any;
     className?: string;
-    rule?: any;
-    control: Control<TFieldValues>;
 }
 
-export default function MpbCheckbox(props: UseControllerProps<InputProps>) {
+export default function MpbCheckbox(props: InputProps) {
     const {
         field: { onChange, onBlur, value },
         fieldState: { isTouched },
@@ -51,11 +44,19 @@ export default function MpbCheckbox(props: UseControllerProps<InputProps>) {
                     </label>
                 )}
             </div>
-            {errors[name] && (
-                <p className="mt-1 text-sm text-red-500">
-                    {errors[name] && errors[name].message}
-                </p>
-            )}
+            <ErrorMessage
+                errors={errors}
+                name={name}
+                render={({ message }) => (
+                    <p className="mt-1 text-sm text-red-500">{message}</p>
+                )}
+            />
         </>
     );
 }
+
+MpbCheckbox.defaultProps = {
+    className: "",
+    label: "",
+    icon: "",
+};

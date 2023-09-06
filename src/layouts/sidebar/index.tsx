@@ -162,12 +162,6 @@ function Sidebar() {
                             </div>
                         )}
                         <li>
-                            <NavLink to="/" className="link">
-                                <Cog size={20} className="min-w-max" />
-                                Role Management
-                            </NavLink>
-                        </li>
-                        <li>
                             <NavLink to="/set-roles-permissions" className="link">
                                 <Cog size={20} className="min-w-max" />
                                 Role Management

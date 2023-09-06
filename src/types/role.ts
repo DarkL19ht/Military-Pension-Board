@@ -1,4 +1,8 @@
-export interface IRoleResponsePayload {
+import { IApiResponse } from ".";
+
+export interface IGetRoleResponsePayload extends IApiResponse<IRoleDataContent> {}
+
+export interface IRoleDataContent {
     id: number;
     name: string;
     description: string;

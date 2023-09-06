@@ -24,7 +24,7 @@ import { reducer, initialState, ReducerActionType } from "./reducer";
 import appConfig from "@/config";
 import { useToast } from "@/components/ui/toast/use-toast";
 import { STATUS, RequestMethod } from "@/types/enum";
-import { UserResponsePayload } from "@/types/user";
+import { IUserDataContent } from "@/types/user";
 import { cn } from "@/lib";
 
 export default function AdminUsersTable() {
@@ -91,7 +91,7 @@ export default function AdminUsersTable() {
         DisableUser({ requestPayload, requestMethod: RequestMethod.PUT, id });
     };
 
-    const columns = useMemo<ColumnDef<UserResponsePayload>[]>(
+    const columns = useMemo<ColumnDef<IUserDataContent>[]>(
         () => [
             {
                 accessorKey: "createdOn",

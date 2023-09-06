@@ -37,7 +37,7 @@ Military Pensions Board – Admin Portal Management
 -   Demo `http://demo.etranzact.com/mpb`
 -   Production `https://`
 
-## Pending Essential Tasks
+## Pending Tasks
 
 -   [x] **_Eslint & Prettier setup_**
 -   [x] **_`Redux toolkit & Redux persist setup`_**
@@ -65,7 +65,11 @@ Military Pensions Board – Admin Portal Management
 -   [x] **_Login form page UI design_**
 -   [x] **_Login implementation_**
 -   [x] **_`Dashboard Layout UI design`_**
--   [ ] Refresh token implementation **_missing endpoints_**
+##  Main Project Tasks
+<!-- User management -->
+-   [X] Login implementation
+-   [ ] Refresh token implementation **_missing endpoints/resolved_**
+-   [ ] Forget password/email _ **_`missing endpoint`_**
   
 <!-- Admin Management -->
 -   [x] Create Admin User
@@ -81,7 +85,7 @@ Military Pensions Board – Admin Portal Management
 -   [ ] Query pensioners table by size, pageNumber `endpoint not working`
 -   [ ] search pensioner table by name etc
 -   [ ] Filtering pensioner table **_special attention_**
--   [ ] Csv upload
+-   [ ] Csv upload **_`missing endpoint`_**
 <!-- Role management -->
 -   [ ] Role management UI
 -   [ ] Create role name and description
@@ -93,10 +97,9 @@ Military Pensions Board – Admin Portal Management
 -   [ ] Filtering verication table
 <!-- Profile -->
 ` Fatima & hope - Wednesday`
--   [ ] display profile information
--   [ ] Edit profile information
--   [ ] change password
--   [ ] Forget password **_`missing endpoint`_**
+-   [X] display profile information
+-   [X] Edit profile information **_`reservation`_**
+-   [X] change password
 
 ## Future Task
 
@@ -109,12 +112,14 @@ Military Pensions Board – Admin Portal Management
 
 ## Note
 
--   createdBy is returning "1" while UI expect "name" to be displayed
+-   createdBy is returning "1" while admin table UI expect "name" to be displayed
 -   The getRole endpoints is paginated which is fine but when using the roles in a select
     dropdown field, it is expected that all role should be fetch. The usual convention is to pass "size=0" to get all roles but that's not working. so what is the queryParams to be pass to get all
     roles.
 -   After successfully updating a user profile page, there is no way to invalidate the endpoint, to get the updated user information
--
+- for user profile update, what is expected to be pass as status since there is not status in the token
+- for user profile update, endpoint expect array of roleId, while token contain array of role as string
+- after successful updating a user password, what is the expectation ? logout the user or what ?
 
 ## Credits
 

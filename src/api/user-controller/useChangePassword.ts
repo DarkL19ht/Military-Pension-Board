@@ -1,7 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
-import { HTTP } from "@/lib/httpClient";
-import config from "@/config";
-import { UserChangePassword as Payload } from "@/types/user";
+import { AuthHTTP } from "@/lib";
+
+interface IParameters {
+    onError?: (err: any) => void;
+    onSuccess?: (res: any) => void;
+}
 
 type RequestPayload = {
     confirmPassword: string;
@@ -9,27 +12,27 @@ type RequestPayload = {
     password: string;
 };
 
-const useChangePassword = () => {
+const useChangePassword = ({ onError, onSuccess }: IParameters = {}) => {
     const Mutation = useMutation({
         mutationFn: async ({
             requestPayload,
             id,
         }: {
-            requestPayload: RequestPayload | Omit<Payload, "status"> | any;
+            requestPayload: RequestPayload;
             id: number;
         }) => {
             try {
-                const res = await HTTP.post(`/api/users/password/${id}`, requestPayload, {
-                    headers: {
-                        Authorization: `Basic ${config.apiKey}`,
-                        "Content-Type": "application/json",
-                    },
-                });
+                const res = await AuthHTTP.post(
+                    `/api/users/password/${id}`,
+                    requestPayload
+                );
                 return res;
             } catch (error) {
                 return Promise.reject(error);
             }
         },
+        onError,
+        onSuccess,
     });
 
     const { mutate, isLoading } = Mutation;
