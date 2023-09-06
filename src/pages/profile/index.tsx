@@ -60,7 +60,7 @@ export default function Profile() {
                                         control={control}
                                         rules={{
                                             required: {
-                                                value: true,
+                                                // value: true,
                                                 message: "First name is required",
                                             },
                                         }}
@@ -77,7 +77,7 @@ export default function Profile() {
                                         control={control}
                                         rules={{
                                             required: {
-                                                value: true,
+                                                // value: true,
                                                 message: "Last name is required",
                                             },
                                         }}
@@ -96,7 +96,7 @@ export default function Profile() {
                                         control={control}
                                         rules={{
                                             required: {
-                                                value: true,
+                                                // value: true,
                                                 message: "Other name is required",
                                             },
                                         }}
@@ -113,7 +113,7 @@ export default function Profile() {
                                         control={control}
                                         rules={{
                                             required: {
-                                                value: true,
+                                                // value: true,
                                                 message: "Username is required",
                                             },
                                         }}
@@ -133,7 +133,7 @@ export default function Profile() {
                                         control={control}
                                         rules={{
                                             required: {
-                                                value: true,
+                                                // value: true,
                                                 message: "Email is required",
                                             },
                                         }}
@@ -151,7 +151,7 @@ export default function Profile() {
                                         control={control}
                                         rules={{
                                             required: {
-                                                value: true,
+                                                // value: true,
                                                 message: "Phone number is required",
                                             },
                                         }}
@@ -166,7 +166,7 @@ export default function Profile() {
                 </div>
             </div>
             <div className="mb-20 ml-20 mt-9 w-full rounded-md border border-gray-100 px-[3.81rem] py-5 pt-[2rem] shadow-md sm:w-[60%]">
-                <pre className="hidden">{JSON.stringify(watch(), null, 2)}</pre>
+                <pre className="hiddens">{JSON.stringify(watch(), null, 2)}</pre>
                 <pre className="hidden">{JSON.stringify(errors, null, 2)}</pre>
                 <form className="w-full max-w-2xl">
                     <p className="mb-10 mt-8 pr-[1.25rem] text-3xl font-semibold text-[#239F5B]">

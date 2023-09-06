@@ -7,6 +7,7 @@ import RootLayout from "@/layouts/RootLayout";
 import AdminUsers from "@/pages/admin-user";
 import SetRolesPermissions from "@/pages/set-roles-permissions";
 import PensionerTable from "@/pages/pensioner/pensioners-table";
+import RolesTable from "@/pages/role/roles-table";
 import AddPensioners from "@/pages/pensioner/onboard-pensioner";
 import PensionersProfile from "@/pages/pensioner/pensioners-profile";
 import ProtectedRoute from "./protected-route";
@@ -93,6 +94,10 @@ const routeConfig = [
                     {
                         path: "create-role",
                         element: <AddRole />,
+                    },
+                    {
+                        path: "view-roles",
+                        element: <RolesTable />,
                     },
                 ],
             },

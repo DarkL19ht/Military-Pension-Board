@@ -44,6 +44,10 @@ const subMenusList = [
                 name: "Create Role",
                 path: "",
             },
+            {
+                name: "View Roles",
+                path: "",
+            },
         ],
     },
 ];
