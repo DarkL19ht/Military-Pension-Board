@@ -5,11 +5,12 @@ import { useForm } from "react-hook-form";
 import BannerImage from "@/assets/images/logo.png";
 import securityIcon from "../../../../public/cardicons/icon-security.svg";
 import MpbTextField from "@/components/@form/MpbTextField";
+import { MpbButton } from "@/components/ui/button/MpbButton";
 import { UserRequestPayload } from "@/types/user";
 
 interface FormValues extends Pick<UserRequestPayload, "email"> {}
 
-function RecoveryMail() {
+export default function RecoveryMail() {
     const { control } = useForm<FormValues>({
         defaultValues: {
             email: "",
@@ -56,11 +57,12 @@ function RecoveryMail() {
                                     }}
                                 />
                             </div>
-                            <Link to="/new-password">
-                                <button className="w-full rounded-md bg-[#00873D] py-[0.7rem] text-[#ffffff]">
-                                    Recover Password
-                                </button>
-                            </Link>
+                            <MpbButton
+                                type="submit"
+                                title="Recover Password"
+                                size="sm"
+                                fullWidth
+                            />
                         </form>
                     </div>
                 </div>
@@ -68,5 +70,3 @@ function RecoveryMail() {
         </div>
     );
 }
-
-export default RecoveryMail;
