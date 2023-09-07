@@ -6,9 +6,10 @@ import BannerImage from "@/assets/images/logo.png";
 import securityIcon from "../../../../public/cardicons/icon-security.svg";
 import MpbTextField from "@/components/@form/MpbTextField";
 import { MpbButton } from "@/components/ui/button/MpbButton";
-import { UserRequestPayload } from "@/types/user";
+import { UserEmailRequestPayload } from "@/types/recoveryEmail";
+// import HTTP from "@/lib/httpClient";
 
-interface FormValues extends Pick<UserRequestPayload, "email"> {}
+interface FormValues extends Pick<UserEmailRequestPayload, "email"> {}
 
 export default function RecoveryMail() {
     const { control } = useForm<FormValues>({
