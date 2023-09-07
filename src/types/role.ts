@@ -1,3 +1,12 @@
+import { STATUS } from "./enum";
+
+export interface IRoleRequestPayload {
+    description: string;
+    name: string;
+    permissions: number[] | any;
+    status: STATUS | "";
+}
+
 export interface IRoleResponsePayload {
     id: number;
     name: string;

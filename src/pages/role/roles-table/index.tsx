@@ -1,20 +1,38 @@
+/* eslint-disable no-unsafe-optional-chaining */
 /* eslint-disable react/no-unstable-nested-components */
-import { useMemo, useState } from "react";
+import { useReducer, useMemo, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import moment from "moment";
 import { CgMoreVertical } from "react-icons/cg";
 import { Search, Trash2, RotateCcw, FileEdit, ShieldCheck } from "lucide-react";
 import { Link } from "react-router-dom";
 // React Table
 import { PaginationState, ColumnDef } from "@tanstack/react-table";
+// change it
+import useUpdateRoles from "@/api/role-controller/useUpdateRoles";
+import queryKeys from "@/api/queryKeys";
 import useGetRoles from "@/api/role-controller/useGetRoles";
+import ManageRoleModal from "./ManageRoleModal";
 import DataTable from "./DataTable";
-import { MpbButton, MpbMenu } from "@/components";
+import {
+    MpbSweetAlert as DisableRoleModal,
+    MpbSweetAlert as ResetPasswordModal,
+    MpbButton,
+    MpbMenu,
+} from "@/components";
+import { reducer, initialState, ReducerActionType } from "./reducer";
 import appConfig from "@/config";
-import { STATUS } from "@/types/enum";
+import { useToast } from "@/components/ui/toast/use-toast";
+// check
+import { STATUS, RequestMethod } from "@/types/enum";
 import { IRoleResponsePayload } from "@/types/role";
 import { cn } from "@/lib";
 
 export default function Roles() {
+    const { toast } = useToast();
+    const queryClient = useQueryClient();
+    const [state, runDispatch] = useReducer(reducer, initialState);
+    const { isResetPassword, isDisableRole, isNewRole, rowData, isEdit } = state;
     const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
         pageIndex: 0,
         pageSize: appConfig.defaultPageSize,
@@ -36,6 +54,43 @@ export default function Roles() {
         }),
         [pageIndex, pageSize]
     );
+
+    const { UpdateRole: DisableRole, isUpdatingRole: isDisablingRole } = useUpdateRoles({
+        onSuccess: (res: any) => {
+            toast({
+                description: res?.data?.responseMessage,
+            });
+            queryClient.invalidateQueries([queryKeys.GET_ROLES]);
+            runDispatch({ type: ReducerActionType.CLOSE_DISABLE_MODAL });
+        },
+        onError: (err: any) => {
+            const { error, message, responseMessage } = err?.response?.data;
+            toast({
+                title: error,
+                description: message || responseMessage,
+                variant: "error",
+            });
+        },
+    });
+
+    const handleDisableRole = () => {
+        const { id, email, firstName, lastName, phone, roles, username, status } =
+            rowData;
+        const requestPayload = {
+            email,
+            firstName,
+            lastName,
+            phone,
+            username,
+            roles: roles?.map((item: any) => item.id),
+            /**
+             * if status is enabled send status request as ("DISABLED")
+             * if status is disabled  send status request as ("ENABLED")
+             */
+            status: status === STATUS.ENABLED ? STATUS.DISABLED : STATUS.ENABLED,
+        };
+        DisableRole({ requestPayload, requestMethod: RequestMethod.PUT, id });
+    };
 
     const columns = useMemo<ColumnDef<IRoleResponsePayload>[]>(
         () => [
@@ -109,12 +164,12 @@ export default function Roles() {
                         >
                             <MpbMenu>
                                 <MpbMenu.Button>
-                                    <CgMoreVertical />
+                                    <CgMoreVertical className="-ml-10" />
                                 </MpbMenu.Button>
                                 <MpbMenu.Items className="right-8 top-0 ">
                                     <MpbMenu.Item className="flex items-center gap-3 hover:bg-green-50 ">
                                         <FileEdit size={15} color="green" />
-                                        <span>Edit User</span>
+                                        <span>Edit Role</span>
                                     </MpbMenu.Item>
                                     <MpbMenu.Item className="flex items-center gap-3 hover:bg-red-50">
                                         <RotateCcw size={15} color="red" />
@@ -124,7 +179,7 @@ export default function Roles() {
                                         {row?.original?.status === STATUS.DISABLED && (
                                             <>
                                                 <ShieldCheck size={15} color="green" />
-                                                <span>Enable User</span>
+                                                <span>Enable Role</span>
                                             </>
                                         )}
                                         {row?.original?.status === STATUS.ENABLED && (
@@ -192,11 +247,11 @@ export default function Roles() {
                     </div>
                     <MpbButton
                         title="Add New Role"
-                        // onClick={() =>
-                        //     runDispatch({
-                        //         type: ReducerActionType.OPEN_ADD_NEW_USER__MODAL,
-                        //     })
-                        // }
+                        onClick={() =>
+                            runDispatch({
+                                type: ReducerActionType.OPEN_ADD_NEW_ROLE__MODAL,
+                            })
+                        }
                     />
                 </div>
                 <DataTable
@@ -210,7 +265,7 @@ export default function Roles() {
                     pageSizeOptions={[5, 10, 20, 30, 50]}
                 />
             </div>
-            {/* {isResetPassword && (
+            {isResetPassword && (
                 <ResetPasswordModal
                     isOpen={isResetPassword}
                     closeModal={() =>
@@ -226,16 +281,16 @@ export default function Roles() {
                     className="px-10"
                 />
             )}
-            {isDisableUser && (
-                <DisableUserModal
-                    isOpen={isDisableUser}
+            {isDisableRole && (
+                <DisableRoleModal
+                    isOpen={isDisableRole}
                     closeModal={() =>
                         runDispatch({ type: ReducerActionType.CLOSE_DISABLE_MODAL })
                     }
                     message={`Are you sure, you want to ${
                         STATUS.DISABLED === rowData.status ? "enable" : "disable"
                     } this user ?`}
-                    onConfirm={handleDisableUser}
+                    onConfirm={handleDisableRole}
                     showCancelButton
                     className={
                         // if status="ENABLED", disable button should show with bg-red
@@ -256,19 +311,19 @@ export default function Roles() {
                             : "delete_icon"
                     }
                     showDivider={false}
-                    isLoading={isDisablingUser}
+                    isLoading={isDisablingRole}
                 />
             )}
-            {isNewUser && (
-                <ManageAdminModal
-                    isOpen={isNewUser}
+            {isNewRole && (
+                <ManageRoleModal
+                    isOpen={isNewRole}
                     closeModal={() =>
-                        runDispatch({ type: ReducerActionType.CLOSE_ADD_NEW_USER__MODAL })
+                        runDispatch({ type: ReducerActionType.CLOSE_ADD_NEW_ROLE__MODAL })
                     }
                     isEdit={isEdit}
                     rowData={rowData}
                 />
-            )} */}
+            )}
         </div>
     );
 }
