@@ -24,7 +24,6 @@ export default function useGetUsers({ size, pageNumber }: IParameters = {}) {
                 return Promise.reject(error);
             }
         },
-        // staleTime: 1000 * 60 * 5
     });
 
     return result;

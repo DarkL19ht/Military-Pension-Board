@@ -4,6 +4,7 @@ const config = {
     httpTimeout: 1000 * 60 * 1, // 1 minutes
     idleTimeOut: 1000 * 60 * 30, /// 30 minutes
     defaultPageSize: 10,
+    maxLimitForManualPensionerForm: 3,
 };
 
 export default config;

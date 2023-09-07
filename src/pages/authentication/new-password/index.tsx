@@ -1,21 +1,25 @@
+/* eslint-disable no-console */
 import { useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import { CiLock } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 import BannerImage from "@/assets/images/logo.png";
 import securityIcon from "../../../../public/cardicons/icon-security.svg";
 import MpbTextField from "@/components/@form/MpbTextField";
-import { ResetPasswordRequestPayload } from "@/types/passwordRecovery";
 import MpbSweetAlert from "@/components/ui/sweetalert/MpbSweetAlert";
 
-interface FormValues
-    extends Pick<
-        ResetPasswordRequestPayload,
-        "confirmPassword" | "oldPassword" | "password"
-    > {}
+interface FormValues {
+    defaultPassword: string;
+    newPassword: string;
+    confirmPassword: string;
+}
 
 function NewPassword() {
+    const email = useSelector((state: RootState) => state.appReducer.email);
+    console.log(email);
+
     const [open, setOpen] = useState(false);
     const { control } = useForm<FormValues>({
         defaultValues: {
@@ -31,7 +35,7 @@ function NewPassword() {
 
     return (
         <div className="grid h-screen grid-cols-1 md:grid-cols-3">
-            <div className="col-span-1 flex h-screen items-center justify-center bg-[#00873D] md:col-span-1">
+            <div className="col-span-1 hidden h-screen items-center justify-center bg-[#00873D] md:col-span-1 md:flex">
                 <img src={securityIcon} alt="svg-img" className="h-full w-[300px]" />
             </div>
             <div className="col-span-1 h-screen bg-[#FFFFFF] md:col-span-2">
@@ -43,22 +47,20 @@ function NewPassword() {
                     </div>
                     <div className="">Having troubles? Get help</div>
                 </div>
-                <div className="flex items-center justify-center ">
-                    <div className="mx-auto rounded-md p-4  sm:w-3/5 lg:w-3/5">
-                        <div className="my-6 ">
-                            <div className="flex items-center justify-between">
+                <div className="flex h-[80%] items-center justify-center ">
+                    <div className="mx-auto flex flex-col gap-10 rounded-md px-5 sm:w-4/5 lg:w-3/5">
+                        <div className="flex flex-col gap-y-4">
+                            <div className="flex items-center ">
                                 <Link to="/recovery-mail">
                                     <IoIosArrowBack />
                                 </Link>
-                                <div className="flex-1  text-center text-[1.5rem] font-[600]">
+                                <div className="flex-1 text-center text-[1.5rem] font-[600]">
                                     Create New Password
                                 </div>
                             </div>
-                            <div className="w-full text-center">
-                                The default password has been sent to
-                                <span className="px-1 text-[#00873D]">
-                                    Josephsusan@gmail.com
-                                </span>
+                            <div className="w-full text-center ">
+                                <span>The default password has been sent to</span>
+                                <span className="px-1 text-[#00873D]">{email}</span>
                             </div>
                         </div>
                         <form className="" onSubmit={handleSubmit}>
@@ -107,7 +109,7 @@ function NewPassword() {
                                     }}
                                 />
                             </div>
-                            <div className="pt-[3rem]">
+                            <div className="pt-8">
                                 <button
                                     className="w-full rounded-md bg-[#00873D] py-[0.7rem] text-[#ffffff]"
                                     type="submit"

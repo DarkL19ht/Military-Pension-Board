@@ -1,3 +1,4 @@
+/* eslint-disable no-unsafe-optional-chaining */
 /* eslint-disable react/no-unstable-nested-components */
 import { useReducer, useState, useMemo } from "react";
 import { useQueryClient } from "@tanstack/react-query";
@@ -22,55 +23,15 @@ import {
 import { reducer, initialState, ReducerActionType } from "./reducer";
 import appConfig from "@/config";
 import { useToast } from "@/components/ui/toast/use-toast";
-import { STATUS } from "@/types/enum";
-
-export type Admin = {
-    id: number;
-    firstName: string;
-    lastName: string;
-    email: string;
-    phone: string;
-    username: string;
-    authorized: boolean;
-    status: STATUS;
-    createdOn: string;
-    createdBy: number;
-    updatedOn: string;
-    updatedBy: number;
-    roles: Role[];
-};
-
-type Role = {
-    id: number;
-    name: string;
-    description: string;
-    authorized: boolean;
-    status: STATUS;
-    createdOn: string;
-    createdBy: number;
-    updatedOn: string;
-    updatedBy: number;
-};
-
-const getStatusClassName = (status: string, type: "bg" | "text" = "bg"): string => {
-    switch (status) {
-        case "ENABLED":
-            return `${type}-green-500`;
-        case "DISABLED":
-            return `${type}-red-500`;
-        case "PENDING_AUTHORIZATION":
-            return `${type}-amber-500`;
-        default:
-            return "";
-    }
-};
+import { STATUS, RequestMethod } from "@/types/enum";
+import { UserResponsePayload } from "@/types/user";
+import { cn } from "@/lib";
 
 export default function AdminUsersTable() {
     const { toast } = useToast();
     const queryClient = useQueryClient();
     const [state, runDispatch] = useReducer(reducer, initialState);
-    const { isResetPassword, isDisableUser, isNewUser } = state;
-    const [rowData, setRowData] = useState<Admin | Record<string, never>>({});
+    const { isResetPassword, isDisableUser, isNewUser, rowData, isEdit } = state;
     const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
         pageIndex: 0,
         pageSize: appConfig.defaultPageSize,
@@ -93,16 +54,16 @@ export default function AdminUsersTable() {
         [pageIndex, pageSize]
     );
 
-    const { UpdateUser, isUpdatingUser: isDisablingUser } = useUpdateUser({
+    const { UpdateUser: DisableUser, isUpdatingUser: isDisablingUser } = useUpdateUser({
         onSuccess: (res: any) => {
             toast({
-                description: res.data.responseMessage,
+                description: res?.data?.responseMessage,
             });
             queryClient.invalidateQueries([queryKeys.GET_USERS]);
             runDispatch({ type: ReducerActionType.CLOSE_DISABLE_MODAL });
         },
         onError: (err: any) => {
-            const { error, message, responseMessage } = err.response.data;
+            const { error, message, responseMessage } = err?.response?.data;
             toast({
                 title: error,
                 description: message || responseMessage,
@@ -120,17 +81,17 @@ export default function AdminUsersTable() {
             lastName,
             phone,
             username,
-            roles: roles?.map((item) => item.id),
+            roles: roles?.map((item: any) => item.id),
             /**
-             * if status is enabled =  status: "DISABLED"
-             * if status is disabled  =  status: "ENABLED"
+             * if status is enabled send status request as ("DISABLED")
+             * if status is disabled  send status request as ("ENABLED")
              */
             status: status === STATUS.ENABLED ? STATUS.DISABLED : STATUS.ENABLED,
         };
-        UpdateUser({ requestPayload, id });
+        DisableUser({ requestPayload, requestMethod: RequestMethod.PUT, id });
     };
 
-    const columns = useMemo<ColumnDef<Admin>[]>(
+    const columns = useMemo<ColumnDef<UserResponsePayload>[]>(
         () => [
             {
                 accessorKey: "createdOn",
@@ -155,9 +116,13 @@ export default function AdminUsersTable() {
                     return (
                         <div className="flex items-center gap-1">
                             <div
-                                className={`h-2 w-2 rounded-full ${getStatusClassName(
-                                    row?.original?.status
-                                )}`}
+                                className={cn(
+                                    `h-2 w-2 rounded-full`,
+                                    STATUS.ENABLED === row?.original?.status &&
+                                        "bg-green-600",
+                                    STATUS.DISABLED === row?.original?.status &&
+                                        "bg-red-600"
+                                )}
                             />
                             <div className="flex gap-2">
                                 <span>{_.startCase(row?.original?.firstName)}</span>
@@ -185,7 +150,12 @@ export default function AdminUsersTable() {
                 cell: ({ row }) => {
                     return (
                         <span
-                            className={getStatusClassName(row?.original?.status, "text")}
+                            className={cn(
+                                STATUS.ENABLED === row?.original?.status &&
+                                    "text-green-500",
+                                STATUS.DISABLED === row?.original?.status &&
+                                    "text-red-500"
+                            )}
                         >
                             {row?.original?.status}
                         </span>
@@ -201,7 +171,8 @@ export default function AdminUsersTable() {
                             {row?.original?.roles.map((item) => (
                                 <span
                                     key={item.name}
-                                    className="whitespace-nowrap rounded-full bg-blue-100/80 px-2 py-1 text-center text-xs font-semibold text-blue-500"
+                                    className="whitespace-nowrap rounded-full bg-blue-100/80 px-2 py-1 
+                                    text-center text-xs font-semibold text-blue-500"
                                 >
                                     {" "}
                                     {_.toLower(item.name)}
@@ -217,7 +188,7 @@ export default function AdminUsersTable() {
                 id: "Action",
                 cell: ({ row }) => {
                     return (
-                        <td
+                        <div
                             className="flex cursor-pointer items-center justify-center 
                             whitespace-nowrap px-2 py-4 text-center text-xs"
                         >
@@ -229,9 +200,15 @@ export default function AdminUsersTable() {
                                     <MpbMenu.Item
                                         onClick={() => {
                                             runDispatch({
-                                                type: ReducerActionType.OPEN_RESET_MODAL,
+                                                type: ReducerActionType.OPEN_ADD_NEW_USER__MODAL,
                                             });
-                                            setRowData(row?.original);
+                                            runDispatch({
+                                                type: ReducerActionType.SET_FORM_DATA,
+                                                payload: row?.original,
+                                            });
+                                            runDispatch({
+                                                type: ReducerActionType.SET_IS_EDIT,
+                                            });
                                         }}
                                         className="flex items-center gap-3 hover:bg-green-50 "
                                     >
@@ -242,8 +219,8 @@ export default function AdminUsersTable() {
                                         onClick={() => {
                                             runDispatch({
                                                 type: ReducerActionType.OPEN_RESET_MODAL,
+                                                payload: row?.original,
                                             });
-                                            setRowData(row?.original);
                                         }}
                                         className="flex items-center gap-3 hover:bg-red-50"
                                     >
@@ -254,8 +231,8 @@ export default function AdminUsersTable() {
                                         onClick={() => {
                                             runDispatch({
                                                 type: ReducerActionType.OPEN_DISABLE_MODAL,
+                                                payload: row?.original,
                                             });
-                                            setRowData(row?.original);
                                         }}
                                         className="flex items-center gap-3 hover:bg-red-50"
                                     >
@@ -274,7 +251,7 @@ export default function AdminUsersTable() {
                                     </MpbMenu.Item>
                                 </MpbMenu.Items>
                             </MpbMenu>
-                        </td>
+                        </div>
                     );
                 },
             },
@@ -349,50 +326,65 @@ export default function AdminUsersTable() {
                     pageSizeOptions={[5, 10, 20, 30, 50]}
                 />
             </div>
-
-            <ResetPasswordModal
-                isOpen={isResetPassword}
-                closeModal={() =>
-                    runDispatch({ type: ReducerActionType.CLOSE_RESET_MODAL })
-                }
-                message="Are you sure, you want to reset password ?"
-                onConfirm={() => undefined}
-                showCancelButton
-                backdrop={false}
-                confirmText="Reset"
-                icon="success_lock_icon"
-                showDivider={false}
-                className="px-10"
-            />
-            <DisableUserModal
-                isOpen={isDisableUser}
-                closeModal={() =>
-                    runDispatch({ type: ReducerActionType.CLOSE_DISABLE_MODAL })
-                }
-                message="Are you sure, you want to disable this user ?"
-                onConfirm={handleDisableUser}
-                showCancelButton
-                className={
-                    // if status="ENABLED", disable button should show with bg-red
-                    // if status="DISABLED", enable button should show with bg-green
-                    STATUS.ENABLED === rowData.status
-                        ? "bg-red-500 px-10 disabled:bg-red-300"
-                        : "px-10"
-                }
-                backdrop={false}
-                // if status="ENABLED", button title is "Disable"
-                // if status="DISABLED", button title is "Enable"
-                confirmText={STATUS.DISABLED === rowData.status ? "Enable" : "Disable"}
-                icon="delete_icon"
-                showDivider={false}
-                isLoading={isDisablingUser}
-            />
-            <ManageAdminModal
-                isOpen={isNewUser}
-                closeModal={() =>
-                    runDispatch({ type: ReducerActionType.CLOSE_ADD_NEW_USER__MODAL })
-                }
-            />
+            {isResetPassword && (
+                <ResetPasswordModal
+                    isOpen={isResetPassword}
+                    closeModal={() =>
+                        runDispatch({ type: ReducerActionType.CLOSE_RESET_MODAL })
+                    }
+                    message="Are you sure, you want to reset password ?"
+                    onConfirm={() => undefined}
+                    showCancelButton
+                    backdrop={false}
+                    confirmText="Reset"
+                    icon="success_lock_icon"
+                    showDivider={false}
+                    className="px-10"
+                />
+            )}
+            {isDisableUser && (
+                <DisableUserModal
+                    isOpen={isDisableUser}
+                    closeModal={() =>
+                        runDispatch({ type: ReducerActionType.CLOSE_DISABLE_MODAL })
+                    }
+                    message={`Are you sure, you want to ${
+                        STATUS.DISABLED === rowData.status ? "enable" : "disable"
+                    } this user ?`}
+                    onConfirm={handleDisableUser}
+                    showCancelButton
+                    className={
+                        // if status="ENABLED", disable button should show with bg-red
+                        // if status="DISABLED", enable button should show with bg-green
+                        STATUS.ENABLED === rowData.status
+                            ? "bg-red-500 px-10 disabled:bg-red-300"
+                            : "px-10"
+                    }
+                    backdrop={false}
+                    // if status="ENABLED", button title is "Disable"
+                    // if status="DISABLED", button title is "Enable"
+                    confirmText={
+                        STATUS.DISABLED === rowData.status ? "Enable" : "Disable"
+                    }
+                    icon={
+                        STATUS.DISABLED === rowData.status
+                            ? "success_icon"
+                            : "delete_icon"
+                    }
+                    showDivider={false}
+                    isLoading={isDisablingUser}
+                />
+            )}
+            {isNewUser && (
+                <ManageAdminModal
+                    isOpen={isNewUser}
+                    closeModal={() =>
+                        runDispatch({ type: ReducerActionType.CLOSE_ADD_NEW_USER__MODAL })
+                    }
+                    isEdit={isEdit}
+                    rowData={rowData}
+                />
+            )}
         </div>
     );
 }

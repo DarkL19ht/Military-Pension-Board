@@ -1,22 +1,52 @@
 import { IoIosArrowBack } from "react-icons/io";
 import { AiOutlineMail } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import BannerImage from "@/assets/images/logo.png";
 import securityIcon from "../../../../public/cardicons/icon-security.svg";
 import MpbTextField from "@/components/@form/MpbTextField";
 import { MpbButton } from "@/components/ui/button/MpbButton";
 import { UserEmailRequestPayload } from "@/types/recoveryEmail";
-// import HTTP from "@/lib/httpClient";
+import HTTP from "@/lib/httpClient";
+import { setEmail } from "@/redux/reducers/app-slice";
 
 interface FormValues extends Pick<UserEmailRequestPayload, "email"> {}
 
 export default function RecoveryMail() {
-    const { control } = useForm<FormValues>({
-        defaultValues: {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const {
+        control,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm<FormValues>({
+        mode: "all",
+        data: {
             email: "",
         },
     });
+
+    const handleEmailRecovery = async (data: FormValues) => {
+        try {
+            const response = await HTTP.post(`/apis/password/reset`, {
+                email: data.email,
+            });
+
+            if (response.status === 200) {
+                dispatch(setEmail(data.email));
+                navigate("/new-password");
+            } else {
+                // eslint-disable-next-line no-console
+                console.error("Failed to send password recovery email.");
+            }
+        } catch (error) {
+            // Handle any network or other errors
+            // eslint-disable-next-line no-console
+            console.error("An error occurred:", error);
+        }
+    };
 
     return (
         <div className="grid h-screen grid-cols-1 md:grid-cols-3">
@@ -42,6 +72,8 @@ export default function RecoveryMail() {
                                 Enter email to recover password
                             </div>
                         </div>
+                        <pre className="hidden">{JSON.stringify(watch(), null, 2)}</pre>
+                        <pre className="hidden">{JSON.stringify(errors, null, 2)}</pre>
                         <form className="">
                             <div className="mb-10">
                                 <MpbTextField
@@ -63,6 +95,7 @@ export default function RecoveryMail() {
                                 title="Recover Password"
                                 size="sm"
                                 fullWidth
+                                onClick={handleSubmit(handleEmailRecovery)}
                             />
                         </form>
                     </div>

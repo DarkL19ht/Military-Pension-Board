@@ -4,6 +4,7 @@ import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 import appReducer from "./app-slice";
 import authReducer from "./auth-slice";
+
 import type { RootState } from "../store";
 
 const rootPersistConfig = {

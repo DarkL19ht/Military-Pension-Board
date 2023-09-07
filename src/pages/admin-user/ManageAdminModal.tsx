@@ -1,30 +1,29 @@
-// import { useState, Fragment } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "@tanstack/react-query";
 import { CiUser } from "react-icons/ci";
-import useCreateUser from "@api/user-controller/useCreateUser";
+import useUpdateUser from "@api/user-controller/useUpdateUser";
 import useGetRoles from "@api/role-controller/useGetRoles";
 import queryKeys from "@api/queryKeys";
 import MpbModal from "@/components/ui/modal/MpbModal";
 import { MpbTextField, MpbButton } from "@/components";
 import MpbReactSelectField from "@/components/@form/MpbReactSelectField";
 import { useToast } from "@/components/ui/toast/use-toast";
+import { UserRequestPayload as FormValues, UserResponsePayload } from "@/types/user";
 
 interface IProps {
     isOpen: boolean;
     closeModal: () => void;
+    isEdit: boolean;
+    rowData: UserResponsePayload;
 }
 
-interface FormValues {
-    email: string;
-    firstName: string;
-    lastName: string;
-    phone: string;
-    roles: number[];
-    username: string;
-}
-
-export default function ManageAdminModal({ isOpen, closeModal }: IProps) {
+export default function ManageAdminModal({
+    isOpen,
+    closeModal,
+    isEdit,
+    rowData,
+}: IProps) {
     const { toast } = useToast();
     const queryClient = useQueryClient();
     const { control, handleSubmit, reset } = useForm<FormValues>({
@@ -36,12 +35,32 @@ export default function ManageAdminModal({ isOpen, closeModal }: IProps) {
             phone: "",
             roles: [],
             username: "",
+            status: "",
         },
     });
+    // Prefill form field with row Data for update
+    useEffect(() => {
+        // reset form with row data
+        if (isEdit) {
+            reset({
+                email: rowData?.email,
+                firstName: rowData?.firstName,
+                lastName: rowData?.lastName,
+                phone: rowData?.phone,
+                roles: rowData?.roles?.map((item) => ({
+                    value: item.id,
+                    label: item.name,
+                })),
+                status: rowData?.status,
+                username: rowData?.username,
+            });
+        }
+    }, [rowData, reset, isEdit]);
+
     /** apiCalls to get roles */
     const { RoleResponse } = useGetRoles();
     /** apiCall for create admin user  */
-    const { CreateUser, isCreatingUser } = useCreateUser({
+    const { UpdateUser, isUpdatingUser } = useUpdateUser({
         onSuccess: (res) => {
             toast({
                 description: res.data.responseMessage,
@@ -58,31 +77,39 @@ export default function ManageAdminModal({ isOpen, closeModal }: IProps) {
             });
         },
     });
-    const handleCreateUser = (values: FormValues) => {
-        const requestPayload = {
+    const handleAdminUser = (values: FormValues) => {
+        // remove "status" key from create request
+        const { status, ...others } = values;
+        const updateRequest = {
             ...values,
             roles: values.roles.map((item) => item.value),
         };
+        const createRequest = {
+            ...others,
+            roles: values.roles.map((item) => item.value),
+        };
         /** mutate function from useCreateUser */
-        CreateUser(requestPayload);
+        UpdateUser({
+            requestPayload: isEdit ? updateRequest : createRequest,
+            requestMethod: isEdit ? "PUT" : "POST",
+            id: rowData?.id,
+        });
     };
     /**
      * closeModal and reset form field
      */
-    const handleCloseModal = () => {
-        reset();
-        closeModal();
-    };
+    const modalTitle = isEdit ? "Update admin user" : "New admin user";
+    const buttonTitle = isEdit ? "Update user" : "Create new user";
 
     return (
         <MpbModal
             showDivider={false}
-            title="new admin user"
+            title={modalTitle}
             isOpen={isOpen}
-            closeModal={handleCloseModal}
+            closeModal={closeModal}
             size="lg"
         >
-            <div className="px-5 pb-5">
+            <div className="px-5 py-5">
                 <form className="w-full space-y-5">
                     <div className="flex gap-3">
                         <div className="w-1/2">
@@ -179,9 +206,9 @@ export default function ManageAdminModal({ isOpen, closeModal }: IProps) {
                     </div>
                     <div className="flex justify-center py-5">
                         <MpbButton
-                            title="Create new user"
-                            onClick={handleSubmit(handleCreateUser)}
-                            isLoading={isCreatingUser}
+                            title={buttonTitle}
+                            onClick={handleSubmit(handleAdminUser)}
+                            isLoading={isUpdatingUser}
                             fullWidth
                         />
                     </div>

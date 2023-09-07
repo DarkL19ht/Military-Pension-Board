@@ -1,5 +1,9 @@
-/* eslint-disable import/prefer-default-export */
 export enum STATUS {
     ENABLED = "ENABLED",
     DISABLED = "DISABLED",
+}
+
+export enum RequestMethod {
+    POST = "POST",
+    PUT = "PUT",
 }

@@ -62,6 +62,7 @@ export default function UploadCsvFileModal({ isOpen, closeModal }: IProps) {
             title="Upload CSV"
             isOpen={isOpen}
             closeModal={handleCloseModal}
+            size="lg"
         >
             <div
                 {...getRootProps({

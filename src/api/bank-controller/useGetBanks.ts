@@ -1,20 +1,23 @@
 import { useQuery } from "@tanstack/react-query";
+import { useCallback } from "react";
 import { AuthHTTP } from "@/lib";
 import queryKeys from "../queryKeys";
 import { IApiResponse } from "@/types";
-import { IRankResponsePayload } from "@/types/rank";
+import { IBankResponsePayload } from "@/types/bank";
 
 interface IParameters {
     size?: number;
     pageNumber?: number;
 }
 
-export default function useGetRanks({ size, pageNumber }: IParameters = {}) {
-    const result = useQuery<IApiResponse<IRankResponsePayload>, Error>({
-        queryKey: [queryKeys.GET_RANKS, { size, pageNumber }],
-        queryFn: async () => {
+// useQuery<<IApiResponse<IBanks>, Error>;
+
+export default function useGetBanks({ size, pageNumber }: IParameters = {}) {
+    const result = useQuery({
+        queryKey: [queryKeys.GET_BANKS, { size, pageNumber }],
+        queryFn: async (): Promise<IApiResponse<IBankResponsePayload>> => {
             try {
-                const res = await AuthHTTP.get("/api/ranks/", {
+                const res = await AuthHTTP.get("/api/banks/", {
                     params: {
                         size,
                         number: pageNumber,
@@ -27,9 +30,14 @@ export default function useGetRanks({ size, pageNumber }: IParameters = {}) {
         },
         select: useCallback((res: any) => {
             return res?.data?.data?.content.map(
-                ({ id, name }: Pick<IBankResponsePayload, "id" | "name">) => ({
-                    value: id,
+                ({
+                    id,
+                    name,
+                    code,
+                }: Pick<IBankResponsePayload, "id" | "name" | "code">) => ({
+                    value: code,
                     label: _.startCase(_.toLower(name)), // capitalize first letter of each words
+                    id,
                 })
             );
         }, []),
