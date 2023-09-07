@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import { AiOutlineMail } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
@@ -16,6 +17,8 @@ interface FormValues extends Pick<UserEmailRequestPayload, "email"> {}
 export default function RecoveryMail() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [errorMessage] = useState("");
+
     const {
         control,
         handleSubmit,
@@ -37,14 +40,10 @@ export default function RecoveryMail() {
             if (response.status === 200) {
                 dispatch(setEmail(data.email));
                 navigate("/new-password");
-            } else {
-                // eslint-disable-next-line no-console
-                console.error("Failed to send password recovery email.");
             }
         } catch (error) {
-            // Handle any network or other errors
             // eslint-disable-next-line no-console
-            console.error("An error occurred:", error);
+            console.log(error);
         }
     };
 
@@ -74,6 +73,7 @@ export default function RecoveryMail() {
                         </div>
                         <pre className="hidden">{JSON.stringify(watch(), null, 2)}</pre>
                         <pre className="hidden">{JSON.stringify(errors, null, 2)}</pre>
+                        <div>{errorMessage}</div>
                         <form className="">
                             <div className="mb-10">
                                 <MpbTextField
