@@ -5,10 +5,8 @@ import { Decorator } from "@storybook/react";
 export const withCentered: Decorator = (Story, _context) => {
     // console.log(context)
     return (
-        <div className="flex h-[60vh] w-full items-center justify-center">
-            <div className="flex w-3/5 items-center justify-center">
-                <Story />
-            </div>
+        <div className="flex h-screen w-full flex-col items-center justify-center">
+            <Story />
         </div>
     );
 };

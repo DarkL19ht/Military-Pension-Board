@@ -96,7 +96,7 @@ const MpbButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
             >
                 {isLoading ? (
                     <div className="flex items-center gap-2">
-                        <LoadingSpinner className="!text-blue-brand" />
+                        <LoadingSpinner className="text-blue-brand" />
                         <div className="flex items-center">
                             <span className="capitalize">{loadingText}</span>
                             <HiOutlineDotsHorizontal

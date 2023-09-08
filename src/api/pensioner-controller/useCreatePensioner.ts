@@ -11,7 +11,7 @@ export default function useCreatePensioner({ onError, onSuccess }: IParameters =
     const Mutation = useMutation({
         mutationFn: async (requestPayload: IPensionerRequestPayload[]) => {
             try {
-                const res = await AuthHTTP.post("/api/pensioners/", requestPayload);
+                const res = await AuthHTTP.post("/api/pensioners", requestPayload);
                 return res;
             } catch (error) {
                 return Promise.reject(error);

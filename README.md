@@ -69,7 +69,7 @@ Military Pensions Board – Admin Portal Management
 <!-- User management -->
 -   [X] Login implementation
 -   [ ] Refresh token implementation **_missing endpoints/resolved_**
--   [ ] Forget password/email _ **_`missing endpoint`_**
+-   [ ] Forget password/email
   
 <!-- Admin Management -->
 -   [x] Create Admin User
@@ -80,7 +80,6 @@ Military Pensions Board – Admin Portal Management
 -   [x] Disable Admin User
 -   [ ] Reset Password on admin user `missing endpoints`
     <!-- Pensioner Management  -->
-    `Tuesday/ wednesday`
 -   [ ] Create Pensioner `endpoints not working`
 -   [ ] Query pensioners table by size, pageNumber `endpoint not working`
 -   [ ] search pensioner table by name etc
@@ -96,9 +95,8 @@ Military Pensions Board – Admin Portal Management
 -   [ ] Search verification table
 -   [ ] Filtering verication table
 <!-- Profile -->
-` Fatima & hope - Wednesday`
 -   [X] display profile information
--   [X] Edit profile information **_`reservation`_**
+-   [X] Edit profile information 
 -   [X] change password
 
 ## Future Task

@@ -131,13 +131,7 @@ export default function Profile() {
                                     placeholder="Joseph.Susan"
                                     type="text"
                                     control={control}
-                                    rules={{
-                                        required: {
-                                            value: true,
-                                            message: "Username is required",
-                                        },
-                                    }}
-                                    readOnly={isReadOnly}
+                                    readOnly
                                 />
                             </div>
                         </div>

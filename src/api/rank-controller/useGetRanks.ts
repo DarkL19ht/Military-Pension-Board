@@ -15,7 +15,7 @@ export default function useGetRanks({ size, pageNumber }: IParameters = {}) {
         queryKey: [queryKeys.GET_RANKS, { size, pageNumber }],
         queryFn: async () => {
             try {
-                const res = await AuthHTTP.get<IGetRankResponsePayload>("/api/ranks/", {
+                const res = await AuthHTTP.get<IGetRankResponsePayload>("/api/ranks", {
                     params: {
                         size,
                         number: pageNumber,

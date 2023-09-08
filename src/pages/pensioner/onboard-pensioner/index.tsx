@@ -1,4 +1,5 @@
 import { useReducer } from "react";
+import { useNavigate } from "react-router-dom";
 import { useForm, useFieldArray } from "react-hook-form";
 import { ChevronLeft, Plus, Trash2 } from "lucide-react";
 import { CiUser } from "react-icons/ci";
@@ -52,6 +53,7 @@ const initialFormValues = {
 
 export default function Pensioner() {
     const { toast } = useToast();
+    const navigate = useNavigate();
     const [state, runDispatch] = useReducer(reducer, initialState);
     const { isRegSuccess, isUploadCsv, hasReachedLimit } = state;
     const {
@@ -70,8 +72,9 @@ export default function Pensioner() {
         control,
         name: "dataFields",
     });
-
+    /** apiCall for ranks */
     const { data: ranks } = useGetRanks();
+    /** apiCall for banks */
     const { data: banks } = useGetBanks();
 
     const { CreatePensioner, isCreatingPensioner } = useCreatePensioner({
@@ -79,8 +82,8 @@ export default function Pensioner() {
             toast({
                 description: res.data.responseMessage,
             });
+            navigate("/pensioners/pensioners-details");
             // queryClient.invalidateQueries([queryKeys.GET_USERS]);
-            // closeModal();
         },
         onError: (err) => {
             const { error, message, responseMessage } = err.response.data;

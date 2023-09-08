@@ -19,7 +19,7 @@ import SubMenu from "./SubMenu";
 
 const subMenusList = [
     {
-        name: "Manage Pensioners",
+        name: "Pensioners",
         icon: TbReportAnalytics,
         menus: [
             {
@@ -27,25 +27,25 @@ const subMenusList = [
                 path: "",
             },
             {
-                name: "View Pensioners",
+                name: "Pensioners Details",
                 path: "",
             },
             {
-                name: "Pensioner's Profile",
+                name: "Verification Approval",
                 path: "",
             },
         ],
     },
-    {
-        name: "Manage Role",
-        icon: TbReportAnalytics,
-        menus: [
-            {
-                name: "Create Role",
-                path: "",
-            },
-        ],
-    },
+    // {
+    //     name: "Manage Role",
+    //     icon: TbReportAnalytics,
+    //     menus: [
+    //         {
+    //             name: "Create Role",
+    //             path: "",
+    //         },
+    //     ],
+    // },
 ];
 
 function Sidebar() {
@@ -132,7 +132,7 @@ function Sidebar() {
                 {/* Menus */}
                 <div className="flex h-full flex-col">
                     <ul
-                        className="flex h-[70%] flex-col gap-4 overflow-x-hidden 
+                        className="flex h-[70%] flex-col gap-2 overflow-x-hidden 
                         whitespace-pre px-2.5 py-5 
                         text-[0.9rem] font-medium scrollbar-thin scrollbar-track-white  scrollbar-thumb-slate-100 md:h-[80%]"
                     >
@@ -155,18 +155,18 @@ function Sidebar() {
                                 {/* <div className="border border-slate-300 py-5"> */}
                                 {/* <small className="mb-2 inline-block pl-3 text-slate-500">Product Categories</small> */}
                                 {subMenusList?.map((menu) => (
-                                    <div key={menu.name} className="flex flex-col gap-1">
+                                    <div key={menu.name} className="flex flex-col gap-4">
                                         <SubMenu data={menu} />
                                     </div>
                                 ))}
                             </div>
                         )}
-                        <li>
+                        {/* <li>
                             <NavLink to="/set-roles-permissions" className="link">
                                 <Cog size={20} className="min-w-max" />
                                 Role Management
                             </NavLink>
-                        </li>
+                        </li> */}
                         <li>
                             <NavLink to="admin-management" className="link">
                                 {/* <SlSettings size={23} className="min-w-max" /> */}

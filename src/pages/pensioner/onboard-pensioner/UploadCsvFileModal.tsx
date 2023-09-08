@@ -1,7 +1,13 @@
 import { useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import {
+    CSVLink,
+    // CSVDownload
+} from "react-csv";
 import MpbModal from "@/components/ui/modal/MpbModal";
+import { sampleCsvHeaders, sampleCsvData, bankCodeHeaders } from "./sample-template";
+import useGetBanks from "@/api/bank-controller/useGetBanks";
 
 interface IProps {
     isOpen: boolean;
@@ -23,7 +29,7 @@ const initialState = {
 };
 
 export default function UploadCsvFileModal({ isOpen, closeModal }: IProps) {
-    const [isProcessing] = useState(false);
+    const [isProcessing, setIsProcessing] = useState(false);
     // const [files, setFiles] = useState([])
     const [file, setFile] = useState<IFileDetails>(initialState);
     const onDrop = useCallback((acceptedFiles: any) => {
@@ -48,6 +54,7 @@ export default function UploadCsvFileModal({ isOpen, closeModal }: IProps) {
     const handleCloseModal = () => {
         closeModal();
         setFile(initialState);
+        setIsProcessing(!isProcessing);
     };
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -56,6 +63,30 @@ export default function UploadCsvFileModal({ isOpen, closeModal }: IProps) {
             "text/csv": [".csv"],
         },
     });
+
+    const { data: banks } = useGetBanks();
+
+    const listOfBankCodes = banks?.reduce((acc: any, items: any) => {
+        return [...acc, { bankName: items.label, bankCode: items.value }];
+    }, []);
+
+    const csvSampleReport = {
+        filename: "sample_csv_upload.csv",
+        headers: sampleCsvHeaders,
+        data: sampleCsvData,
+        target: "_blank",
+        className: "text-green-600",
+    };
+
+    /** TODO: change this to  */
+    const csvBankCodes = {
+        filename: "list_of_bank_codes.csv",
+        headers: bankCodeHeaders,
+        data: listOfBankCodes,
+        target: "_blank",
+        className: "text-green-600",
+    };
+
     return (
         <MpbModal
             showDivider={false}
@@ -64,6 +95,18 @@ export default function UploadCsvFileModal({ isOpen, closeModal }: IProps) {
             closeModal={handleCloseModal}
             size="lg"
         >
+            {isProcessing ? null : (
+                <div className="mx-5 flex justify-between bg-green-50 px-5 py-3">
+                    <div className="flex gap-1">
+                        <CSVLink {...csvSampleReport}>Download</CSVLink>
+                        <span>CSV template</span>
+                    </div>
+                    <div className="flex gap-1">
+                        <CSVLink {...csvBankCodes}>Download</CSVLink>
+                        <span>Bank Codes</span>
+                    </div>
+                </div>
+            )}
             <div
                 {...getRootProps({
                     className: "p-5",

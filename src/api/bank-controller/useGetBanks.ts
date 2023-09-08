@@ -17,7 +17,7 @@ export default function useGetBanks({ size, pageNumber }: IParameters = {}) {
         queryKey: [queryKeys.GET_BANKS, { size, pageNumber }],
         queryFn: async (): Promise<IGetBankResponsePayload> => {
             try {
-                const res = await AuthHTTP.get("/api/banks/", {
+                const res = await AuthHTTP.get("/api/banks", {
                     params: {
                         size,
                         number: pageNumber,

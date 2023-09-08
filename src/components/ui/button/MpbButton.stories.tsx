@@ -28,7 +28,16 @@ const meta: Meta<typeof MpbButton> = {
         },
         size: { control: "inline-radio", options: ["default", "sm", "md", "lg"] },
     },
-    decorators: [withCentered],
+    decorators: [
+        (Story) => {
+            return (
+                <div className="flex w-3/5 justify-center">
+                    <Story />
+                </div>
+            );
+        },
+        withCentered,
+    ],
 };
 
 export default meta;

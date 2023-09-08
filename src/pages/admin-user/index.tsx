@@ -12,7 +12,7 @@ import { PaginationState, ColumnDef } from "@tanstack/react-table";
 import useUpdateUser from "@/api/user-controller/useUpdateUser";
 import queryKeys from "@/api/queryKeys";
 import useGetUsers from "@/api/user-controller/useGetUsers";
-import DataTable from "./DataTable";
+import DataTable from "@/components/ui/table/SSRDataTable";
 import ManageAdminModal from "./ManageAdminModal";
 import {
     MpbSweetAlert as DisableUserModal,
@@ -168,7 +168,7 @@ export default function AdminUsersTable() {
                 cell: ({ row }) => {
                     return (
                         <div className="flex flex-col gap-2">
-                            {row?.original?.roles.map((item) => (
+                            {row?.original?.roles?.map((item) => (
                                 <span
                                     key={item.name}
                                     className="whitespace-nowrap rounded-full bg-blue-100/80 px-2 py-1 
