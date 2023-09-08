@@ -30,6 +30,7 @@ export default function ManageRoleModal({ isOpen, closeModal, isEdit, rowData }:
             status: "",
         },
     });
+
     // Prefill form field with row Data for update
     useEffect(() => {
         // reset form with row data
@@ -46,8 +47,13 @@ export default function ManageRoleModal({ isOpen, closeModal, isEdit, rowData }:
         }
     }, [rowData, reset, isEdit]);
 
-    /** apiCalls to get roles */
-    const { PermissionResponse } = useGetPermissions();
+    /** apiCalls to get permissions */
+    const { data } = useGetPermissions();
+    const permissions = data?.content?.map((item) => ({
+        value: item.id,
+        label: item.name,
+    }));
+
     /** apiCall for create roles  */
     const { UpdateRole, isUpdatingRole } = useUpdateRoles({
         onSuccess: (res) => {
@@ -137,7 +143,7 @@ export default function ManageRoleModal({ isOpen, closeModal, isEdit, rowData }:
                             label="Permissions"
                             control={control}
                             name="permissions"
-                            options={PermissionResponse}
+                            options={permissions}
                             isMulti
                             rules={{
                                 required: {
