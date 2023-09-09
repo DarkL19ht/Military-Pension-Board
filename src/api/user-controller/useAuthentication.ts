@@ -12,6 +12,23 @@ type RequestPayload = {
     grant_type: string;
 };
 
+export interface ILogin {
+    access_token: string;
+    token_type: string;
+    refresh_token: string;
+    expires_in: number;
+    scope: string;
+    id: number;
+    firstname: string;
+    email: string;
+    mobile: string;
+    lastname: string;
+    username: string;
+    roles: string[];
+    authorities: string[];
+    jti: string;
+}
+
 const useAuthentication = () => {
     const { dispatch, setAuthenticationDetails } = useAuth();
     // FIXME: typescript issue with any and put the correct type definition
@@ -42,12 +59,13 @@ const useAuthentication = () => {
         },
     });
 
-    const { mutate, error, isLoading } = Mutation;
+    const { mutate, error, isLoading, isError } = Mutation;
 
     return {
         LoginUser: mutate,
         isLoginUser: isLoading,
         loginErrorResponse: error?.response?.data,
+        isError,
     };
 };
 

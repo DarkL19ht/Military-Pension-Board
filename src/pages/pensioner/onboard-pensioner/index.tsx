@@ -1,4 +1,5 @@
 import { useReducer } from "react";
+import { useNavigate } from "react-router-dom";
 import { useForm, useFieldArray } from "react-hook-form";
 import { ChevronLeft, Plus, Trash2 } from "lucide-react";
 import { CiUser } from "react-icons/ci";
@@ -12,18 +13,27 @@ import {
 } from "@/components";
 import MpbReactSelectField from "@/components/@form/MpbReactSelectField";
 import appConfig from "@/config";
+import useCreatePensioner from "@/api/pensioner-controller/useCreatePensioner";
+import useGetRanks from "@/api/rank-controller/useGetRanks";
+import useGetBanks from "@/api/bank-controller/useGetBanks";
+import { useToast } from "@/components/ui/toast/use-toast";
+
+// type SelectField = {
+//     label:string;
+//     value: string;
+// }
 
 interface FormValues {
     dataFields: {
         accountNo: string;
-        bankCode: string;
+        bankCode: string | any;
         bvn: string;
         email: string;
         firstName: string;
         lastName: string;
         otherName: string;
         phone: string;
-        rank: number;
+        rankCode: string | any;
         serviceNo: string;
     }[];
 }
@@ -37,17 +47,20 @@ const initialFormValues = {
     lastName: "",
     otherName: "",
     phone: "",
-    rank: 0,
+    rankCode: "",
     serviceNo: "",
 };
 
 export default function Pensioner() {
+    const { toast } = useToast();
+    const navigate = useNavigate();
     const [state, runDispatch] = useReducer(reducer, initialState);
     const { isRegSuccess, isUploadCsv, hasReachedLimit } = state;
     const {
         control,
-        // handleSubmit,
-        // watch
+        handleSubmit,
+        watch,
+        formState: { errors },
     } = useForm<FormValues>({
         mode: "all",
         defaultValues: {
@@ -59,10 +72,38 @@ export default function Pensioner() {
         control,
         name: "dataFields",
     });
+    /** apiCall for ranks */
+    const { data: ranks } = useGetRanks();
+    /** apiCall for banks */
+    const { data: banks } = useGetBanks();
 
-    // const handlePensionerForm = (values: FormValues) => {
+    const { CreatePensioner, isCreatingPensioner } = useCreatePensioner({
+        onSuccess: (res) => {
+            toast({
+                description: res.data.responseMessage,
+            });
+            navigate("/pensioners/pensioners-details");
+            // queryClient.invalidateQueries([queryKeys.GET_USERS]);
+        },
+        onError: (err) => {
+            const { error, message, responseMessage } = err.response.data;
+            toast({
+                title: error,
+                description: message || responseMessage,
+                variant: "error",
+            });
+        },
+    });
 
-    // };
+    const handleCreatePensioner = (values: FormValues) => {
+        const requestPayload = values?.dataFields?.map((item) => ({
+            ...item,
+            bankCode: item?.bankCode?.value,
+            rankCode: item?.rankCode?.value,
+        }));
+        CreatePensioner(requestPayload);
+    };
+
     return (
         <div className="w-[95%] pl-14 md:w-[75%]">
             <div className="my-5 flex gap-1">
@@ -94,9 +135,10 @@ export default function Pensioner() {
                 </div>
                 <div>
                     {/* TODO: user correct icon for each field */}
-                    {/* <pre>{JSON.stringify(watch(), null, 2)}</pre> */}
+                    <pre className="hidden">{JSON.stringify(watch(), null, 2)}</pre>
+                    <pre className="hidden">{JSON.stringify(errors, null, 2)}</pre>
                     <form>
-                        {fields.map((field, index) => {
+                        {fields.map((field, index, arr) => {
                             return (
                                 <div
                                     key={field.id}
@@ -108,7 +150,7 @@ export default function Pensioner() {
                                         <h4 className="text-green-600">
                                             Form {index + 1}
                                         </h4>
-                                        {index > 0 && (
+                                        {arr.length > 1 && (
                                             <button
                                                 type="button"
                                                 onClick={() => remove(index)}
@@ -132,7 +174,7 @@ export default function Pensioner() {
                                                         message: "First name is required",
                                                     },
                                                 }}
-                                            />
+                                            />{" "}
                                         </div>
                                         <div className="w-full md:w-1/2">
                                             <MpbTextField
@@ -227,7 +269,7 @@ export default function Pensioner() {
                                                 label="Bank"
                                                 control={control}
                                                 name={`dataFields.${index}.bankCode`}
-                                                options={[]}
+                                                options={banks}
                                                 rules={{
                                                     required: {
                                                         value: true,
@@ -250,11 +292,11 @@ export default function Pensioner() {
                                                             "Account number is required",
                                                     },
                                                 }}
-                                            />
+                                            />{" "}
                                         </div>
                                     </div>
                                     {/*  */}
-                                    <div className="flex items-center gap-3">
+                                    <div className="flex  gap-3">
                                         <div className="w-full md:w-1/2">
                                             <MpbTextField
                                                 label="Service ID"
@@ -274,8 +316,8 @@ export default function Pensioner() {
                                             <MpbReactSelectField
                                                 label="Rank"
                                                 control={control}
-                                                name={`dataFields.${index}.rank`}
-                                                options={[]}
+                                                name={`dataFields.${index}.rankCode`}
+                                                options={ranks}
                                                 rules={{
                                                     required: {
                                                         value: true,
@@ -289,10 +331,11 @@ export default function Pensioner() {
                                 </div>
                             );
                         })}
-                        <div className="flex w-full justify-end py-2.5">
+                        <div className="flex w-full justify-end py-3">
                             <MpbButton
                                 onClick={(e) => {
                                     e.preventDefault();
+                                    e.stopPropagation();
                                     if (
                                         fields.length ===
                                         appConfig.maxLimitForManualPensionerForm
@@ -311,14 +354,16 @@ export default function Pensioner() {
                         <div className="flex justify-center">
                             <MpbButton
                                 variant="outline-primary"
-                                type="button"
-                                onClick={() =>
-                                    runDispatch({
-                                        type: ReducerActionType.OPEN_REG_SUCCESS_MODAL,
-                                    })
-                                }
+                                type="submit"
+                                onClick={handleSubmit(handleCreatePensioner)}
+                                // onClick={() =>
+                                //     runDispatch({
+                                //         type: ReducerActionType.OPEN_REG_SUCCESS_MODAL,
+                                //     })
+                                // }
                                 title="Submit"
                                 className="my-5 w-3/5"
+                                isLoading={isCreatingPensioner}
                             />
                         </div>
                     </form>

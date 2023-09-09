@@ -16,7 +16,7 @@ interface ISweetAlert {
     message: string;
     animation?: boolean;
     icon?: "success_icon" | "success_lock_icon" | "delete_icon" | "warning_icon" | "";
-    description?: string;
+    description?: string | any;
     confirmText?: string;
     showConfirmButton?: boolean;
     showCloseButton?: boolean;

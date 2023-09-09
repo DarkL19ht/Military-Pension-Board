@@ -5,6 +5,7 @@ import Dashboard from "@/pages/dashboard";
 import Profile from "@/pages/profile";
 import RootLayout from "@/layouts/RootLayout";
 import AdminUsers from "@/pages/admin-user";
+import SetRolesPermissions from "@/pages/set-roles-permissions";
 import PensionerTable from "@/pages/pensioner/pensioners-table";
 import AddPensioners from "@/pages/pensioner/onboard-pensioner";
 import PensionersProfile from "@/pages/pensioner/pensioners-profile";
@@ -50,10 +51,10 @@ const routeConfig = [
             { path: "dashboard", index: true, element: <Dashboard /> },
             { path: "settings", element: <Profile /> },
             {
-                path: "manage-pensioners",
+                path: "pensioners",
                 children: [
                     {
-                        path: "view-pensioners",
+                        path: "pensioners-details",
                         element: <PensionerTable />,
                     },
                     {
@@ -61,7 +62,7 @@ const routeConfig = [
                         element: <AddPensioners />,
                     },
                     {
-                        path: "pensioners-profile",
+                        path: "verification-approval",
                         element: <PensionersProfile />,
                     },
                 ],
@@ -73,6 +74,16 @@ const routeConfig = [
                         index: true,
                         path: "",
                         element: <AdminUsers />,
+                    },
+                ],
+            },
+            {
+                path: "set-roles-permissions",
+                children: [
+                    {
+                        index: true,
+                        path: "",
+                        element: <SetRolesPermissions />,
                     },
                 ],
             },

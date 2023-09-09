@@ -6,7 +6,6 @@ import {
     PaginationState,
     OnChangeFn,
 } from "@tanstack/react-table";
-
 import {
     Table,
     TableBody,

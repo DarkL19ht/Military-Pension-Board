@@ -82,7 +82,7 @@ function Header() {
                                 } duration-200 `}
                             />
                         </MpbMenu.Button>
-                        <MpbMenu.Items className="right-0 mt-2">
+                        <MpbMenu.Items className="right-0 z-50 mt-2">
                             <MpbMenu.Item
                                 onClick={() => {
                                     setProfileOpen(!profileOpen);

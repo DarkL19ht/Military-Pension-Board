@@ -26,18 +26,6 @@ export interface IApiResponse<T> {
     };
 }
 
-export interface IPensioners {
-    id: number;
-    image: string;
-    firstName: string;
-    middleName: string;
-    lastName: string;
-    rank: string;
-    verificationMode: string;
-    referenceId: string;
-    status: string;
-}
-
 export interface IAuthState {
     isAuthenticated: boolean;
     accessToken: string | null;

@@ -6,3 +6,4 @@ export { default as MpbSelectField } from "./@form/MpbSelectField";
 export { default as MpbReactSelectField } from "./@form/MpbReactSelectField";
 export { default as MpbSweetAlert } from "./ui/sweetalert/MpbSweetAlert";
 export { default as MpbMenu } from "./ui/MpbMenu";
+export { default as MpbSearchInput } from "./ui/search/MpbSearchInput";

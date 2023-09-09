@@ -1,28 +1,28 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useController, UseControllerProps, Control } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
 import Select from "react-select";
 
-interface InputProps<
-    TFieldValues extends FieldValues = FieldValues,
-    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-> {
-    name: TName;
-    label?: string;
-    asterik: boolean;
+interface InputProps extends UseControllerProps {
+    label: string;
+    asterik?: boolean;
     className?: string;
-    rule?: any;
-    control: Control<TFieldValues>;
     options: any[];
-    rules: any;
+    control: Control<any>;
+    isMulti?: boolean;
 }
 
-export default function MpbReactSelectField(props: UseControllerProps<InputProps>) {
+export default function MpbReactSelectField(props: InputProps) {
     const {
         field,
         // fieldState: { isTouched },
         formState: { errors },
     } = useController(props);
 
-    const { name, label, asterik = true, options, ...others } = props;
+    const { name, className, label, asterik, isMulti, options, ...others } = props;
+
+    // TODO: this has to be review whether to remove it or not for the pensioner dataFields
+    const [dataFields, index, inputField] = name.split(".");
 
     const selectStyle = {
         control: (styles: any) => ({
@@ -35,7 +35,11 @@ export default function MpbReactSelectField(props: UseControllerProps<InputProps
             outline: "none",
             cursor: "pointer",
             border: `1px solid ${
-                errors[name] && errors[name].message ? "#dc2626" : "#9ca3af"
+                (errors[name] && errors[name]?.message) ||
+                // @ts-ignore TODO: review this and resolve it
+                errors?.[dataFields]?.[index]?.[inputField]?.message
+                    ? "#dc2626"
+                    : "#9ca3af"
             } `,
         }),
         option: (styles: any) => {
@@ -53,20 +57,31 @@ export default function MpbReactSelectField(props: UseControllerProps<InputProps
                 &nbsp;{label}
             </label>
             <Select
-                {...field}
-                {...others}
-                name={name}
+                // name={name}
                 options={options}
                 styles={selectStyle}
                 className="basic-multi-select"
                 classNamePrefix="react-select"
                 isClearable
+                isMulti={isMulti}
+                // value={options?.find((c) => c?.value === value)}
+                // onChange={(e) => onChange(e.map((c: any) => c?.value))} = [0, 3, 4,5]
+                {...field}
+                {...others}
             />
-            {errors[name] && (
-                <span className="mt-1 text-sm text-red-700" data-cy={name}>
-                    {errors[name] && errors[name].message}
-                </span>
-            )}
+            <ErrorMessage
+                errors={errors}
+                name={name}
+                render={({ message }) => (
+                    <p className="mt-1 text-sm text-red-500">{message}</p>
+                )}
+            />
         </>
     );
 }
+
+MpbReactSelectField.defaultProps = {
+    className: "",
+    asterik: true,
+    isMulti: false,
+};
