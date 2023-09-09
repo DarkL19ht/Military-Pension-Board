@@ -1,24 +1,22 @@
 import { useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import { AiOutlineMail } from "react-icons/ai";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
 import BannerImage from "@/assets/images/logo.png";
 import securityIcon from "../../../../public/cardicons/icon-security.svg";
 import MpbTextField from "@/components/@form/MpbTextField";
 import { MpbButton } from "@/components/ui/button/MpbButton";
 import { UserEmailRequestPayload } from "@/types/recoveryEmail";
-import HTTP from "@/lib/httpClient";
-import { setEmail } from "@/redux/reducers/app-slice";
+import useForgetPassword from "@/api/user-controller/useForgetPassword";
+import { MpbSweetAlert as RecoveryEmailModal } from "@/components";
 
 interface FormValues extends Pick<UserEmailRequestPayload, "email"> {}
 
 export default function RecoveryMail() {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const [errorMessage] = useState("");
-
+    const [successModal, setSuccessModal] = useState(false);
+    const [displayMessage, setDisplayMessage] = useState("");
+    const [closeModal] = useState(false);
     const {
         control,
         handleSubmit,
@@ -31,20 +29,21 @@ export default function RecoveryMail() {
         },
     });
 
-    const handleEmailRecovery = async (data: FormValues) => {
-        try {
-            const response = await HTTP.post(`/apis/password/reset`, {
-                email: data.email,
-            });
+    const { initiateForgetPassword, isInitiatingForgetPassword } = useForgetPassword({
+        onSuccess: (res) => {
+            // console.log({ res });
+            setDisplayMessage(res?.data?.responseMessage);
+            setSuccessModal(true);
+        },
+        // onError: (err) => {
+        //     // console.log(err);
 
-            if (response.status === 200) {
-                dispatch(setEmail(data.email));
-                navigate("/new-password");
-            }
-        } catch (error) {
-            // eslint-disable-next-line no-console
-            console.log(error);
-        }
+        //     setSuccessModal(true);
+        // },
+    });
+
+    const handleEmailRecovery = async (data: FormValues) => {
+        initiateForgetPassword(data);
     };
 
     return (
@@ -73,7 +72,11 @@ export default function RecoveryMail() {
                         </div>
                         <pre className="hidden">{JSON.stringify(watch(), null, 2)}</pre>
                         <pre className="hidden">{JSON.stringify(errors, null, 2)}</pre>
-                        <div>{errorMessage}</div>
+                        <div className="py-2 text-center text-sm font-[600] text-red-500">
+                            {/* {errorMessage === null || errorMessage === undefined
+                                ? ""
+                                : errorMessage} */}
+                        </div>
                         <form className="">
                             <div className="mb-10">
                                 <MpbTextField
@@ -96,11 +99,22 @@ export default function RecoveryMail() {
                                 size="sm"
                                 fullWidth
                                 onClick={handleSubmit(handleEmailRecovery)}
+                                isLoading={isInitiatingForgetPassword}
                             />
                         </form>
                     </div>
                 </div>
             </div>
+            <RecoveryEmailModal
+                isOpen={successModal}
+                message="Success"
+                description={displayMessage}
+                icon="success_icon"
+                showDivider={false}
+                closeModal={closeModal}
+                confirmText="Done"
+                // onConfirm={handleCloseModal}
+            />
         </div>
     );
 }
