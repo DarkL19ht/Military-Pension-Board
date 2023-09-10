@@ -1,4 +1,5 @@
 import { STATUS } from "./enum";
+import { IApiRoleResponse } from ".";
 
 export interface IRoleRequestPayload {
     description: string;
@@ -7,11 +8,13 @@ export interface IRoleRequestPayload {
     status: STATUS | "";
 }
 
-export interface IRoleResponsePayload {
+export interface IGetRoleResponsePayload extends IApiRoleResponse<IRoleDataContent> {}
+
+export interface IRoleDataContent {
     id: number;
     name: string;
     description: string;
-    status: "DISABLED" | "ENABLED";
+    status: STATUS | "";
     permissions: Permission[];
 }
 

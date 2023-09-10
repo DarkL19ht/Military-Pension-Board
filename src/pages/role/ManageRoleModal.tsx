@@ -10,24 +10,31 @@ import MpbModal from "@/components/ui/modal/MpbModal";
 import { MpbTextField, MpbButton } from "@/components";
 import MpbReactSelectField from "@/components/@form/MpbReactSelectField";
 import { useToast } from "@/components/ui/toast/use-toast";
-import { IRoleRequestPayload as FormValues, IRoleResponsePayload } from "@/types/role";
+import { IRoleRequestPayload as FormValues, IRoleDataContent } from "@/types/role";
+import { RequestMethod } from "@/types/enum";
 
 interface IProps {
     isOpen: boolean;
     closeModal: () => void;
     isEdit: boolean;
-    rowData: IRoleResponsePayload;
+    rowData: IRoleDataContent;
 }
 
 export default function ManageRoleModal({ isOpen, closeModal, isEdit, rowData }: IProps) {
     const { toast } = useToast();
     const queryClient = useQueryClient();
-    const { control, handleSubmit, reset } = useForm<FormValues>({
+    const {
+        control,
+        handleSubmit,
+        reset,
+        watch,
+        formState: { errors },
+    } = useForm<FormValues>({
         mode: "all",
         defaultValues: {
             description: "",
-            permissions: [],
             name: "",
+            permissions: [],
             status: "",
         },
     });
@@ -89,7 +96,7 @@ export default function ManageRoleModal({ isOpen, closeModal, isEdit, rowData }:
         /** mutate function from useCreateRole */
         UpdateRole({
             requestPayload: isEdit ? updateRequest : createRequest,
-            requestMethod: isEdit ? "PUT" : "POST",
+            requestMethod: isEdit ? RequestMethod.PUT : RequestMethod.POST,
             id: rowData?.id,
         });
     };
@@ -108,6 +115,8 @@ export default function ManageRoleModal({ isOpen, closeModal, isEdit, rowData }:
             size="lg"
         >
             <div className="px-5 py-5">
+                <pre className="hidden">{JSON.stringify(watch(), null, 2)}</pre>
+                <pre className="hidden">{JSON.stringify(errors, null, 2)}</pre>
                 <form className="w-full space-y-5">
                     <div className="flex flex-col gap-1">
                         <MpbTextField

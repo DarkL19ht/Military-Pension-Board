@@ -3,6 +3,7 @@
 import { useReducer, useMemo, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import moment from "moment";
+import _ from "lodash";
 import { CgMoreVertical } from "react-icons/cg";
 import { Search, Trash2, RotateCcw, FileEdit, ShieldCheck } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -25,7 +26,7 @@ import appConfig from "@/config";
 import { useToast } from "@/components/ui/toast/use-toast";
 // check
 import { STATUS, RequestMethod } from "@/types/enum";
-import { IRoleResponsePayload } from "@/types/role";
+import { IRoleDataContent } from "@/types/role";
 import { cn } from "@/lib";
 
 export default function Roles() {
@@ -74,15 +75,11 @@ export default function Roles() {
     });
 
     const handleDisableRole = () => {
-        const { id, email, firstName, lastName, phone, roles, username, status } =
-            rowData;
+        const { id, description, name, permissions, status } = rowData;
         const requestPayload = {
-            email,
-            firstName,
-            lastName,
-            phone,
-            username,
-            roles: roles?.map((item: any) => item.id),
+            description,
+            name,
+            permissions: permissions?.map((item: any) => item.id),
             /**
              * if status is enabled send status request as ("DISABLED")
              * if status is disabled  send status request as ("ENABLED")
@@ -92,11 +89,29 @@ export default function Roles() {
         DisableRole({ requestPayload, requestMethod: RequestMethod.PUT, id });
     };
 
-    const columns = useMemo<ColumnDef<IRoleResponsePayload>[]>(
+    const columns = useMemo<ColumnDef<IRoleDataContent>[]>(
         () => [
             {
-                accessorKey: "name",
+                accessorKey: "",
                 header: "Name",
+                cell: ({ row }) => {
+                    return (
+                        <div className="flex items-center gap-1">
+                            <div
+                                className={cn(
+                                    `h-2 w-2 rounded-full`,
+                                    STATUS.ENABLED === row?.original?.status &&
+                                        "bg-green-600",
+                                    STATUS.DISABLED === row?.original?.status &&
+                                        "bg-red-600"
+                                )}
+                            />
+                            <div className="">
+                                <span>{_.upperCase(row?.original?.name)}</span>
+                            </div>
+                        </div>
+                    );
+                },
             },
             {
                 accessorKey: "description",
@@ -126,11 +141,19 @@ export default function Roles() {
                 cell: ({ row }) => {
                     return (
                         <div className="flex flex-col gap-1">
-                            <span>
-                                {moment(row?.original?.createdOn).format("MMMM Do YYYY")}
+                            <span className="text-gray-400">
+                                {moment(
+                                    row?.original?.permissions?.map(
+                                        (item) => item.createdOn
+                                    )
+                                ).format("MMMM Do YYYY")}
                             </span>
                             <span className="text-gray-400">
-                                {moment(row?.original?.createdOn).format("dddd, ha")}
+                                {moment(
+                                    row?.original?.permissions?.map(
+                                        (item) => item.createdOn
+                                    )
+                                ).format("dddd, ha")}
                             </span>
                         </div>
                     );
@@ -142,11 +165,19 @@ export default function Roles() {
                 cell: ({ row }) => {
                     return (
                         <div className="flex flex-col gap-1">
-                            <span>
-                                {moment(row?.original?.createdOn).format("MMMM Do YYYY")}
+                            <span className="text-gray-400">
+                                {moment(
+                                    row?.original?.permissions?.map(
+                                        (item) => item.updatedOn
+                                    )
+                                ).format("MMMM Do YYYY")}
                             </span>
                             <span className="text-gray-400">
-                                {moment(row?.original?.createdOn).format("dddd, ha")}
+                                {moment(
+                                    row?.original?.permissions?.map(
+                                        (item) => item.updatedOn
+                                    )
+                                ).format("dddd, ha")}
                             </span>
                         </div>
                     );
@@ -167,7 +198,21 @@ export default function Roles() {
                                     <CgMoreVertical className="-ml-10" />
                                 </MpbMenu.Button>
                                 <MpbMenu.Items className="right-8 top-0 ">
-                                    <MpbMenu.Item className="flex items-center gap-3 hover:bg-green-50 ">
+                                    <MpbMenu.Item
+                                        onClick={() => {
+                                            runDispatch({
+                                                type: ReducerActionType.OPEN_ADD_NEW_ROLE__MODAL,
+                                            });
+                                            runDispatch({
+                                                type: ReducerActionType.SET_FORM_DATA,
+                                                payload: row?.original,
+                                            });
+                                            runDispatch({
+                                                type: ReducerActionType.SET_IS_EDIT,
+                                            });
+                                        }}
+                                        className="flex items-center gap-3 hover:bg-green-50 "
+                                    >
                                         <FileEdit size={15} color="green" />
                                         <span>Edit Role</span>
                                     </MpbMenu.Item>
@@ -175,7 +220,15 @@ export default function Roles() {
                                         <RotateCcw size={15} color="red" />
                                         <span>Reset Password</span>
                                     </MpbMenu.Item>{" "}
-                                    <MpbMenu.Item className="flex items-center gap-3 hover:bg-red-50">
+                                    <MpbMenu.Item
+                                        onClick={() => {
+                                            runDispatch({
+                                                type: ReducerActionType.OPEN_DISABLE_MODAL,
+                                                payload: row?.original,
+                                            });
+                                        }}
+                                        className="flex items-center gap-3 hover:bg-red-50"
+                                    >
                                         {row?.original?.status === STATUS.DISABLED && (
                                             <>
                                                 <ShieldCheck size={15} color="green" />
@@ -185,7 +238,7 @@ export default function Roles() {
                                         {row?.original?.status === STATUS.ENABLED && (
                                             <>
                                                 <Trash2 size={15} color="red" />
-                                                <span>Disable User</span>
+                                                <span>Disable Role</span>
                                             </>
                                         )}
                                     </MpbMenu.Item>
@@ -211,8 +264,8 @@ export default function Roles() {
                         </li>
                         <li className="inline-flex items-center space-x-2">
                             <span className="text-secondary-400">/</span>
-                            <Link to="/admin-management" className="">
-                                Admin users
+                            <Link to="/roles-management" className="">
+                                Role Management
                             </Link>
                         </li>
                     </ol>
@@ -289,7 +342,7 @@ export default function Roles() {
                     }
                     message={`Are you sure, you want to ${
                         STATUS.DISABLED === rowData.status ? "enable" : "disable"
-                    } this user ?`}
+                    } this role ?`}
                     onConfirm={handleDisableRole}
                     showCancelButton
                     className={
