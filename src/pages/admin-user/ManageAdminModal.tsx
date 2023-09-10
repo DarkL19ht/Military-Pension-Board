@@ -10,13 +10,14 @@ import MpbModal from "@/components/ui/modal/MpbModal";
 import { MpbTextField, MpbButton } from "@/components";
 import MpbReactSelectField from "@/components/@form/MpbReactSelectField";
 import { useToast } from "@/components/ui/toast/use-toast";
-import { UserRequestPayload as FormValues, UserResponsePayload } from "@/types/user";
+import { UserRequestPayload as FormValues, IUserDataContent } from "@/types/user";
+import { RequestMethod } from "@/types/enum";
 
 interface IProps {
     isOpen: boolean;
     closeModal: () => void;
     isEdit: boolean;
-    rowData: UserResponsePayload;
+    rowData: IUserDataContent;
 }
 
 export default function ManageAdminModal({
@@ -27,7 +28,13 @@ export default function ManageAdminModal({
 }: IProps) {
     const { toast } = useToast();
     const queryClient = useQueryClient();
-    const { control, handleSubmit, reset } = useForm<FormValues>({
+    const {
+        control,
+        handleSubmit,
+        reset,
+        watch,
+        formState: { errors },
+    } = useForm<FormValues>({
         mode: "all",
         defaultValues: {
             email: "",
@@ -84,16 +91,16 @@ export default function ManageAdminModal({
         const { status, ...others } = values;
         const updateRequest = {
             ...values,
-            roles: values.roles.map((item) => item.value),
+            roles: values.roles.map((item: any) => item.value),
         };
         const createRequest = {
             ...others,
-            roles: values.roles.map((item) => item.value),
+            roles: values.roles.map((item: any) => item.value),
         };
         /** mutate function from useCreateUser */
         UpdateUser({
             requestPayload: isEdit ? updateRequest : createRequest,
-            requestMethod: isEdit ? "PUT" : "POST",
+            requestMethod: isEdit ? RequestMethod.PUT : RequestMethod.POST,
             id: rowData?.id,
         });
     };
@@ -112,6 +119,8 @@ export default function ManageAdminModal({
             size="lg"
         >
             <div className="px-5 py-5">
+                <pre className="hidden">{JSON.stringify(watch(), null, 2)}</pre>
+                <pre className="hidden">{JSON.stringify(errors, null, 2)}</pre>
                 <form className="w-full space-y-5">
                     <div className="flex gap-3">
                         <div className="w-1/2">

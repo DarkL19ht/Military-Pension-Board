@@ -1,9 +1,13 @@
-export interface IBankResponsePayload {
-    id: number;
+import { IApiResponse } from ".";
+
+export interface IGetBankResponsePayload extends IApiResponse {}
+
+export interface IBankDataContent {
     code: string;
     name: string;
-    createdOn: string;
-    createdBy: number;
-    updatedOn: string;
-    updatedBy: string;
+    // id: number;
+    // createdOn: string;
+    // createdBy: number;
+    // updatedOn: string;
+    // updatedBy: string;
 }

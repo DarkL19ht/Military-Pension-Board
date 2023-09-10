@@ -1,25 +1,21 @@
 import { useController, UseControllerProps, Control } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
 import { cn } from "@/lib";
 
-interface InputProps<
-    TFieldValues extends FieldValues = FieldValues,
-    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-> {
-    name: TName;
+interface InputProps extends UseControllerProps {
     label?: string;
     type: string;
-    asterik: boolean;
-    icon?: IconType;
+    asterik?: boolean;
+    icon?: any;
     className?: string;
-    rule?: any;
-    control: Control<TFieldValues>;
     options: any[];
     optionTitle?: string;
-    optionValue?: string;
-    optionLabel?: string;
+    optionValue: any;
+    optionLabel: any;
+    control: Control<any>;
 }
 
-export default function MpbSelectField(props: UseControllerProps<InputProps>) {
+export default function MpbSelectField(props: InputProps) {
     const {
         field: { onChange, onBlur, value },
         fieldState: { isTouched },
@@ -69,7 +65,7 @@ export default function MpbSelectField(props: UseControllerProps<InputProps>) {
                     {...others}
                 >
                     <option value="">{optionTitle}</option>
-                    {options?.map((data) => {
+                    {options?.map((data: any) => {
                         return (
                             <option key={data[optionValue]} value={data[optionValue]}>
                                 {data[optionLabel]}
@@ -78,19 +74,23 @@ export default function MpbSelectField(props: UseControllerProps<InputProps>) {
                     })}
                 </select>
             </div>
-            {errors[name] && (
-                <p className="mt-1 text-sm text-red-500">
-                    {errors[name] && errors[name].message}
-                </p>
-            )}
+            <ErrorMessage
+                errors={errors}
+                name={name}
+                render={({ message }) => (
+                    <p className="mt-1 text-sm text-red-500">{message}</p>
+                )}
+            />
         </>
     );
 }
 
 MpbSelectField.defaultProps = {
     optionTitle: "",
-    optionValue: "value",
-    optionLabel: "label",
-    options: [],
+    // optionValue: "value",
+    // optionLabel: "label",
     asterik: true,
+    label: "",
+    className: "",
+    icon: "",
 };

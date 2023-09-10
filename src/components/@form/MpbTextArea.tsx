@@ -1,43 +1,19 @@
 import { useController, UseControllerProps, Control } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
 // import { IconType } from "react-icons";
 import { cn } from "@/lib";
 
-// export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-// label: string;
-// name: string;
-// type: string;
-// asterik: boolean;
-// icon: IconType;
-// className: string;
-//     rule: any;
-//     control: any;
-// }
-
-// type ValidationRules = {
-//     required: string;
-//     pattern: {
-//         value: string;
-//         message: string;
-//     };
-// };
-
-interface InputProps<
-    TFieldValues extends FieldValues = FieldValues,
-    TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-> {
-    name: TName;
+interface InputProps extends UseControllerProps {
     label?: string;
-    name: string;
     type: string;
     asterik: boolean;
-    icon?: IconType;
+    icon?: any;
     className?: string;
-    rule?: any;
-    control: Control<TFieldValues>;
     rows: number;
+    control: Control<any>;
 }
 
-export default function MpbTextArea(props: UseControllerProps<InputProps>) {
+export default function MpbTextArea(props: InputProps) {
     const {
         field: { onChange, onBlur, value },
         fieldState: { isTouched },
@@ -87,11 +63,24 @@ export default function MpbTextArea(props: UseControllerProps<InputProps>) {
                     {...others}
                 />
             </div>
-            {errors[name] && (
+            <ErrorMessage
+                errors={errors}
+                name={name}
+                render={({ message }) => (
+                    <p className="mt-1 text-sm text-red-500">{message}</p>
+                )}
+            />
+            {/* {errors[name] && (
                 <p className="mt-1 text-sm text-red-500">
                     {errors[name] && errors[name].message}
                 </p>
-            )}
+            )} */}
         </>
     );
 }
+
+MpbTextArea.defaultProps = {
+    className: "",
+    label: "",
+    icon: "",
+};

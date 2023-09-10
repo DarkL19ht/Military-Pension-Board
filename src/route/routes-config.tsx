@@ -52,10 +52,10 @@ const routeConfig = [
             { path: "dashboard", index: true, element: <Dashboard /> },
             { path: "settings", element: <Profile /> },
             {
-                path: "manage-pensioners",
+                path: "pensioners",
                 children: [
                     {
-                        path: "view-pensioners",
+                        path: "pensioners-details",
                         element: <PensionerTable />,
                     },
                     {
@@ -63,7 +63,7 @@ const routeConfig = [
                         element: <AddPensioners />,
                     },
                     {
-                        path: "pensioners-profile",
+                        path: "verification-approval",
                         element: <PensionersProfile />,
                     },
                 ],

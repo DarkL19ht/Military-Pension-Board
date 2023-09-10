@@ -1,5 +1,5 @@
-```js
 
+```js
 .eslintrc.cjs
 -----
 module.exports = {
@@ -233,9 +233,7 @@ export default function pagination({ table}: any) {
         </div>
     );
 }
-
 ```
-
 ```ts
 const handleTextInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: "changeRole" });
