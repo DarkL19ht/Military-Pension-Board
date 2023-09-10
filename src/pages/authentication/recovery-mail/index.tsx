@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useReducer, useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import { AiOutlineMail } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import BannerImage from "@/assets/images/logo.png";
 import securityIcon from "../../../../public/cardicons/icon-security.svg";
@@ -10,40 +10,52 @@ import { MpbButton } from "@/components/ui/button/MpbButton";
 import { UserEmailRequestPayload } from "@/types/recoveryEmail";
 import useForgetPassword from "@/api/user-controller/useForgetPassword";
 import { MpbSweetAlert as RecoveryEmailModal } from "@/components";
+import { reducer, initialState, ReducerActionType } from "./reducer";
+import { useToast } from "@/components/ui/toast/use-toast";
 
 interface FormValues extends Pick<UserEmailRequestPayload, "email"> {}
 
 export default function RecoveryMail() {
-    const [successModal, setSuccessModal] = useState(false);
+    const navigate = useNavigate();
+    const { toast } = useToast();
     const [displayMessage, setDisplayMessage] = useState("");
-    const [closeModal] = useState(false);
+    const [state, runDispatch] = useReducer(reducer, initialState);
+    const { isRecoverySuccess } = state;
     const {
         control,
         handleSubmit,
         watch,
         formState: { errors },
+        reset,
     } = useForm<FormValues>({
         mode: "all",
-        data: {
-            email: "",
-        },
     });
 
     const { initiateForgetPassword, isInitiatingForgetPassword } = useForgetPassword({
-        onSuccess: (res) => {
-            // console.log({ res });
+        onSuccess: async (res) => {
             setDisplayMessage(res?.data?.responseMessage);
-            setSuccessModal(true);
+            toast({
+                description: res.data.responseMessage,
+            });
+            reset();
+            setTimeout(() => {
+                navigate("/");
+            }, 5000);
         },
-        // onError: (err) => {
-        //     // console.log(err);
-
-        //     setSuccessModal(true);
-        // },
+        onError: (err) => {
+            const { message, responseMessage } = err.response.data;
+            toast({
+                description: message || responseMessage,
+                variant: "error",
+            });
+        },
     });
 
     const handleEmailRecovery = async (data: FormValues) => {
-        initiateForgetPassword(data);
+        const requestPayload: UserEmailRequestPayload = {
+            email: data.email,
+        };
+        initiateForgetPassword(requestPayload);
     };
 
     return (
@@ -106,14 +118,15 @@ export default function RecoveryMail() {
                 </div>
             </div>
             <RecoveryEmailModal
-                isOpen={successModal}
-                message="Success"
-                description={displayMessage}
+                onConfirm={() => undefined}
+                isOpen={isRecoverySuccess}
+                closeModal={() =>
+                    runDispatch({ type: ReducerActionType.CLOSE_RECOVERY_SUCCESS_MODAL })
+                }
+                message={displayMessage}
                 icon="success_icon"
-                showDivider={false}
-                closeModal={closeModal}
                 confirmText="Done"
-                // onConfirm={handleCloseModal}
+                showDivider={false}
             />
         </div>
     );
