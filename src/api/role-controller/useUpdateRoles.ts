@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useMutation } from "@tanstack/react-query";
 import { AuthHTTP } from "@/lib";
 import { IRoleRequestPayload as Payload } from "@/types/role";
@@ -27,6 +28,7 @@ export default function useUpdateRoles({ onError, onSuccess }: IParameters = {})
                 if (requestMethod === "PUT") {
                     res = await AuthHTTP.put(`/api/roles/${id}`, requestPayload);
                 }
+                console.log("res", res);
                 return res;
             } catch (error) {
                 return Promise.reject(error);

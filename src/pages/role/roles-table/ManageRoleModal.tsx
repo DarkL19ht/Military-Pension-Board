@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "@tanstack/react-query";
@@ -83,6 +84,8 @@ export default function ManageRoleModal({ isOpen, closeModal, isEdit, rowData }:
             ...others,
             permissions: values.permissions.map((item) => item.value),
         };
+
+        console.log("request", creatRequest);
         /** mutate function from useCreateRole */
         UpdateRole({
             requestPayload: isEdit ? updateRequest : createRequest,

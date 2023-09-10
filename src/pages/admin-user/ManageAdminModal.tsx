@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "@tanstack/react-query";
@@ -67,6 +68,7 @@ export default function ManageAdminModal({
             });
             queryClient.invalidateQueries([queryKeys.GET_USERS]);
             closeModal();
+            console.log("resAdmin", res);
         },
         onError: (err) => {
             const { error, message, responseMessage } = err.response.data;
