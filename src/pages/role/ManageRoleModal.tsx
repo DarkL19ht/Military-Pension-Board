@@ -50,7 +50,7 @@ export default function ManageRoleModal({ isOpen, closeModal, isEdit, rowData }:
 
     /** apiCalls to get permissions */
     const { data } = useGetPermissions();
-    const permissions = data?.content?.map((item) => ({
+    const permissions = data?.content?.map((item: { id: number; name: string }) => ({
         value: item.id,
         label: item.name,
     }));
@@ -78,14 +78,14 @@ export default function ManageRoleModal({ isOpen, closeModal, isEdit, rowData }:
         const { status, ...others } = values;
         const updateRequest = {
             ...values,
-            permissions: values.permissions.map((item) => item.value),
+            permissions: values.permissions.map((item: { value: string }) => item.value),
         };
         const createRequest = {
             ...others,
-            permissions: values.permissions.map((item) => item.value),
+            permissions: values.permissions.map((item: { value: string }) => item.value),
         };
 
-        console.log("request", creatRequest);
+        console.log("request", createRequest);
         /** mutate function from useCreateRole */
         UpdateRole({
             requestPayload: isEdit ? updateRequest : createRequest,

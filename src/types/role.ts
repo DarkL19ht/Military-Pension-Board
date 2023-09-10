@@ -11,10 +11,19 @@ export interface IRoleResponsePayload {
     id: number;
     name: string;
     description: string;
-    authorized: boolean;
     status: "DISABLED" | "ENABLED";
+    permissions: Permission[];
+}
+
+type Permission = {
+    id: number;
+    name: string;
+    description: string;
+    authorized: boolean;
+    category: string;
+    status: STATUS;
     createdOn: string;
     createdBy: number;
     updatedOn: string;
     updatedBy: number;
-}
+};

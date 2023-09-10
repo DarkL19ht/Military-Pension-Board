@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "@tanstack/react-query";
@@ -66,7 +65,11 @@ export default function ManageAdminModal({
     }, [rowData, reset, isEdit]);
 
     /** apiCalls to get roles */
-    const { RoleResponse } = useGetRoles();
+    const { data } = useGetRoles();
+    const RoleResponse = data?.content?.map((item: { id: number; name: string }) => ({
+        value: item.id,
+        label: item.name,
+    }));
     /** apiCall for create admin user  */
     const { UpdateUser, isUpdatingUser } = useUpdateUser({
         onSuccess: (res) => {
@@ -75,7 +78,6 @@ export default function ManageAdminModal({
             });
             queryClient.invalidateQueries([queryKeys.GET_USERS]);
             closeModal();
-            console.log("resAdmin", res);
         },
         onError: (err) => {
             const { error, message, responseMessage } = err.response.data;
