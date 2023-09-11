@@ -13,8 +13,8 @@ import PensionersProfile from "@/pages/pensioner/pensioners-profile";
 import ProtectedRoute from "./protected-route";
 import PublicRoute from "./public-route";
 import AddRole from "@/pages/role/create-role";
-import RecoveryMail from "@/pages/authentication/recovery-mail";
-import NewPassword from "@/pages/authentication/new-password";
+import RecoveryMail from "@/pages/authentication/forget-password";
+import NewPassword from "@/@bin/new-password";
 
 const routeConfig = [
     {

@@ -1,61 +1,51 @@
-import { useReducer, useState } from "react";
+import { useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import { AiOutlineMail } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { AlertCircle } from "lucide-react";
 import BannerImage from "@/assets/images/logo.png";
 import securityIcon from "../../../../public/cardicons/icon-security.svg";
 import MpbTextField from "@/components/@form/MpbTextField";
 import { MpbButton } from "@/components/ui/button/MpbButton";
-import { UserEmailRequestPayload } from "@/types/recoveryEmail";
 import useForgetPassword from "@/api/user-controller/useForgetPassword";
-import { MpbSweetAlert as RecoveryEmailModal } from "@/components";
-import { reducer, initialState, ReducerActionType } from "./reducer";
-import { useToast } from "@/components/ui/toast/use-toast";
+import { MpbSweetAlert as ForgetPasswordModal } from "@/components";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
-interface FormValues extends Pick<UserEmailRequestPayload, "email"> {}
+interface FormValues {
+    email: string;
+}
 
 export default function RecoveryMail() {
     const navigate = useNavigate();
-    const { toast } = useToast();
-    const [displayMessage, setDisplayMessage] = useState("");
-    const [state, runDispatch] = useReducer(reducer, initialState);
-    const { isRecoverySuccess } = state;
-    const {
-        control,
-        handleSubmit,
-        watch,
-        formState: { errors },
-        reset,
-    } = useForm<FormValues>({
+    const [successMessage, setSuccessMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+    const [isOpen, setIsOpen] = useState(false);
+    const { control, handleSubmit, reset } = useForm<FormValues>({
         mode: "all",
+        defaultValues: {
+            email: "",
+        },
     });
 
-    const { initiateForgetPassword, isInitiatingForgetPassword } = useForgetPassword({
-        onSuccess: async (res) => {
-            setDisplayMessage(res?.data?.responseMessage);
-            toast({
-                description: res.data.responseMessage,
-            });
-            reset();
-            setTimeout(() => {
-                navigate("/");
-            }, 5000);
-        },
-        onError: (err) => {
-            const { message, responseMessage } = err.response.data;
-            toast({
-                description: message || responseMessage,
-                variant: "error",
-            });
-        },
-    });
+    const { initiateForgetPassword, isInitiatingForgetPassword, isError } =
+        useForgetPassword({
+            onSuccess: async (res) => {
+                setSuccessMessage(res?.data?.responseMessage);
+                setIsOpen(true);
+                reset();
+                setTimeout(() => {
+                    navigate("/");
+                }, 5000);
+            },
+            onError: (err) => {
+                const { message } = err.response.data;
+                setErrorMessage(message);
+            },
+        });
 
     const handleEmailRecovery = async (data: FormValues) => {
-        const requestPayload: UserEmailRequestPayload = {
-            email: data.email,
-        };
-        initiateForgetPassword(requestPayload);
+        initiateForgetPassword(data);
     };
 
     return (
@@ -82,13 +72,13 @@ export default function RecoveryMail() {
                                 Enter email to recover password
                             </div>
                         </div>
-                        <pre className="hidden">{JSON.stringify(watch(), null, 2)}</pre>
-                        <pre className="hidden">{JSON.stringify(errors, null, 2)}</pre>
-                        <div className="py-2 text-center text-sm font-[600] text-red-500">
-                            {/* {errorMessage === null || errorMessage === undefined
-                                ? ""
-                                : errorMessage} */}
-                        </div>
+                        {isError && (
+                            <Alert variant="destructive" className="my-5">
+                                <AlertCircle className="h-4 w-4" />
+                                <AlertTitle>Error</AlertTitle>
+                                <AlertDescription>{errorMessage}</AlertDescription>
+                            </Alert>
+                        )}
                         <form className="">
                             <div className="mb-10">
                                 <MpbTextField
@@ -96,6 +86,7 @@ export default function RecoveryMail() {
                                     name="email"
                                     type="email"
                                     icon={<AiOutlineMail size={20} />}
+                                    className="py-2"
                                     control={control}
                                     rules={{
                                         required: {
@@ -117,16 +108,17 @@ export default function RecoveryMail() {
                     </div>
                 </div>
             </div>
-            <RecoveryEmailModal
-                onConfirm={() => undefined}
-                isOpen={isRecoverySuccess}
-                closeModal={() =>
-                    runDispatch({ type: ReducerActionType.CLOSE_RECOVERY_SUCCESS_MODAL })
-                }
-                message={displayMessage}
+            <ForgetPasswordModal
+                isOpen={isOpen}
+                closeModal={() => setIsOpen(false)}
+                message={successMessage}
+                onConfirm={() => navigate("/")}
+                backdrop={false}
+                confirmText="Login"
                 icon="success_icon"
-                confirmText="Done"
                 showDivider={false}
+                animation
+                messageClassName="px-10"
             />
         </div>
     );
