@@ -19,6 +19,9 @@ import {
     MpbSweetAlert as ResetPasswordModal,
     MpbButton,
     MpbMenu,
+    MenuButton,
+    MenuItems,
+    MenuItem,
 } from "@/components";
 import { reducer, initialState, ReducerActionType } from "./reducer";
 import appConfig from "@/config";
@@ -34,11 +37,11 @@ export default function AdminUsersTable() {
     const { isResetPassword, isDisableUser, isNewUser, rowData, isEdit } = state;
     const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
         pageIndex: 0,
-        pageSize: appConfig.defaultPageSize,
+        pageSize: appConfig?.defaultPageSize,
     });
 
     const fetchDataOptions = {
-        pageNumber: pageIndex + 1,
+        page: pageIndex + 1,
         size: pageSize,
     };
 
@@ -193,11 +196,11 @@ export default function AdminUsersTable() {
                             whitespace-nowrap px-2 py-4 text-center text-xs"
                         >
                             <MpbMenu>
-                                <MpbMenu.Button>
+                                <MenuButton>
                                     <CgMoreVertical />
-                                </MpbMenu.Button>
-                                <MpbMenu.Items className="right-8 top-0 ">
-                                    <MpbMenu.Item
+                                </MenuButton>
+                                <MenuItems className="right-8 top-0 ">
+                                    <MenuItem
                                         onClick={() => {
                                             runDispatch({
                                                 type: ReducerActionType.OPEN_ADD_NEW_USER__MODAL,
@@ -214,8 +217,8 @@ export default function AdminUsersTable() {
                                     >
                                         <FileEdit size={15} color="green" />
                                         <span>Edit User</span>
-                                    </MpbMenu.Item>
-                                    <MpbMenu.Item
+                                    </MenuItem>
+                                    <MenuItem
                                         onClick={() => {
                                             runDispatch({
                                                 type: ReducerActionType.OPEN_RESET_MODAL,
@@ -226,8 +229,8 @@ export default function AdminUsersTable() {
                                     >
                                         <RotateCcw size={15} color="red" />
                                         <span>Reset Password</span>
-                                    </MpbMenu.Item>{" "}
-                                    <MpbMenu.Item
+                                    </MenuItem>{" "}
+                                    <MenuItem
                                         onClick={() => {
                                             runDispatch({
                                                 type: ReducerActionType.OPEN_DISABLE_MODAL,
@@ -248,8 +251,8 @@ export default function AdminUsersTable() {
                                                 <span>Disable User</span>
                                             </>
                                         )}
-                                    </MpbMenu.Item>
-                                </MpbMenu.Items>
+                                    </MenuItem>
+                                </MenuItems>
                             </MpbMenu>
                         </div>
                     );
@@ -323,7 +326,7 @@ export default function AdminUsersTable() {
                     pageCount={data?.totalPages}
                     totalRecords={data?.totalElements}
                     isLoading={isLoading}
-                    pageSizeOptions={[5, 10, 20, 30, 50]}
+                    pageSizeOptions={[5, 10, 20, 30, 50, 100, 300]}
                 />
             </div>
             {isResetPassword && (

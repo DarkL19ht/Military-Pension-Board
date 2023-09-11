@@ -7,6 +7,7 @@ import RootLayout from "@/layouts/RootLayout";
 import AdminUsers from "@/pages/admin-user";
 import SetRolesPermissions from "@/pages/set-roles-permissions";
 import PensionerTable from "@/pages/pensioner/pensioners-table";
+import PensionerVerification from "@/pages/pensioner/pensioner-verification";
 import AddPensioners from "@/pages/pensioner/onboard-pensioner";
 import PensionersProfile from "@/pages/pensioner/pensioners-profile";
 import ProtectedRoute from "./protected-route";
@@ -54,7 +55,7 @@ const routeConfig = [
                 path: "pensioners",
                 children: [
                     {
-                        path: "pensioners-details",
+                        path: "view-lists",
                         element: <PensionerTable />,
                     },
                     {
@@ -62,8 +63,12 @@ const routeConfig = [
                         element: <AddPensioners />,
                     },
                     {
-                        path: "verification-approval",
+                        path: "profile",
                         element: <PensionersProfile />,
+                    },
+                    {
+                        path: "verification",
+                        element: <PensionerVerification />,
                     },
                 ],
             },

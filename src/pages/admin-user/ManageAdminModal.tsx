@@ -11,6 +11,7 @@ import MpbReactSelectField from "@/components/@form/MpbReactSelectField";
 import { useToast } from "@/components/ui/toast/use-toast";
 import { UserRequestPayload as FormValues, IUserDataContent } from "@/types/user";
 import { RequestMethod } from "@/types/enum";
+import { VALIDATE_NAME, VALIDATE_EMAIL } from "@/lib/validators";
 
 interface IProps {
     isOpen: boolean;
@@ -133,6 +134,7 @@ export default function ManageAdminModal({
                                         value: true,
                                         message: "First name is required",
                                     },
+                                    validate: VALIDATE_NAME,
                                 }}
                             />
                         </div>
@@ -148,6 +150,7 @@ export default function ManageAdminModal({
                                         value: true,
                                         message: "Last name is required",
                                     },
+                                    validate: VALIDATE_NAME,
                                 }}
                             />
                         </div>
@@ -164,6 +167,7 @@ export default function ManageAdminModal({
                                     value: true,
                                     message: "username is required",
                                 },
+                                validate: VALIDATE_NAME,
                             }}
                         />
                     </div>
@@ -195,6 +199,7 @@ export default function ManageAdminModal({
                                     value: true,
                                     message: "Email is required",
                                 },
+                                pattern: VALIDATE_EMAIL,
                             }}
                         />
                     </div>

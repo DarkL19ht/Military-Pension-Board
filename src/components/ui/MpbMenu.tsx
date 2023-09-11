@@ -3,15 +3,16 @@ import { Transition, Menu } from "@headlessui/react";
 import { Fragment } from "react";
 import { cn } from "@/lib";
 
-export default function MpbMenu({ children }: { children: React.ReactNode }) {
+function MpbMenu({ children }: { children: React.ReactNode }) {
     return (
         <Menu as="div" className="relative inline-block text-left">
             {children}
         </Menu>
     );
 }
+MpbMenu.displayName = Menu.displayName;
 
-function Button({
+function MenuButton({
     children,
     className = "",
     onClick,
@@ -26,6 +27,8 @@ function Button({
         </Menu.Button>
     );
 }
+
+MenuButton.displayName = Menu.Button.displayName;
 
 function MenuItems({
     className = "",
@@ -61,6 +64,8 @@ function MenuItems({
     );
 }
 
+MenuItems.displayName = Menu.Items.displayName;
+
 interface IMenuItem {
     className?: string;
     onClick?: () => void;
@@ -89,6 +94,7 @@ function MenuItem({ className, onClick = undefined, children, ...props }: IMenuI
         </Menu.Item>
     );
 }
-MpbMenu.Button = Button;
-MpbMenu.Items = MenuItems;
-MpbMenu.Item = MenuItem;
+
+MenuItem.displayName = Menu.Item.displayName;
+
+export { MpbMenu, MenuButton, MenuItems, MenuItem };

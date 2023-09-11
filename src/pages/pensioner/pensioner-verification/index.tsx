@@ -6,7 +6,6 @@ import {
 import { PaginationState, ColumnDef } from "@tanstack/react-table";
 import { RadioGroup } from "@headlessui/react";
 import DataTable from "@/components/ui/table/SSRDataTable";
-// import { MpbMenu } from "@/components";
 import { IPensionerDataContent } from "@/types/pensioner";
 import useGetPensioners from "@/api/pensioner-controller/useGetPensioners";
 import appConfig from "@/config";
@@ -76,7 +75,7 @@ export default function Pensioner() {
     return (
         <div className="mx-auto w-[95%]">
             <div className="mb-2 flex w-full items-center justify-between py-3">
-                <h4 className="text-2xl">Pensioners Details {status}</h4>
+                <h4 className="text-2xl">Verification Acceptance</h4>
                 <div className="flex gap-3">
                     <button
                         type="button"
@@ -96,7 +95,7 @@ export default function Pensioner() {
             <div className="mb-20 w-full overflow-auto rounded-md border border-gray-100 p-5 shadow-md">
                 {/* Table UI */}
                 <div className="mb-4 flex justify-between divide-y-reverse">
-                    <h4 className="text-base">Verification Acceptance</h4>
+                    {/* <h4 className="text-base">Verification Acceptance</h4> */}
                     <div className="">
                         <RadioGroup value={status} onChange={setStatus}>
                             <div className="flex gap-10">

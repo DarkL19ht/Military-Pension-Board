@@ -5,11 +5,13 @@ import { IAuthState, IDecodedToken } from "@/types";
 export interface IAuthPayload {
     decodedToken: IDecodedToken;
     accessToken: string;
+    refreshToken: string;
 }
 
 const initialState = {
     isAuthenticated: false,
     accessToken: null,
+    refreshToken: null,
     user: {},
 } satisfies IAuthState as IAuthState;
 
@@ -25,6 +27,7 @@ export const authSlice = createSlice({
         setAuthenticationDetails: (state, action: PayloadAction<IAuthPayload>) => {
             state.isAuthenticated = true;
             state.accessToken = action.payload.accessToken;
+            state.refreshToken = action.payload.refreshToken;
             state.user = action.payload.decodedToken;
         },
     },

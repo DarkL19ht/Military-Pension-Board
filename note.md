@@ -412,3 +412,18 @@ export const useFetchUser = (userID: string | undefined) => {
 }
 
 ```
+
+```jsx
+ <div className="mt-1">
+     <img
+         src={ProfilePics}
+         alt="profile_picture"
+         className="rounded-full border-4 border-[#006C31]"
+     />
+ </div>
+```
+
+
+// MpbMenu.Button = MenuButton;
+// MpbMenu.Items = MenuItems;
+// MpbMenu.Item = MenuItem;

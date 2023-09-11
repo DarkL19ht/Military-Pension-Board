@@ -28,6 +28,7 @@ Military Pensions Board – Admin Portal Management
 
 ## Web URL
 
+-   [Swagger URL demo](http://172.17.10.16:20008/swagger-ui.html#/)
 -   [Swagger URL demo](https://demo.etranzact.com/mpb/swagger-ui.html#/)
 -   [Swagger URL staging](https://mpb-admin-api.azurewebsites.net/swagger-ui/index.html)
 -   [Figma design](<https://www.figma.com/file/zm27pUSkgjjBSdy2v49ppO/e-Pension-Web-Portal(MPB-1)?type=design&node-id=1-2&mode=design>)
@@ -75,13 +76,13 @@ Military Pensions Board – Admin Portal Management
 -   [x] Create Admin User
 -   [x] Query Admin User
 -   [x] Querying admin table by size, pageNumber
--   [ ] Search on Admin User table `missing endpoints`
+-   [ ] Search on Admin User table 
 -   [x] Edit Admin User
 -   [x] Disable Admin User
 -   [ ] Reset Password on admin user `missing endpoints`
     <!-- Pensioner Management  -->
--   [ ] Create Pensioner `endpoints not working`
--   [ ] Query pensioners table by size, pageNumber `endpoint not working`
+-   [X] Create Pensioner `endpoints not working`
+-   [X] Query pensioners table by size, pageNumber `endpoint not working`
 -   [ ] search pensioner table by name etc
 -   [ ] Filtering pensioner table **_special attention_**
 -   [ ] Csv upload **_`missing endpoint`_**
@@ -99,8 +100,11 @@ Military Pensions Board – Admin Portal Management
 -   [X] Edit profile information 
 -   [X] change password
 
-## Future Task
-
+## Other Task
+-   [ ] Form validation for email, empty string etc
+-   [ ] change of form icon to reflect the form label
+-   [ ] Prefetching pagination
+-   [ ] Table virtualization
 -   [ ] Refactor dark mode implementation
 -   [ ] Restructure the navigation (side & header) bar
 -   [ ] Change the profile sidebar icon
