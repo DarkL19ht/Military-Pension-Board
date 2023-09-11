@@ -11,14 +11,15 @@ import { UserEmailRequestPayload } from "@/types/recoveryEmail";
 import useForgetPassword from "@/api/user-controller/useForgetPassword";
 import { MpbSweetAlert as RecoveryEmailModal } from "@/components";
 import { reducer, initialState, ReducerActionType } from "./reducer";
-import { useToast } from "@/components/ui/toast/use-toast";
 
 interface FormValues extends Pick<UserEmailRequestPayload, "email"> {}
 
 export default function RecoveryMail() {
     const navigate = useNavigate();
-    const { toast } = useToast();
+
     const [displayMessage, setDisplayMessage] = useState("");
+    const [errDisplayMessage, setErrDisplayMessage] = useState("");
+
     const [state, runDispatch] = useReducer(reducer, initialState);
     const { isRecoverySuccess } = state;
     const {
@@ -26,7 +27,6 @@ export default function RecoveryMail() {
         handleSubmit,
         watch,
         formState: { errors },
-        reset,
     } = useForm<FormValues>({
         mode: "all",
     });
@@ -34,20 +34,14 @@ export default function RecoveryMail() {
     const { initiateForgetPassword, isInitiatingForgetPassword } = useForgetPassword({
         onSuccess: async (res) => {
             setDisplayMessage(res?.data?.responseMessage);
-            toast({
-                description: res.data.responseMessage,
-            });
-            reset();
+            runDispatch({ type: ReducerActionType.OPEN_RECOVERY_SUCCESS_MODAL });
             setTimeout(() => {
                 navigate("/");
             }, 5000);
         },
         onError: (err) => {
-            const { message, responseMessage } = err.response.data;
-            toast({
-                description: message || responseMessage,
-                variant: "error",
-            });
+            const { message } = err.response.data;
+            setErrDisplayMessage(message);
         },
     });
 
@@ -85,9 +79,9 @@ export default function RecoveryMail() {
                         <pre className="hidden">{JSON.stringify(watch(), null, 2)}</pre>
                         <pre className="hidden">{JSON.stringify(errors, null, 2)}</pre>
                         <div className="py-2 text-center text-sm font-[600] text-red-500">
-                            {/* {errorMessage === null || errorMessage === undefined
+                            {errDisplayMessage === null || errDisplayMessage === undefined
                                 ? ""
-                                : errorMessage} */}
+                                : errDisplayMessage}
                         </div>
                         <form className="">
                             <div className="mb-10">
@@ -117,17 +111,21 @@ export default function RecoveryMail() {
                     </div>
                 </div>
             </div>
-            <RecoveryEmailModal
-                onConfirm={() => undefined}
-                isOpen={isRecoverySuccess}
-                closeModal={() =>
-                    runDispatch({ type: ReducerActionType.CLOSE_RECOVERY_SUCCESS_MODAL })
-                }
-                message={displayMessage}
-                icon="success_icon"
-                confirmText="Done"
-                showDivider={false}
-            />
+            {isRecoverySuccess && (
+                <RecoveryEmailModal
+                    onConfirm={() => undefined}
+                    isOpen={isRecoverySuccess}
+                    closeModal={() =>
+                        runDispatch({
+                            type: ReducerActionType.CLOSE_RECOVERY_SUCCESS_MODAL,
+                        })
+                    }
+                    message={displayMessage}
+                    icon="success_icon"
+                    confirmText="Home"
+                    showDivider={false}
+                />
+            )}
         </div>
     );
 }
