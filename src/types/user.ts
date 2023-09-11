@@ -1,4 +1,5 @@
 import { STATUS } from "./enum";
+import { IApiResponse } from ".";
 
 export interface UserRequestPayload {
     email: string;
@@ -10,7 +11,9 @@ export interface UserRequestPayload {
     username: string;
 }
 
-export interface UserResponsePayload {
+export interface IGetUserResponsePayload extends IApiResponse<IUserDataContent> {}
+
+export interface IUserDataContent {
     id: number;
     firstName: string;
     lastName: string;

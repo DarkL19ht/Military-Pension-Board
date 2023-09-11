@@ -1,5 +1,5 @@
 import { FaLaptop } from "react-icons/fa";
-
+import { Link } from "react-router-dom";
 import { MpbButton } from "@/components/ui/button/MpbButton";
 import LineChart from "./LineChart";
 import PensionersTable from "./PensionersTable";
@@ -57,13 +57,25 @@ export default function Dashboard() {
                 {/*  */}
             </div>
             <div className="mt-3 max-w-full justify-center sm:flex">
-                <div className="w-6/6 mx-4 mb-20 overflow-auto rounded-md border border-gray-100 p-2 pr-10 shadow-md md:w-4/6">
+                <div className="w-6/6 mx-4 mb-5 overflow-auto rounded-md border border-gray-100 p-2 pr-10 shadow-md md:w-4/6">
                     <LineChart />
                 </div>
-                <div className="w-6/6 mx-4 mb-20 overflow-auto rounded-md border border-gray-100 p-2 shadow-md md:w-2/6">
+                <div className="w-6/6 mx-4 mb-5 overflow-auto rounded-md border border-gray-100 p-2 shadow-md md:w-2/6">
                     <PieChart />
                 </div>
             </div>
+            <nav aria-label="breadcrumb" className="">
+                <ol className="mx-5 inline-flex items-center space-x-2 border-b-2 border-green-600 px-3 py-1 text-sm font-medium">
+                    <li className="inline-flex items-center">
+                        <Link
+                            to="/"
+                            className="text-secondary-500 hover:text-secondary-600 text-sm"
+                        >
+                            All Verification types
+                        </Link>
+                    </li>
+                </ol>
+            </nav>
             <div className="max-w-full justify-center pr-3 md:flex">
                 <div className="w-6/6 md:w-3/6 lg:w-4/6">
                     <PensionersTable />

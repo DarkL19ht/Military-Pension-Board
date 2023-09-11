@@ -1,9 +1,13 @@
-export interface IRankResponsePayload {
-    id: number;
+import { IApiResponse } from ".";
+
+export interface IGetRankResponsePayload extends IApiResponse<IRankDataContent> {}
+
+export interface IRankDataContent {
     code: string;
     name: string;
-    createdOn: string;
-    createdBy: number;
-    updatedOn: string;
-    updatedBy: string;
+    // id: number;
+    // createdOn: string;
+    // createdBy: number;
+    // updatedOn: string;
+    // updatedBy: string;
 }

@@ -1,10 +1,62 @@
+import { useForm } from "react-hook-form";
+import { useState } from "react";
+import { CiUser } from "react-icons/ci";
+import useUpdateUser from "@api/user-controller/useUpdateUser";
+import { MpbButton, MpbTextField } from "@/components";
 import ProfilePics from "@/assets/images/profilepics.png";
+import ChangePassword from "./ChangePassword";
+import { UserRequestPayload as FormValues } from "@/types/user";
+import { useAppSelector } from "@/hooks/useRedux";
+import { STATUS, RequestMethod } from "@/types/enum";
+import { useToast } from "@/components/ui/toast/use-toast";
 
 export default function Profile() {
+    const { toast } = useToast();
+    const [isReadOnly, setIsReadOnly] = useState<boolean>(true);
+    const user = useAppSelector((state) => state.authReducer.user);
+    const { control, handleSubmit, watch } = useForm<FormValues>({
+        mode: "all",
+        defaultValues: {
+            email: user?.email,
+            firstName: user?.firstname,
+            lastName: user?.lastname,
+            phone: user?.mobile,
+            roles: [],
+            username: user?.username,
+            status: STATUS.ENABLED,
+        },
+    });
+
+    const { UpdateUser, isUpdatingUser } = useUpdateUser({
+        onSuccess: (res) => {
+            toast({
+                description: res.data.responseMessage,
+            });
+            // queryClient.invalidateQueries([queryKeys.GET_USERS]);
+        },
+        onError: (err) => {
+            const { error, message, responseMessage } = err.response.data;
+            toast({
+                title: error,
+                description: message || responseMessage,
+                variant: "error",
+            });
+        },
+    });
+
+    const handleProfileUpdate = (values: FormValues) => {
+        UpdateUser({
+            requestMethod: RequestMethod.PUT,
+            requestPayload: values,
+            id: user.id,
+        });
+    };
+
     return (
-        // <div className="h-[90vh] overflow-hidden">
-        // h-full overflow-y-scroll
         <div className="w-full overflow-auto ">
+            {/* TODO: remove line below */}
+            <pre className="hidden">{JSON.stringify(user, null, 2)}</pre>
+            <pre className="hidden">{JSON.stringify(watch(), null, 2)}</pre>
             <div className="mb-20 ml-20 mt-9 w-full rounded-md border border-gray-100 px-[3.81rem] py-5 pt-[2rem] shadow-md sm:w-[60%]">
                 <div className="mt-1">
                     <img
@@ -19,197 +71,127 @@ export default function Profile() {
                     </p>
                 </div>
                 <div>
-                    <form className="w-full max-w-2xl">
-                        <div className="-mx-3 mb-1 flex flex-wrap">
-                            <div className="mb-1 w-full px-3 md:mb-0 md:w-1/2">
-                                <label
-                                    className="block pb-1 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
-                                    htmlFor="first-name"
-                                >
-                                    First name
-                                </label>
-                                <input
-                                    className="mb-2 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
-                                    id="first-name"
-                                    type="text"
+                    <form className="flex w-full max-w-2xl flex-col gap-8">
+                        <div className="flex gap-5">
+                            <div className="w-full md:w-1/2">
+                                <MpbTextField
+                                    label="First name"
+                                    name="firstName"
                                     placeholder="Jane"
+                                    type="text"
+                                    control={control}
+                                    rules={{
+                                        required: {
+                                            value: true,
+                                            message: "First name is required",
+                                        },
+                                    }}
+                                    readOnly={isReadOnly}
                                 />
                             </div>
-                            <div className="w-full px-3 md:w-1/2">
-                                <label
-                                    className="block pb-1 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
-                                    htmlFor="last-name"
-                                >
-                                    Last name
-                                </label>
-                                <input
-                                    className="mb-2 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
-                                    id="last-name"
-                                    type="text"
+                            <div className="w-full md:w-1/2">
+                                <MpbTextField
+                                    label="Last name"
+                                    name="lastName"
                                     placeholder="Joseph"
+                                    type="text"
+                                    control={control}
+                                    rules={{
+                                        required: {
+                                            value: true,
+                                            message: "Last name is required",
+                                        },
+                                    }}
+                                    readOnly={isReadOnly}
                                 />
                             </div>
                         </div>
-                        <div className="-mx-3 mb-1 flex flex-wrap">
-                            <div className="mb-3 w-full px-3 md:mb-0 md:w-1/2">
-                                <label
-                                    className="block pb-2 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
-                                    htmlFor="rank"
-                                >
-                                    Rank
-                                </label>
-                                <div className="relative">
-                                    <select
-                                        className="block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 pr-8 leading-tight text-gray-700 placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
-                                        id="rank"
-                                    >
-                                        <option>Colonel</option>
-                                        <option>Colonel</option>
-                                        <option>Colonel</option>
-                                    </select>
-                                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                                        <svg
-                                            className="h-4 w-4 fill-current"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 20 20"
-                                        >
-                                            {/* <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /> */}
-                                        </svg>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="w-full px-3 md:w-1/2">
-                                <label
-                                    className="block pb-2 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
-                                    htmlFor="phone-number"
-                                >
-                                    Phone number
-                                </label>
-                                <input
-                                    className="mb-3 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-white placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
-                                    id="phone-number"
-                                    type="text"
+                        <div className="flex gap-5">
+                            <div className="w-full md:w-1/2">
+                                <MpbTextField
+                                    label="Phone number"
+                                    name="phone"
                                     placeholder="0905634289"
+                                    type="number"
+                                    icon={<CiUser size={20} />}
+                                    control={control}
+                                    rules={{
+                                        required: {
+                                            value: true,
+                                            message: "Phone number is required",
+                                        },
+                                    }}
+                                    readOnly={isReadOnly}
+                                />
+                            </div>
+                            <div className="w-full md:w-1/2">
+                                <MpbTextField
+                                    label="Username"
+                                    name="username"
+                                    placeholder="Joseph.Susan"
+                                    type="text"
+                                    control={control}
+                                    readOnly
                                 />
                             </div>
                         </div>
-                        <div className="-mx-3 mb-1 flex flex-wrap">
-                            <div className="mb-3 w-full px-3 md:mb-0 md:w-1/2">
-                                <label
-                                    className="block pb-2 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
-                                    htmlFor="email-address"
-                                >
-                                    Email address
-                                </label>
-                                <input
-                                    className="mb-3 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-white placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
-                                    id="email-address"
-                                    type="text"
+                        <div className="flex gap-5">
+                            <div className=" w-full">
+                                <MpbTextField
+                                    label="Email address"
+                                    name="email"
+                                    type="email"
                                     placeholder="Susanjoseph@nigerianarmy.com.ng"
-                                />
-                            </div>
-                            <div className="w-full px-3 md:w-1/2">
-                                <label
-                                    className="block pb-2 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
-                                    htmlFor="gender"
-                                >
-                                    Gender
-                                </label>
-                                <input
-                                    className="mb-3 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-white placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
-                                    id="gender"
-                                    type="text"
-                                    placeholder="Female"
+                                    icon={<CiUser size={20} />}
+                                    control={control}
+                                    rules={{
+                                        required: {
+                                            value: true,
+                                            message: "Email is required",
+                                        },
+                                    }}
+                                    readOnly={isReadOnly}
                                 />
                             </div>
                         </div>
-                        <div className="-mx-3 mb-1 flex flex-wrap">
-                            <div className="w-full px-3">
-                                <label
-                                    className="block pb-2 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
-                                    htmlFor="address"
-                                >
-                                    Address
-                                </label>
-                                <input
-                                    className="mb-3 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-white placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
-                                    id="address"
-                                    type="password"
-                                    placeholder="Military barracks Ikeja cantoment"
+                        {isReadOnly ? (
+                            <div className="mt-8">
+                                <MpbButton
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        setIsReadOnly(false);
+                                    }}
+                                    fullWidth
+                                    title="Edit Profile"
+                                    variant="primary"
                                 />
                             </div>
-                        </div>
-                        <div className="flex justify-center">
-                            <button
-                                type="button"
-                                className="mt-[50px] inline-flex h-[40px] w-64 items-center justify-center rounded-lg bg-[#00873D] px-10 py-6 text-[#ffffff]"
-                            >
-                                Save changes
-                            </button>
-                        </div>
+                        ) : (
+                            <div className="mt-8 flex w-full gap-4">
+                                <MpbButton
+                                    onClick={handleSubmit(handleProfileUpdate)}
+                                    fullWidth
+                                    title="Save Changes"
+                                    variant="primary"
+                                    isLoading={isUpdatingUser}
+                                    className="w-4/5"
+                                />
+                                <MpbButton
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        setIsReadOnly(true);
+                                    }}
+                                    fullWidth
+                                    title="Cancel"
+                                    variant="secondary"
+                                    className="w-1/5"
+                                />
+                            </div>
+                        )}
                     </form>
                 </div>
             </div>
-            <div className="mb-20 ml-20 mt-9 w-full rounded-md border border-gray-100 px-[3.81rem] py-5 pt-[2rem] shadow-md sm:w-[60%]">
-                <form className="w-full max-w-2xl">
-                    <p className="mb-10 mt-8 pr-[1.25rem] text-3xl font-semibold text-[#239F5B]">
-                        Change password
-                    </p>
-                    <div className="-mx-3 mb-3 w-full px-3 md:mb-0 md:w-1/2">
-                        <label
-                            className="block pb-1 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
-                            htmlFor="old-password"
-                        >
-                            Old password
-                        </label>
-                        <input
-                            className="mb-2 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
-                            id="old password"
-                            type="password"
-                            placeholder="*********************"
-                        />
-                    </div>
-                    <div className="-mx-3 mb-1 flex flex-wrap">
-                        <div className="mb-3 w-full px-3 md:mb-0 md:w-1/2">
-                            <label
-                                className="block pb-2 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
-                                htmlFor="new password"
-                            >
-                                New password
-                            </label>
-                            <input
-                                className="mb-3 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
-                                id="new-password"
-                                type="password"
-                                placeholder="*****************"
-                            />
-                        </div>
-                        <div className="w-full px-3 md:w-1/2">
-                            <label
-                                className="block pb-2 text-sm font-medium tracking-wide text-slate-700 before:ml-0.5 before:text-red-500 before:content-['*']"
-                                htmlFor="confirm-password"
-                            >
-                                Confirm password
-                            </label>
-                            <input
-                                className="mb-3 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none"
-                                id="confirm-password"
-                                type="password"
-                                placeholder="*****************"
-                            />
-                        </div>
-                    </div>
-                    <div className="flex justify-center">
-                        <button
-                            type="button"
-                            className="mt-[50px] inline-flex h-[40px] w-64 items-center justify-center rounded-lg bg-[#00873D] px-10 py-6 text-[#ffffff]"
-                        >
-                            Save changes
-                        </button>
-                    </div>
-                </form>
-            </div>
+            <ChangePassword userId={user?.id} />
         </div>
-        // </div>
     );
 }

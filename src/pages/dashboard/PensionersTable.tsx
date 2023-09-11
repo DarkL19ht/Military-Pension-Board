@@ -1,36 +1,23 @@
 import { CgMoreVertical } from "react-icons/cg";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 // import Pagination from "@/components/ui/pagination";
 import { pensionersDashboardData } from "@/lib/fakers";
 
 export default function PensionersTable() {
     return (
-        <div className="mx-auto w-[95%]">
-            <div className="mb-2 flex w-full items-center justify-between py-3">
-                {/* Breacrumb */}
-                <nav aria-label="breadcrumb">
-                    <ol className="inline-flex items-center space-x-2 py-2 text-sm font-medium">
-                        <li className="inline-flex items-center">
-                            <Link
-                                to="/"
-                                className="text-secondary-500 hover:text-secondary-600"
-                            >
-                                All Verification types
-                            </Link>
-                        </li>
-                    </ol>
-                </nav>
+        <div className="mx-auto mb-20 w-[95%] overflow-auto rounded-md border border-gray-100 px-5 py-12 shadow-md">
+            {/* <div className="mb-2 flex w-full items-center justify-end py-3">
                 <div className="flex gap-3">
                     <button
                         type="button"
-                        className="bg-white-700 rounded-md border-[1.5px] border-green-600 px-4 py-1.5 text-xs text-green-600"
+                        className="rounded-md border-[1.5px] border-green-600 bg-green-50 px-4 py-1 text-xs text-green-600"
                     >
                         View Full Report
                     </button>
                 </div>
-            </div>
+            </div> */}
             {/* Card layout */}
-            <div className="mb-20 w-full overflow-auto rounded-md border border-gray-100 p-5 shadow-md">
+            <div className="">
                 {/* Table UI */}
                 <table className="w-full table-auto border border-gray-300 text-left font-light">
                     <thead className="border-b bg-[#F2FAF5] font-medium">

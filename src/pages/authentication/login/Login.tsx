@@ -13,13 +13,7 @@ type FormValues = {
 };
 
 function Login() {
-    const {
-        control,
-        handleSubmit,
-        watch,
-        // formState: { errors, isValid, isDirty },
-        formState: { errors },
-    } = useForm<FormValues>({
+    const { control, handleSubmit } = useForm<FormValues>({
         mode: "all",
         defaultValues: {
             username: "",
@@ -58,9 +52,6 @@ function Login() {
                     Login to Military Pension Board
                 </div>
                 <div className="mx-auto w-4/5 md:w-3/5">
-                    {/* TODO: remove line below */}
-                    <pre className="hidden">{JSON.stringify(watch(), null, 2)}</pre>
-                    <pre className="hidden">{JSON.stringify(errors, null, 2)}</pre>
                     <form className="mt-[2.5rem]">
                         <div className="mb-5">
                             <MpbTextField

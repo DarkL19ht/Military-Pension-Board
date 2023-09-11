@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
+import _ from "lodash";
+import { useCallback } from "react";
 import { AuthHTTP } from "@/lib";
 import queryKeys from "../queryKeys";
-import { IApiResponse } from "@/types";
-import { IRankResponsePayload } from "@/types/rank";
+import { IGetRankResponsePayload, IRankDataContent } from "@/types/rank";
 
 interface IParameters {
     size?: number;
@@ -10,28 +11,27 @@ interface IParameters {
 }
 
 export default function useGetRanks({ size, pageNumber }: IParameters = {}) {
-    const result = useQuery<IApiResponse<IRankResponsePayload>, Error>({
+    const result = useQuery({
         queryKey: [queryKeys.GET_RANKS, { size, pageNumber }],
         queryFn: async () => {
             try {
-                const res = await AuthHTTP.get("/api/ranks/", {
+                const res = await AuthHTTP.get<IGetRankResponsePayload>("/api/ranks", {
                     params: {
                         size,
                         number: pageNumber,
                     },
                 });
-                return res?.data?.data;
+                return res;
             } catch (error) {
                 return Promise.reject(error);
             }
         },
         select: useCallback((res: any) => {
-            return res?.data?.data?.content.map(
-                ({ id, name }: Pick<IBankResponsePayload, "id" | "name">) => ({
-                    value: id,
-                    label: _.startCase(_.toLower(name)), // capitalize first letter of each words
-                })
-            );
+            // console.log(res.data.data)
+            return res?.data?.data?.content?.map(({ code, name }: IRankDataContent) => ({
+                value: code,
+                label: _.startCase(_.toLower(name)), // capitalize first letter of each words
+            }));
         }, []),
     });
 
