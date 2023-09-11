@@ -142,6 +142,13 @@ function Sidebar() {
                                 <span>Dashboard</span>
                             </NavLink>
                         </li>
+                        <li>
+                            <NavLink to="/settings" className="link">
+                                <Cog size={20} className="min-w-max" />
+                                Profile
+                            </NavLink>
+                        </li>
+
                         {/* Menu with submenu */}
                         {open && (
                             <div>
@@ -155,7 +162,7 @@ function Sidebar() {
                             </div>
                         )}
                         <li>
-                            <NavLink to="/settings" className="link">
+                            <NavLink to="/" className="link">
                                 <Cog size={20} className="min-w-max" />
                                 Role Management
                             </NavLink>

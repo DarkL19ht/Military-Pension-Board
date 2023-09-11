@@ -9,7 +9,7 @@ import MpbTextField from "@/components/@form/MpbTextField";
 import BannerImage from "@/assets/images/soldierimage.jpg";
 import Logo from "@/assets/images/logo.png";
 import MpbCheckbox from "@/components/@form/MpbCheckbox";
-import { UserRequestPayload } from "@/types";
+import { UserRequestPayload } from "@/types/user";
 // import { useAuth } from "@/hooks";
 
 interface FormValues extends Pick<UserRequestPayload, "username" | "password"> {}
@@ -125,7 +125,7 @@ export default function Login() {
                                     />
                                 </div>
                                 {/* TODO: change the Link to div */}
-                                <Link to="/dashboard" className="text-sm">
+                                <Link to="/recovery-mail" className="text-sm">
                                     Forgot password?{" "}
                                     <span className="text-[#00873D]">Reset here</span>
                                 </Link>

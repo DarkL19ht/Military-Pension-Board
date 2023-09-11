@@ -13,7 +13,7 @@ function Pensionerslist() {
                         <div className=" font-medium text-slate-700">Name</div>
                         <div>Joseph Aminu</div>
                     </div>
-                    <div className="space-y-1 border-s-2 px-2">
+                    <div className="space-y-1 border-s-2 px-1">
                         <div className=" font-medium text-slate-700">
                             Verification status
                         </div>
