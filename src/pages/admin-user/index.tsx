@@ -5,13 +5,14 @@ import { useQueryClient } from "@tanstack/react-query";
 import moment from "moment";
 import { CgMoreVertical } from "react-icons/cg";
 import { Search, Trash2, RotateCcw, FileEdit, ShieldCheck } from "lucide-react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import _ from "lodash";
 // React Table
 import { PaginationState, ColumnDef } from "@tanstack/react-table";
 import useUpdateUser from "@/api/user-controller/useUpdateUser";
 import queryKeys from "@/api/queryKeys";
 import useGetUsers from "@/api/user-controller/useGetUsers";
+import useForgetPassword from "@/api/user-controller/useForgetPassword";
 import DataTable from "@/components/ui/table/SSRDataTable";
 import ManageAdminModal from "./ManageAdminModal";
 import {
@@ -56,7 +57,7 @@ export default function AdminUsersTable() {
         }),
         [pageIndex, pageSize]
     );
-
+    /** Enable and disable user action */
     const { UpdateUser: DisableUser, isUpdatingUser: isDisablingUser } = useUpdateUser({
         onSuccess: (res: any) => {
             toast({
@@ -92,6 +93,29 @@ export default function AdminUsersTable() {
             status: status === STATUS.ENABLED ? STATUS.DISABLED : STATUS.ENABLED,
         };
         DisableUser({ requestPayload, requestMethod: RequestMethod.PUT, id });
+    };
+
+    /** * Reset Password action  */
+    const { initiateForgetPassword, isInitiatingForgetPassword } = useForgetPassword({
+        onSuccess: async (res) => {
+            toast({
+                description: res?.data?.responseMessage,
+            });
+            runDispatch({ type: ReducerActionType.CLOSE_RESET_MODAL });
+        },
+        onError: (err) => {
+            const { error, message, responseMessage } = err.response.data;
+            toast({
+                title: error,
+                description: message || responseMessage,
+            });
+        },
+    });
+
+    const handlePasswordReset = () => {
+        initiateForgetPassword({
+            email: rowData?.email,
+        });
     };
 
     const columns = useMemo<ColumnDef<IUserDataContent>[]>(
@@ -264,8 +288,7 @@ export default function AdminUsersTable() {
 
     return (
         <div className="w-full px-5">
-            <div className=" flex w-full items-center justify-between py-3">
-                {/* TODO: refactor this to a breadcrumb components */}
+            {/* <div className=" flex w-full items-center justify-between py-3">
                 <nav aria-label="breadcrumb" className="text-base text-gray-500">
                     <ol className="inline-flex items-center space-x-2 py-2 text-sm font-medium">
                         <li className="inline-flex items-center">
@@ -281,7 +304,7 @@ export default function AdminUsersTable() {
                         </li>
                     </ol>
                 </nav>
-            </div>
+            </div> */}
             {/* Card layout */}
             {/* <div className="mb-20 overflow-auto rounded-md border border-gray-100  p-5 shadow-md"> */}
             <div className="mb-20 mt-4 rounded-md border border-gray-100 px-10 py-5 shadow-md">
@@ -336,13 +359,14 @@ export default function AdminUsersTable() {
                         runDispatch({ type: ReducerActionType.CLOSE_RESET_MODAL })
                     }
                     message="Are you sure, you want to reset password ?"
-                    onConfirm={() => undefined}
+                    onConfirm={() => handlePasswordReset()}
                     showCancelButton
                     backdrop={false}
                     confirmText="Reset"
                     icon="success_lock_icon"
                     showDivider={false}
                     className="px-10"
+                    isLoading={isInitiatingForgetPassword}
                 />
             )}
             {isDisableUser && (

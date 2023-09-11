@@ -44,7 +44,7 @@ export default function RecoveryMail() {
             },
         });
 
-    const handleEmailRecovery = async (data: FormValues) => {
+    const handleForgetPassword = async (data: FormValues) => {
         initiateForgetPassword(data);
     };
 
@@ -73,10 +73,10 @@ export default function RecoveryMail() {
                             </div>
                         </div>
                         {isError && (
-                            <Alert variant="destructive" className="my-5">
+                            <Alert variant="primary" className="my-5">
                                 <AlertCircle className="h-4 w-4" />
                                 <AlertTitle>Error</AlertTitle>
-                                <AlertDescription>{errorMessage}</AlertDescription>
+                                <AlertDescription>{errorMessage} grace</AlertDescription>
                             </Alert>
                         )}
                         <form className="">
@@ -101,7 +101,7 @@ export default function RecoveryMail() {
                                 title="Recover Password"
                                 size="sm"
                                 fullWidth
-                                onClick={handleSubmit(handleEmailRecovery)}
+                                onClick={handleSubmit(handleForgetPassword)}
                                 isLoading={isInitiatingForgetPassword}
                             />
                         </form>

@@ -57,7 +57,7 @@ Military Pensions Board – Admin Portal Management
 -   [x] React Table setup
 -   [x] configure dark mode
 -   [x] lint-stage and husky setup
--   [ ] change the favicon
+-   [X] change the favicon
 -   [ ] simple backdrop components
 -   [ ] Search Input components with Debounce
 -   [ ] restructure the dashboard layout, sidebar menu
@@ -70,7 +70,7 @@ Military Pensions Board – Admin Portal Management
 <!-- User management -->
 -   [X] Login implementation
 -   [ ] Refresh token implementation **_missing endpoints/resolved_**
--   [ ] Forget password/email
+-   [X] Forget password/email
   
 <!-- Admin Management -->
 -   [x] Create Admin User
@@ -79,7 +79,7 @@ Military Pensions Board – Admin Portal Management
 -   [ ] Search on Admin User table 
 -   [x] Edit Admin User
 -   [x] Disable Admin User
--   [ ] Reset Password on admin user `missing endpoints`
+-   [X] Reset Password on admin user 
     <!-- Pensioner Management  -->
 -   [X] Create Pensioner `endpoints not working`
 -   [X] Query pensioners table by size, pageNumber `endpoint not working`
