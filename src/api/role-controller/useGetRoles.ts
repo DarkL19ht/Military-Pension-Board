@@ -7,16 +7,17 @@ interface IParameters {
     pageNumber?: number | undefined;
 }
 
-export default function useGetRoles({ size = 1_000, pageNumber }: IParameters = {}) {
+export default function useGetRoles(requestParameter: IParameters = {}) {
     const result = useQuery({
-        queryKey: [queryKeys.GET_ROLES, { size, pageNumber }],
+        queryKey: [queryKeys.GET_ROLES, requestParameter],
         queryFn: async () => {
             try {
                 const res = await AuthHTTP.get("/api/roles", {
                     params: {
-                        size,
-                        number: pageNumber,
-                        sort: true,
+                        size: 1_000,
+                        sort: false,
+                        sortBy: "id",
+                        ...requestParameter,
                     },
                 });
                 return res?.data?.data;

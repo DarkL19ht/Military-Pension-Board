@@ -25,6 +25,7 @@ import appConfig from "@/config";
 import { useToast } from "@/components/ui/toast/use-toast";
 import { STATUS, RequestMethod } from "@/types/enum";
 import { IRoleDataContent } from "@/types/role";
+import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib";
 
 export default function Roles() {
@@ -104,14 +105,9 @@ export default function Roles() {
                     return (
                         <div className="grid grid-cols-3 gap-4">
                             {row?.original?.permissions?.map((item) => (
-                                <span
-                                    key={item.name}
-                                    className="whitespace-nowrap rounded-full bg-blue-100/80 px-1 py-1 
-                                    text-center text-xs font-semibold text-blue-500"
-                                >
-                                    {" "}
-                                    {_.startCase(_.toLower(item.name))}
-                                </span>
+                                <Badge key={item.name} variant="info">
+                                    {_.toLower(item.name)}
+                                </Badge>
                             ))}
                         </div>
                     );
@@ -147,7 +143,7 @@ export default function Roles() {
                         >
                             <MpbMenu>
                                 <MenuButton>
-                                    <CgMoreVertical className="-ml-10" />
+                                    <CgMoreVertical />
                                 </MenuButton>
                                 <MenuItems className="right-8 top-0 ">
                                     <MenuItem

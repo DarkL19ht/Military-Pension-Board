@@ -64,7 +64,7 @@ export default function ManageRoleModal({ isOpen, closeModal, isEdit, rowData }:
             toast({
                 description: res.data.responseMessage,
             });
-            queryClient.invalidateQueries([queryKeys.GET_USERS]);
+            queryClient.invalidateQueries([queryKeys.GET_ROLES]);
             closeModal();
         },
         onError: (err) => {

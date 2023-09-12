@@ -6,14 +6,16 @@ import useUpdateUser from "@api/user-controller/useUpdateUser";
 import { MpbButton, MpbTextField } from "@/components";
 import ChangePassword from "./ChangePassword";
 import { UserRequestPayload as FormValues } from "@/types/user";
-import { useAppSelector } from "@/hooks/useRedux";
 import { STATUS, RequestMethod } from "@/types/enum";
 import { useToast } from "@/components/ui/toast/use-toast";
+import { useAuth } from "@/hooks";
 
 export default function Profile() {
     const { toast } = useToast();
     const [isDisabled, setIsDisabled] = useState<boolean>(true);
-    const user = useAppSelector((state) => state.authReducer.user);
+    const {
+        authState: { user },
+    } = useAuth();
     const userObj = useMemo(() => {
         return {
             email: user?.email,
