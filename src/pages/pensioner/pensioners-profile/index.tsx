@@ -1,5 +1,4 @@
 // import { Link } from "react-router-dom";
-import React from "react";
 import { Tab } from "@headlessui/react";
 import { ChevronLeft, FileEdit, DownloadCloud } from "lucide-react";
 import PensionerPics from "@/assets/images/pensionerpics.png";
