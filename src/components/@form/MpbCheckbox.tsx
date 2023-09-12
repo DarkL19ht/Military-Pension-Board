@@ -4,8 +4,8 @@ import { cn } from "@/lib";
 
 interface InputProps extends UseControllerProps {
     label?: string;
-    type: string;
     // asterik: boolean;
+    control: any;
     icon?: any;
     className?: string;
 }
@@ -17,7 +17,7 @@ export default function MpbCheckbox(props: InputProps) {
         formState: { errors },
     } = useController(props);
 
-    const { type, name, label, className, ...others } = props;
+    const { name, label, className, ...others } = props;
 
     const baseClass = cn(`input-control`, className, {
         "ring-1 ring-red-500 border-none focus:ring-1 focus:ring-red-500":

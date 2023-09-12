@@ -7,9 +7,11 @@ import MpbTextField from "@/components/@form/MpbTextField";
 import BannerImage from "@/assets/images/soldierimage.jpg";
 import Logo from "@/assets/images/logo.png";
 import MpbCheckbox from "@/components/@form/MpbCheckbox";
-import { UserRequestPayload } from "@/types/user";
 
-interface FormValues extends Pick<UserRequestPayload, "username" | "password"> {}
+interface FormValues {
+    username: string;
+    password: string;
+}
 
 export default function Login() {
     const { control, handleSubmit } = useForm<FormValues>({
@@ -29,8 +31,8 @@ export default function Login() {
 
     const handleAuthentication = (values: FormValues) => {
         const formData = new URLSearchParams();
-        formData.append("username", values.username);
-        formData.append("password", values.password);
+        formData.append("username", values?.username);
+        formData.append("password", values?.password);
         formData.append("grant_type", "password");
         LoginUser(formData);
     };
@@ -88,7 +90,7 @@ export default function Login() {
                                 <MpbTextField
                                     label="Password"
                                     name="password"
-                                    type="text"
+                                    type="password"
                                     icon={<CiLock size={20} />}
                                     control={control}
                                     rules={{
@@ -107,7 +109,7 @@ export default function Login() {
                                         name="rememberMe"
                                     />
                                 </div>
-                                <Link to="/recovery-mail" className="text-sm">
+                                <Link to="/forget-password" className="text-sm">
                                     Forgot password?{" "}
                                     <span className="text-[#00873D]">Reset here</span>
                                 </Link>

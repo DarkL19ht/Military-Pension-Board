@@ -24,7 +24,7 @@ interface IData {
 
 export default function SubMenu({ data }: IData) {
     const { pathname } = useLocation();
-    const [subMenuOpen, setSubMenuOpen] = useState(false);
+    const [subMenuOpen, setSubMenuOpen] = useState(true);
     return (
         <>
             <li

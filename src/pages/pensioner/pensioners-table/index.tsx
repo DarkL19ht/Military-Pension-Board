@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unstable-nested-components */
-import React, { useState, Fragment, useMemo } from "react";
+import { useState, Fragment, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Upload, PenSquare, MoreVertical } from "lucide-react";
 import moment from "moment";
@@ -9,10 +9,14 @@ import { RadioGroup } from "@headlessui/react";
 import DataTable from "@/components/ui/table/SSRDataTable";
 import { MpbMenu, MenuButton, MenuItems, MenuItem, MpbSearchInput } from "@/components";
 import { IPensionerDataContent } from "@/types/pensioner";
-import useGetPensioners from "@/api/pensioner-controller/useGetPensioners";
+import useGetPensioners, {
+    getPensioners,
+} from "@/api/pensioner-controller/useGetPensioners";
+import queryKeys from "@/api/queryKeys";
 import appConfig from "@/config";
 import { cn } from "@/lib";
 import { STATUS } from "@/types/enum";
+import { queryClient } from "@/providers/ReactQueryProvider";
 
 export default function Pensioner() {
     const [status, setStatus] = useState("");
@@ -38,6 +42,16 @@ export default function Pensioner() {
     );
 
     const { data, isLoading } = useGetPensioners(fetchDataOptions);
+    /** TODO: fix prefetching not caching result data */
+    useEffect(() => {
+        queryClient.prefetchQuery({
+            queryKey: [queryKeys.GET_PENSIONERS],
+            queryFn: () =>
+                getPensioners({
+                    page: pageIndex + 2,
+                }),
+        });
+    }, [pageIndex]);
 
     const columns = useMemo<ColumnDef<IPensionerDataContent>[]>(
         () => [

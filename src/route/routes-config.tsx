@@ -5,16 +5,15 @@ import Dashboard from "@/pages/dashboard";
 import Profile from "@/pages/profile";
 import RootLayout from "@/layouts/RootLayout";
 import AdminUsers from "@/pages/admin-user";
-import SetRolesPermissions from "@/pages/set-roles-permissions";
+import RolesManagement from "@/pages/role";
 import PensionerTable from "@/pages/pensioner/pensioners-table";
 import PensionerVerification from "@/pages/pensioner/pensioner-verification";
 import AddPensioners from "@/pages/pensioner/onboard-pensioner";
 import PensionersProfile from "@/pages/pensioner/pensioners-profile";
 import ProtectedRoute from "./protected-route";
 import PublicRoute from "./public-route";
-import AddRole from "@/pages/role/create-role";
-import RecoveryMail from "@/pages/authentication/forget-password";
 import Notification from "@/pages/notifications";
+import ForgetPassword from "@/pages/authentication/forget-password";
 
 const routeConfig = [
     {
@@ -26,14 +25,13 @@ const routeConfig = [
         ),
     },
     {
-        path: "/recovery-mail",
+        path: "/forget-password",
         element: (
             <PublicRoute>
-                <RecoveryMail />
+                <ForgetPassword />
             </PublicRoute>
         ),
     },
-
     {
         path: "/",
         element: (
@@ -48,7 +46,8 @@ const routeConfig = [
                 path: "pensioners",
                 children: [
                     {
-                        path: "view-lists",
+                        index: true,
+                        path: "",
                         element: <PensionerTable />,
                     },
                     {
@@ -76,21 +75,12 @@ const routeConfig = [
                 ],
             },
             {
-                path: "set-roles-permissions",
+                path: "roles-management",
                 children: [
                     {
                         index: true,
                         path: "",
-                        element: <SetRolesPermissions />,
-                    },
-                ],
-            },
-            {
-                path: "manage-role",
-                children: [
-                    {
-                        path: "create-role",
-                        element: <AddRole />,
+                        element: <RolesManagement />,
                     },
                 ],
             },
