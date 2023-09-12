@@ -120,7 +120,7 @@ export default function Notification() {
                                 </span>
                                 <span className="">
                                     <div className="mb-[1rem] text-[13px] font-[600]">
-                                        200 Pensioners verification pending approval
+                                        200 Pensioners verification pending approval.
                                     </div>
                                     <div className="mb-[1rem] flex items-center">
                                         <span className="pr-[2rem] text-[13px] font-[600]">
