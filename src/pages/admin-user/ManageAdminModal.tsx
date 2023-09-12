@@ -66,7 +66,11 @@ export default function ManageAdminModal({
     }, [rowData, reset, isEdit]);
 
     /** apiCalls to get roles */
-    const { RoleResponse } = useGetRoles();
+    const { data } = useGetRoles();
+    const RoleResponse = data?.content?.map((item: { id: number; name: string }) => ({
+        value: item.id,
+        label: item.name,
+    }));
     /** apiCall for create admin user  */
     const { UpdateUser, isUpdatingUser } = useUpdateUser({
         onSuccess: (res) => {

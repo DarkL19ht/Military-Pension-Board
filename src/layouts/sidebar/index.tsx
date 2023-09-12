@@ -30,6 +30,10 @@ const subMenusList = [
                 name: "Verification Approval",
                 path: "verification",
             },
+            {
+                name: "View Roles",
+                path: "",
+            },
         ],
     },
 ];
@@ -147,6 +151,13 @@ function Sidebar() {
                                 Role Management
                             </NavLink>
                         </li> */}
+                        <li>
+                            <NavLink to="roles-management" className="link">
+                                {/* <SlSettings size={23} className="min-w-max" /> */}
+                                <Users size={20} className="min-w-max" />
+                                Roles Management
+                            </NavLink>
+                        </li>
                         <li>
                             <NavLink to="admin-management" className="link">
                                 {/* <SlSettings size={23} className="min-w-max" /> */}

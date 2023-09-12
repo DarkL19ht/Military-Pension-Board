@@ -129,7 +129,7 @@ List of contributors
 
 -   Ibrahim Olayinka [frontend developer] <ibrahimolayinkaa@gmail.com> (070-6564-3303)
 -   Hope Adeniran [frontend developer] <adeniranhopeadebayo@gmail.com> (090-1184-7868)
--   Fatima Olasunkanmi-Ojo [frontend developer]
+-   Fatima Olasunkanmi-Ojo [frontend developer] <fatimaolasunkanmi01@gmail.com> (080-6665-6856)
 -   Olamide Olaitan [frontend developer]
 
 ## License
