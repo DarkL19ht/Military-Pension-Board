@@ -29,6 +29,7 @@ export interface IApiResponse<T> {
 export interface IAuthState {
     isAuthenticated: boolean;
     accessToken: string | null;
+    refreshToken: string | null;
     user: Record<string, any>;
 }
 

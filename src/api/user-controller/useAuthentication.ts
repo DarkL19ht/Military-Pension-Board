@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import jwtDecode from "jwt-decode";
-import type { IAuthPayload } from "@redux/reducers/auth-slice";
+import type { IAuthPayload } from "@/redux/reducers/auth-slice";
 import { HTTP } from "@/lib/httpClient";
 import config from "@/config";
 import { setAuthTokenHTTP } from "@/lib/setAuthToken";
@@ -47,14 +47,15 @@ const useAuthentication = () => {
             }
         },
         onSuccess: (res) => {
-            const { access_token: accessToken } = res.data;
+            const { access_token: accessToken, refresh_token: refreshToken } = res.data;
             setAuthTokenHTTP(accessToken);
             const decodedToken = jwtDecode(accessToken);
             const sendToStore = {
                 decodedToken,
                 accessToken,
+                refreshToken,
             };
-            localStorage.setItem("mpb", accessToken);
+            // localStorage.setItem("mpb", accessToken);
             dispatch(setAuthenticationDetails(sendToStore as IAuthPayload));
         },
     });

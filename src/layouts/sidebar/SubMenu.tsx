@@ -53,7 +53,7 @@ export default function SubMenu({ data }: IData) {
                     <li key={menu.name}>
                         {/* className="hover:text-blue-600 hover:font-medium" */}
                         <NavLink
-                            to={`/${_.kebabCase(data?.name)}/${_.kebabCase(menu?.name)}`}
+                            to={`/${_.kebabCase(data?.name)}/${_.kebabCase(menu?.path)}`}
                             className="link cursor-pointer  capitalize"
                         >
                             {menu.name}

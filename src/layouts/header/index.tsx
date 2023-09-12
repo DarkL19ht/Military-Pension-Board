@@ -7,7 +7,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import { HiOutlineSun, HiOutlineMoon } from "react-icons/hi2";
 import profileImage from "@/assets/images/ib.png";
 import { useTheme } from "@/providers/ThemeProvider";
-import { MpbMenu } from "@/components";
+import { MpbMenu, MenuButton, MenuItems, MenuItem } from "@/components";
 import { useAuth } from "@/hooks";
 
 function Header() {
@@ -75,15 +75,15 @@ function Header() {
                         </p>
                     </div>
                     <MpbMenu>
-                        <MpbMenu.Button onClick={() => setProfileOpen(!profileOpen)}>
+                        <MenuButton onClick={() => setProfileOpen(!profileOpen)}>
                             <IoIosArrowDown
                                 className={` ${
                                     profileOpen && "rotate-180"
                                 } duration-200 `}
                             />
-                        </MpbMenu.Button>
-                        <MpbMenu.Items className="right-0 z-50 mt-2">
-                            <MpbMenu.Item
+                        </MenuButton>
+                        <MenuItems className="right-0 z-50 mt-2">
+                            <MenuItem
                                 onClick={() => {
                                     setProfileOpen(!profileOpen);
                                 }}
@@ -91,8 +91,8 @@ function Header() {
                             >
                                 <FaUser className="mr-2" />
                                 <span>Profile</span>
-                            </MpbMenu.Item>
-                            <MpbMenu.Item
+                            </MenuItem>
+                            <MenuItem
                                 onClick={() => {
                                     setProfileOpen(!profileOpen);
                                 }}
@@ -100,8 +100,8 @@ function Header() {
                             >
                                 <FaCog />
                                 <span>Settings</span>
-                            </MpbMenu.Item>{" "}
-                            <MpbMenu.Item
+                            </MenuItem>{" "}
+                            <MenuItem
                                 onClick={() => {
                                     setProfileOpen(!profileOpen);
                                     dispatch(logout());
@@ -110,8 +110,8 @@ function Header() {
                             >
                                 <MdLogout />
                                 <span>Logout</span>
-                            </MpbMenu.Item>
-                        </MpbMenu.Items>
+                            </MenuItem>
+                        </MenuItems>
                     </MpbMenu>
                 </div>
             </div>

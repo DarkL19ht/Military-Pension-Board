@@ -2,6 +2,8 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import useChangePassword from "@api/user-controller/useChangePassword";
 import { MpbButton, MpbTextField } from "@/components";
 import { useToast } from "@/components/ui/toast/use-toast";
+import { VALIDATE_PASSWORD } from "@/lib/validators";
+import { useAuth } from "@/hooks";
 
 interface FormValues {
     confirmPassword: string;
@@ -11,6 +13,7 @@ interface FormValues {
 
 export default function ChangePassword({ userId }: { userId: number }) {
     const { toast } = useToast();
+    const { logout, dispatch } = useAuth();
 
     const {
         control,
@@ -33,6 +36,7 @@ export default function ChangePassword({ userId }: { userId: number }) {
                 description: res.data.responseMessage,
             });
             // logout the user
+            dispatch(logout());
         },
         onError: (err) => {
             const { error, message, responseMessage } = err.response.data;
@@ -66,7 +70,8 @@ export default function ChangePassword({ userId }: { userId: number }) {
                         <MpbTextField
                             label="Old password"
                             name="oldPassword"
-                            placeholder="*********************"
+                            placeholder="Enter your old password"
+                            autoComplete="new-password"
                             type="password"
                             control={control}
                             rules={{
@@ -84,7 +89,8 @@ export default function ChangePassword({ userId }: { userId: number }) {
                             <MpbTextField
                                 label="New password"
                                 name="password"
-                                placeholder="*********************"
+                                placeholder="Enter your password"
+                                autoComplete="new-password"
                                 type="password"
                                 control={control}
                                 rules={{
@@ -92,11 +98,7 @@ export default function ChangePassword({ userId }: { userId: number }) {
                                         value: true,
                                         message: "Password is required",
                                     },
-                                    minLength: {
-                                        value: 6,
-                                        message:
-                                            "Password must have atleast 6 characters",
-                                    },
+                                    pattern: VALIDATE_PASSWORD,
                                 }}
                             />
                         </div>
@@ -106,7 +108,8 @@ export default function ChangePassword({ userId }: { userId: number }) {
                             <MpbTextField
                                 label="Confirm password"
                                 name="confirmPassword"
-                                placeholder="*********************"
+                                autoComplete="new-password"
+                                placeholder="Enter confirm password"
                                 type="password"
                                 control={control}
                                 rules={{

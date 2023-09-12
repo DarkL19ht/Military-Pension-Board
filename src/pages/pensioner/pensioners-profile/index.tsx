@@ -1,5 +1,7 @@
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
+import React from "react";
 import { Tab } from "@headlessui/react";
+import { ChevronLeft, FileEdit, DownloadCloud } from "lucide-react";
 import PensionerPics from "@/assets/images/pensionerpics.png";
 import QrCode from "@/assets/images/QRCode.png";
 import Card1 from "@/assets/images/card1.png";
@@ -9,31 +11,24 @@ import Card3 from "@/assets/images/card3.png";
 export default function ViewPensionersProfile() {
     return (
         <div className="mx-auto w-4/5">
-            <div className="mb-2 flex w-full justify-between py-3">
+            <div className="mb-5 flex w-full justify-between py-3">
                 {/* Breacrumb */}
-                <nav aria-label="breadcrumb" className="text-base text-gray-500">
-                    <ol className="inline-flex items-center space-x-2 py-2 text-sm font-medium">
-                        <li className="inline-flex items-center">
-                            <Link
-                                to="/"
-                                className="text-secondary-500 hover:text-secondary-600"
-                            >
-                                Dashboard
-                            </Link>
-                        </li>
-                        <li className="inline-flex items-center space-x-2">
-                            <span className="text-secondary-400">/</span>
-                            <Link
-                                to="/"
-                                className="text-secondary-500 hover:text-secondary-600"
-                            >
-                                View Pensioner&apos;s Profile
-                            </Link>
-                        </li>
-                    </ol>
-                </nav>
+                <button className="flex gap-1">
+                    <ChevronLeft />
+                    <span>Back to Pensioners Verification</span>
+                </button>
+                <div className="flex gap-2 ">
+                    <button className="flex items-center gap-1">
+                        <span>Edit</span>
+                        <FileEdit size={15} />
+                    </button>
+                    <button className="flex items-center gap-1">
+                        <span>Download report</span>
+                        <DownloadCloud size={15} />
+                    </button>
+                </div>
             </div>
-            <div className="mx-auto w-[55%]">
+            <div className="mx-auto w-[55%] p-5">
                 <div className="flex">
                     <div>
                         <img

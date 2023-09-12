@@ -7,13 +7,14 @@ import RootLayout from "@/layouts/RootLayout";
 import AdminUsers from "@/pages/admin-user";
 import SetRolesPermissions from "@/pages/set-roles-permissions";
 import PensionerTable from "@/pages/pensioner/pensioners-table";
+import PensionerVerification from "@/pages/pensioner/pensioner-verification";
 import AddPensioners from "@/pages/pensioner/onboard-pensioner";
 import PensionersProfile from "@/pages/pensioner/pensioners-profile";
 import ProtectedRoute from "./protected-route";
 import PublicRoute from "./public-route";
 import AddRole from "@/pages/role/create-role";
-import RecoveryMail from "@/pages/authentication/recovery-mail";
-import NewPassword from "@/pages/authentication/new-password";
+import RecoveryMail from "@/pages/authentication/forget-password";
+import Notification from "@/pages/notifications";
 
 const routeConfig = [
     {
@@ -32,14 +33,7 @@ const routeConfig = [
             </PublicRoute>
         ),
     },
-    {
-        path: "/new-password",
-        element: (
-            <PublicRoute>
-                <NewPassword />
-            </PublicRoute>
-        ),
-    },
+
     {
         path: "/",
         element: (
@@ -54,7 +48,7 @@ const routeConfig = [
                 path: "pensioners",
                 children: [
                     {
-                        path: "pensioners-details",
+                        path: "view-lists",
                         element: <PensionerTable />,
                     },
                     {
@@ -62,8 +56,12 @@ const routeConfig = [
                         element: <AddPensioners />,
                     },
                     {
-                        path: "verification-approval",
+                        path: "profile",
                         element: <PensionersProfile />,
+                    },
+                    {
+                        path: "verification",
+                        element: <PensionerVerification />,
                     },
                 ],
             },
@@ -93,6 +91,16 @@ const routeConfig = [
                     {
                         path: "create-role",
                         element: <AddRole />,
+                    },
+                ],
+            },
+            {
+                path: "notifications",
+                children: [
+                    {
+                        index: true,
+                        path: "",
+                        element: <Notification />,
                     },
                 ],
             },

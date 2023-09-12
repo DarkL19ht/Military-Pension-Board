@@ -51,6 +51,8 @@ export default function DataTable<TData, TValue>({
         getCoreRowModel: getCoreRowModel(),
     });
     // console.log(table.getState().pagination)
+    // const { rows } = table.getRowModel();
+
     return (
         <div className="rounded-sm border border-gray-300 ">
             <Table className="w-full text-left font-light">

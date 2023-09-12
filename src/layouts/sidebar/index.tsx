@@ -7,11 +7,7 @@ import { useMediaQuery } from "react-responsive";
 // * React icons
 import { IoIosArrowBack } from "react-icons/io";
 import { HiOutlineHome } from "react-icons/hi";
-import { Users, Cog, LogOut } from "lucide-react";
-// import { AiOutlineAppstore } from "react-icons/ai";
-// import { BsPerson } from "react-icons/bs";
-// import { HiOutlineDatabase } from "react-icons/hi";
-// import { RiBuilding3Line } from "react-icons/ri";
+import { Users, UserCog, LogOut } from "lucide-react";
 import { TbReportAnalytics } from "react-icons/tb";
 import { MdMenu } from "react-icons/md";
 import Logo from "@/assets/images/logo.png";
@@ -24,28 +20,18 @@ const subMenusList = [
         menus: [
             {
                 name: "Add Pensioners",
-                path: "",
+                path: "add-pensioners",
             },
             {
                 name: "Pensioners Details",
-                path: "",
+                path: "view-lists",
             },
             {
                 name: "Verification Approval",
-                path: "",
+                path: "verification",
             },
         ],
     },
-    // {
-    //     name: "Manage Role",
-    //     icon: TbReportAnalytics,
-    //     menus: [
-    //         {
-    //             name: "Create Role",
-    //             path: "",
-    //         },
-    //     ],
-    // },
 ];
 
 function Sidebar() {
@@ -132,7 +118,7 @@ function Sidebar() {
                 {/* Menus */}
                 <div className="flex h-full flex-col">
                     <ul
-                        className="flex h-[70%] flex-col gap-2 overflow-x-hidden 
+                        className="flex h-[70%] flex-col gap-4 overflow-x-hidden 
                         whitespace-pre px-2.5 py-5 
                         text-[0.9rem] font-medium scrollbar-thin scrollbar-track-white  scrollbar-thumb-slate-100 md:h-[80%]"
                     >
@@ -140,12 +126,6 @@ function Sidebar() {
                             <NavLink to="dashboard" className="link">
                                 <HiOutlineHome size={20} className="min-w-max" />
                                 <span>Dashboard</span>
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="/settings" className="link">
-                                <Cog size={20} className="min-w-max" />
-                                Profile
                             </NavLink>
                         </li>
 
@@ -174,6 +154,20 @@ function Sidebar() {
                                 Admin Management
                             </NavLink>
                         </li>
+                        <li>
+                            <NavLink to="notifications" className="link">
+                                {/* <SlSettings size={23} className="min-w-max" /> */}
+                                <Users size={20} className="min-w-max" />
+                                Notifications
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/settings" className="link">
+                                {/* <Cog size={20} className="min-w-max" /> */}
+                                <UserCog size={20} className="min-w-max" />
+                                Profile
+                            </NavLink>
+                        </li>
                     </ul>
                     {/* second  */}
                     {(open || isTabletMid) && (
@@ -183,7 +177,10 @@ function Sidebar() {
                                     <p>Spark</p>
                                     <small>No-cost $0/month</small>
                                 </div> */}
-                                <button className="link active rounded-lg bg-teal-50 px-10 py-3 text-sm text-teal-500">
+                                <button
+                                    className="link active rounded-lg bg-teal-50
+                                     px-10 py-3 text-sm text-teal-500"
+                                >
                                     <LogOut />
                                     <span>Logout</span>
                                 </button>

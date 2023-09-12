@@ -2,6 +2,8 @@ import React from "react";
 import "../src/index.css";
 import { withThemeByDataAttribute } from "@storybook/addon-styling";
 import Toaster from "../src/components/ui/toast/toaster";
+import { ReactQueryProvider, ReactReduxProvider, ThemeProvider } from "../src/providers";
+import {  BrowserRouter } from "react-router-dom";
 
 
 /** @type { import('@storybook/react').Preview } */
@@ -41,10 +43,16 @@ const preview = {
         }),
         (Story) => {
             return (
-                <div>
-                    <Story />
-                    <Toaster />
-                </div>
+                <ReactReduxProvider>
+                    <ReactQueryProvider>
+                        <ThemeProvider>
+                            <BrowserRouter>
+                                <Story />
+                                <Toaster />
+                            </BrowserRouter>
+                        </ThemeProvider>
+                    </ReactQueryProvider>
+                </ReactReduxProvider>
             );
         },
     ],

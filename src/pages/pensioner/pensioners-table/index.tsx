@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unstable-nested-components */
-import { useState, Fragment, useMemo } from "react";
+import React, { useState, Fragment, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Upload, PenSquare, MoreVertical } from "lucide-react";
 import moment from "moment";
@@ -7,7 +7,7 @@ import _ from "lodash";
 import { PaginationState, ColumnDef } from "@tanstack/react-table";
 import { RadioGroup } from "@headlessui/react";
 import DataTable from "@/components/ui/table/SSRDataTable";
-import { MpbMenu, MpbSearchInput } from "@/components";
+import { MpbMenu, MenuButton, MenuItems, MenuItem, MpbSearchInput } from "@/components";
 import { IPensionerDataContent } from "@/types/pensioner";
 import useGetPensioners from "@/api/pensioner-controller/useGetPensioners";
 import appConfig from "@/config";
@@ -83,10 +83,7 @@ export default function Pensioner() {
                     return (
                         <div className="flex flex-col gap-1">
                             <span>
-                                {moment(row?.original?.createdOn).format("MMMM Do YYYY")}
-                            </span>
-                            <span className="text-gray-400">
-                                {moment(row?.original?.createdOn).format("dddd, ha")}
+                                {moment(row?.original?.createdOn).format("MMMM Do, YYYY")}
                             </span>
                         </div>
                     );
@@ -100,10 +97,6 @@ export default function Pensioner() {
                 accessorKey: "verificationStage",
                 header: "Verification Stage",
             },
-            // {
-            //     accessorKey: "verificationStatus",
-            //     header: "Verification Status",
-            // },
             {
                 accessorKey: "status",
                 header: "Status",
@@ -119,21 +112,24 @@ export default function Pensioner() {
                             whitespace-nowrap px-2 py-4 text-center text-xs"
                         >
                             <MpbMenu>
-                                <MpbMenu.Button>
+                                <MenuButton>
                                     <MoreVertical />
-                                </MpbMenu.Button>
-                                <MpbMenu.Items className="right-8 top-0 w-40">
-                                    <MpbMenu.Item className="flex items-center gap-3 hover:bg-green-50">
+                                </MenuButton>
+                                <MenuItems className="right-8 top-0 w-40">
+                                    <MenuItem
+                                        className="flex items-center gap-3 hover:bg-green-50"
+                                        onClick={() => navigate("/pensioners/profile")}
+                                    >
                                         View Detail
-                                    </MpbMenu.Item>
-                                </MpbMenu.Items>
+                                    </MenuItem>
+                                </MenuItems>
                             </MpbMenu>
                         </div>
                     );
                 },
             },
         ],
-        []
+        [navigate]
     );
     return (
         <div className="mx-auto w-[95%]">
@@ -149,29 +145,30 @@ export default function Pensioner() {
                         Download report
                     </button>
                     <MpbMenu>
-                        <MpbMenu.Button
+                        <MenuButton
                             className="rounded-md border border-green-600
                          bg-green-700 px-4 py-2 text-xs text-white"
                         >
                             Add Pensioner
-                        </MpbMenu.Button>
-                        <MpbMenu.Items className="right-0 mt-2">
-                            <MpbMenu.Item
+                        </MenuButton>
+                        <MenuItems className="right-0 mt-2">
+                            <MenuItem
                                 className="flex items-center gap-4 hover:bg-green-50"
                                 onClick={() => navigate("/pensioners/add-pensioners")}
                             >
                                 <PenSquare size={17} />
                                 <span>Manual entry</span>
-                            </MpbMenu.Item>{" "}
-                            <MpbMenu.Item className="flex items-center gap-4 hover:bg-green-50">
+                            </MenuItem>{" "}
+                            <MenuItem className="flex items-center gap-4 hover:bg-green-50">
                                 <Upload size={17} />
                                 <span>Upload CSV</span>
-                            </MpbMenu.Item>
-                        </MpbMenu.Items>
+                            </MenuItem>
+                        </MenuItems>
                     </MpbMenu>
                 </div>
             </div>
             {/* Card layout */}
+            {/* overflow-auto */}
             <div className="mb-20 w-full overflow-auto rounded-md border border-gray-100 p-5 shadow-md">
                 {/* Table UI */}
                 <div className="mb-4 flex justify-between divide-y-reverse">

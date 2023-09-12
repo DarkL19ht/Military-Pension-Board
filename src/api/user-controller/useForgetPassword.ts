@@ -24,9 +24,10 @@ export default function useForgetPassword({ onError, onSuccess }: IParameters = 
         onSuccess,
     });
 
-    const { mutate, isLoading } = Mutation;
+    const { mutate, isLoading, isError } = Mutation;
     return {
         initiateForgetPassword: mutate,
         isInitiatingForgetPassword: isLoading,
+        isError,
     };
 }

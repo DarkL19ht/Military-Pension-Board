@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { CiUser } from "react-icons/ci";
+import { FolderEdit, X } from "lucide-react";
 import useUpdateUser from "@api/user-controller/useUpdateUser";
 import { MpbButton, MpbTextField } from "@/components";
-import ProfilePics from "@/assets/images/profilepics.png";
 import ChangePassword from "./ChangePassword";
 import { UserRequestPayload as FormValues } from "@/types/user";
 import { useAppSelector } from "@/hooks/useRedux";
@@ -12,11 +12,10 @@ import { useToast } from "@/components/ui/toast/use-toast";
 
 export default function Profile() {
     const { toast } = useToast();
-    const [isReadOnly, setIsReadOnly] = useState<boolean>(true);
+    const [isDisabled, setIsDisabled] = useState<boolean>(true);
     const user = useAppSelector((state) => state.authReducer.user);
-    const { control, handleSubmit, watch } = useForm<FormValues>({
-        mode: "all",
-        defaultValues: {
+    const userObj = useMemo(() => {
+        return {
             email: user?.email,
             firstName: user?.firstname,
             lastName: user?.lastname,
@@ -24,6 +23,13 @@ export default function Profile() {
             roles: [],
             username: user?.username,
             status: STATUS.ENABLED,
+        };
+    }, [user?.email, user?.firstname, user?.lastname, user?.mobile, user?.username]);
+
+    const { control, handleSubmit, watch, reset } = useForm<FormValues>({
+        mode: "all",
+        defaultValues: {
+            ...userObj,
         },
     });
 
@@ -58,20 +64,41 @@ export default function Profile() {
             <pre className="hidden">{JSON.stringify(user, null, 2)}</pre>
             <pre className="hidden">{JSON.stringify(watch(), null, 2)}</pre>
             <div className="mb-20 ml-20 mt-9 w-full rounded-md border border-gray-100 px-[3.81rem] py-5 pt-[2rem] shadow-md sm:w-[60%]">
-                <div className="mt-1">
-                    <img
-                        src={ProfilePics}
-                        alt="profile_picture"
-                        className="rounded-full border-4 border-[#006C31]"
-                    />
-                </div>
-                <div className="mb-14 mt-8">
+                <div className="mb-14 mt-8 flex justify-between">
                     <p className="pr-[1.25rem] text-3xl font-semibold text-[#239F5B]">
                         Profile Information
                     </p>
+                    {isDisabled ? (
+                        <button
+                            className="flex items-center gap-1
+                        rounded-lg border border-green-500 px-8 py-1.5 text-sm text-green-400"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                setIsDisabled(false);
+                            }}
+                        >
+                            <span>Edit</span>
+                            <FolderEdit size={15} />
+                        </button>
+                    ) : (
+                        <button
+                            className="flex items-center gap-1
+                        rounded-lg border border-red-500 px-8 py-1.5 text-sm text-red-400"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                setIsDisabled(true);
+                                reset({
+                                    ...userObj,
+                                });
+                            }}
+                        >
+                            <span>Cancel</span>
+                            <X size={15} />
+                        </button>
+                    )}
                 </div>
                 <div>
-                    <form className="flex w-full max-w-2xl flex-col gap-8">
+                    <form className="flex w-full max-w-2xl flex-col gap-8 pb-6">
                         <div className="flex gap-5">
                             <div className="w-full md:w-1/2">
                                 <MpbTextField
@@ -86,7 +113,7 @@ export default function Profile() {
                                             message: "First name is required",
                                         },
                                     }}
-                                    readOnly={isReadOnly}
+                                    disabled={isDisabled}
                                 />
                             </div>
                             <div className="w-full md:w-1/2">
@@ -102,7 +129,7 @@ export default function Profile() {
                                             message: "Last name is required",
                                         },
                                     }}
-                                    readOnly={isReadOnly}
+                                    disabled={isDisabled}
                                 />
                             </div>
                         </div>
@@ -121,7 +148,7 @@ export default function Profile() {
                                             message: "Phone number is required",
                                         },
                                     }}
-                                    readOnly={isReadOnly}
+                                    disabled={isDisabled}
                                 />
                             </div>
                             <div className="w-full md:w-1/2">
@@ -131,7 +158,8 @@ export default function Profile() {
                                     placeholder="Joseph.Susan"
                                     type="text"
                                     control={control}
-                                    readOnly
+                                    // readOnly
+                                    disabled={isDisabled}
                                 />
                             </div>
                         </div>
@@ -150,23 +178,11 @@ export default function Profile() {
                                             message: "Email is required",
                                         },
                                     }}
-                                    readOnly={isReadOnly}
+                                    disabled={isDisabled}
                                 />
                             </div>
                         </div>
-                        {isReadOnly ? (
-                            <div className="mt-8">
-                                <MpbButton
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        setIsReadOnly(false);
-                                    }}
-                                    fullWidth
-                                    title="Edit Profile"
-                                    variant="primary"
-                                />
-                            </div>
-                        ) : (
+                        {!isDisabled && (
                             <div className="mt-8 flex w-full gap-4">
                                 <MpbButton
                                     onClick={handleSubmit(handleProfileUpdate)}
@@ -174,17 +190,6 @@ export default function Profile() {
                                     title="Save Changes"
                                     variant="primary"
                                     isLoading={isUpdatingUser}
-                                    className="w-4/5"
-                                />
-                                <MpbButton
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        setIsReadOnly(true);
-                                    }}
-                                    fullWidth
-                                    title="Cancel"
-                                    variant="secondary"
-                                    className="w-1/5"
                                 />
                             </div>
                         )}
