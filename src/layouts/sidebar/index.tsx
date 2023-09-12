@@ -24,15 +24,11 @@ const subMenusList = [
             },
             {
                 name: "Pensioners Details",
-                path: "view-lists",
+                path: "",
             },
             {
                 name: "Verification Approval",
                 path: "verification",
-            },
-            {
-                name: "View Roles",
-                path: "",
             },
         ],
     },

@@ -56,11 +56,7 @@ export default function ManageRoleModal({ isOpen, closeModal, isEdit, rowData }:
     }, [rowData, reset, isEdit]);
 
     /** apiCalls to get permissions */
-    const { data } = useGetPermissions();
-    const permissions = data?.content?.map((item: { id: number; name: string }) => ({
-        value: item.id,
-        label: item.name,
-    }));
+    const { data: permissions } = useGetPermissions();
 
     /** apiCall for create roles  */
     const { UpdateRole, isUpdatingRole } = useUpdateRoles({

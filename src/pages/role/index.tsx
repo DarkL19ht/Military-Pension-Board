@@ -2,29 +2,27 @@
 /* eslint-disable react/no-unstable-nested-components */
 import { useReducer, useMemo, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import moment from "moment";
 import _ from "lodash";
 import { CgMoreVertical } from "react-icons/cg";
-import { Search, Trash2, RotateCcw, FileEdit, ShieldCheck } from "lucide-react";
-import { Link } from "react-router-dom";
-// React Table
+import { Search, Trash2, FileEdit, ShieldCheck } from "lucide-react";
 import { PaginationState, ColumnDef } from "@tanstack/react-table";
-// change it
+import DataTable from "@/components/ui/table/SSRDataTable";
 import useUpdateRoles from "@/api/role-controller/useUpdateRoles";
-import queryKeys from "@/api/queryKeys";
 import useGetRoles from "@/api/role-controller/useGetRoles";
+import queryKeys from "@/api/queryKeys";
 import ManageRoleModal from "./ManageRoleModal";
-import DataTable from "./DataTable";
 import {
     MpbSweetAlert as DisableRoleModal,
-    MpbSweetAlert as ResetPasswordModal,
     MpbButton,
     MpbMenu,
+    MenuButton,
+    MenuItems,
+    MenuItem,
+    // MpbSearchInput,
 } from "@/components";
 import { reducer, initialState, ReducerActionType } from "./reducer";
 import appConfig from "@/config";
 import { useToast } from "@/components/ui/toast/use-toast";
-// check
 import { STATUS, RequestMethod } from "@/types/enum";
 import { IRoleDataContent } from "@/types/role";
 import { cn } from "@/lib";
@@ -33,7 +31,7 @@ export default function Roles() {
     const { toast } = useToast();
     const queryClient = useQueryClient();
     const [state, runDispatch] = useReducer(reducer, initialState);
-    const { isResetPassword, isDisableRole, isNewRole, rowData, isEdit } = state;
+    const { isDisableRole, isNewRole, rowData, isEdit } = state;
     const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
         pageIndex: 0,
         pageSize: appConfig.defaultPageSize,
@@ -92,30 +90,32 @@ export default function Roles() {
     const columns = useMemo<ColumnDef<IRoleDataContent>[]>(
         () => [
             {
-                accessorKey: "",
+                accessorKey: "name",
                 header: "Name",
-                cell: ({ row }) => {
-                    return (
-                        <div className="flex items-center gap-1">
-                            <div
-                                className={cn(
-                                    `h-2 w-2 rounded-full`,
-                                    STATUS.ENABLED === row?.original?.status &&
-                                        "bg-green-600",
-                                    STATUS.DISABLED === row?.original?.status &&
-                                        "bg-red-600"
-                                )}
-                            />
-                            <div className="">
-                                <span>{_.upperCase(row?.original?.name)}</span>
-                            </div>
-                        </div>
-                    );
-                },
             },
             {
                 accessorKey: "description",
                 header: "Description",
+            },
+            {
+                accessorKey: "permissions",
+                header: "Permission",
+                cell: ({ row }) => {
+                    return (
+                        <div className="grid grid-cols-3 gap-4">
+                            {row?.original?.permissions?.map((item) => (
+                                <span
+                                    key={item.name}
+                                    className="whitespace-nowrap rounded-full bg-blue-100/80 px-1 py-1 
+                                    text-center text-xs font-semibold text-blue-500"
+                                >
+                                    {" "}
+                                    {_.startCase(_.toLower(item.name))}
+                                </span>
+                            ))}
+                        </div>
+                    );
+                },
             },
             {
                 accessorKey: "status",
@@ -136,54 +136,6 @@ export default function Roles() {
                 },
             },
             {
-                accessorKey: "createdOn",
-                header: "Date Created",
-                cell: ({ row }) => {
-                    return (
-                        <div className="flex flex-col gap-1">
-                            <span className="text-gray-400">
-                                {moment(
-                                    row?.original?.permissions?.map(
-                                        (item) => item.createdOn
-                                    )
-                                ).format("MMMM Do YYYY")}
-                            </span>
-                            <span className="text-gray-400">
-                                {moment(
-                                    row?.original?.permissions?.map(
-                                        (item) => item.createdOn
-                                    )
-                                ).format("dddd, ha")}
-                            </span>
-                        </div>
-                    );
-                },
-            },
-            {
-                accessorKey: "updatedOn",
-                header: "Date Updated",
-                cell: ({ row }) => {
-                    return (
-                        <div className="flex flex-col gap-1">
-                            <span className="text-gray-400">
-                                {moment(
-                                    row?.original?.permissions?.map(
-                                        (item) => item.updatedOn
-                                    )
-                                ).format("MMMM Do YYYY")}
-                            </span>
-                            <span className="text-gray-400">
-                                {moment(
-                                    row?.original?.permissions?.map(
-                                        (item) => item.updatedOn
-                                    )
-                                ).format("dddd, ha")}
-                            </span>
-                        </div>
-                    );
-                },
-            },
-            {
                 // accessorKey: "",
                 header: "Action",
                 id: "Action",
@@ -194,11 +146,11 @@ export default function Roles() {
                             whitespace-nowrap px-2 py-4 text-center text-xs"
                         >
                             <MpbMenu>
-                                <MpbMenu.Button>
+                                <MenuButton>
                                     <CgMoreVertical className="-ml-10" />
-                                </MpbMenu.Button>
-                                <MpbMenu.Items className="right-8 top-0 ">
-                                    <MpbMenu.Item
+                                </MenuButton>
+                                <MenuItems className="right-8 top-0 ">
+                                    <MenuItem
                                         onClick={() => {
                                             runDispatch({
                                                 type: ReducerActionType.OPEN_ADD_NEW_ROLE__MODAL,
@@ -215,12 +167,8 @@ export default function Roles() {
                                     >
                                         <FileEdit size={15} color="green" />
                                         <span>Edit Role</span>
-                                    </MpbMenu.Item>
-                                    <MpbMenu.Item className="flex items-center gap-3 hover:bg-red-50">
-                                        <RotateCcw size={15} color="red" />
-                                        <span>Reset Password</span>
-                                    </MpbMenu.Item>{" "}
-                                    <MpbMenu.Item
+                                    </MenuItem>
+                                    <MenuItem
                                         onClick={() => {
                                             runDispatch({
                                                 type: ReducerActionType.OPEN_DISABLE_MODAL,
@@ -241,8 +189,8 @@ export default function Roles() {
                                                 <span>Disable Role</span>
                                             </>
                                         )}
-                                    </MpbMenu.Item>
-                                </MpbMenu.Items>
+                                    </MenuItem>
+                                </MenuItems>
                             </MpbMenu>
                         </div>
                     );
@@ -253,27 +201,9 @@ export default function Roles() {
     );
     return (
         <div className="w-full px-5">
-            <div className=" flex w-full items-center justify-between py-3">
-                {/* TODO: refactor this to a breadcrumb components */}
-                <nav aria-label="breadcrumb" className="text-base text-gray-500">
-                    <ol className="inline-flex items-center space-x-2 py-2 text-sm font-medium">
-                        <li className="inline-flex items-center">
-                            <Link to="/" className="">
-                                Dashboard
-                            </Link>
-                        </li>
-                        <li className="inline-flex items-center space-x-2">
-                            <span className="text-secondary-400">/</span>
-                            <Link to="/roles-management" className="">
-                                Role Management
-                            </Link>
-                        </li>
-                    </ol>
-                </nav>
-            </div>
             {/* Card layout */}
             {/* <div className="mb-20 overflow-auto rounded-md border border-gray-100  p-5 shadow-md"> */}
-            <div className="mb-20 mt-4 rounded-md border border-gray-100 px-10 py-5 shadow-md">
+            <div className="mb-20 mt-4 w-[80%] rounded-md border border-gray-100 px-10 py-5 shadow-md">
                 {/* Table UI */}
                 <h4 className="mb-2 text-xl font-medium capitalize">role management</h4>
                 <div className="flex justify-between py-5">
@@ -316,24 +246,9 @@ export default function Roles() {
                     totalRecords={data?.totalElements}
                     isLoading={isLoading}
                     pageSizeOptions={[5, 10, 20, 30, 50]}
+                    isFooter={false}
                 />
             </div>
-            {isResetPassword && (
-                <ResetPasswordModal
-                    isOpen={isResetPassword}
-                    closeModal={() =>
-                        runDispatch({ type: ReducerActionType.CLOSE_RESET_MODAL })
-                    }
-                    message="Are you sure, you want to reset password ?"
-                    onConfirm={() => undefined}
-                    showCancelButton
-                    backdrop={false}
-                    confirmText="Reset"
-                    icon="success_lock_icon"
-                    showDivider={false}
-                    className="px-10"
-                />
-            )}
             {isDisableRole && (
                 <DisableRoleModal
                     isOpen={isDisableRole}

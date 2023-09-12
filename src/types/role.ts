@@ -1,5 +1,6 @@
 import { STATUS } from "./enum";
-import { IApiRoleResponse } from ".";
+import { IApiResponse } from ".";
+import { IPermissionDataContent } from "./permission";
 
 export interface IRoleRequestPayload {
     description: string;
@@ -8,25 +9,12 @@ export interface IRoleRequestPayload {
     status: STATUS | "";
 }
 
-export interface IGetRoleResponsePayload extends IApiRoleResponse<IRoleDataContent> {}
+export interface IGetRoleResponsePayload extends IApiResponse<IRoleDataContent> {}
 
 export interface IRoleDataContent {
     id: number;
     name: string;
     description: string;
-    status: STATUS | "";
-    permissions: Permission[];
+    status: STATUS | ""; // check and confirm why the empty string is use here
+    permissions: IPermissionDataContent[];
 }
-
-type Permission = {
-    id: number;
-    name: string;
-    description: string;
-    authorized: boolean;
-    category: string;
-    status: STATUS;
-    createdOn: string;
-    createdBy: number;
-    updatedOn: string;
-    updatedBy: number;
-};

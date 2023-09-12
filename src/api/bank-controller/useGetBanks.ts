@@ -11,13 +11,14 @@ interface IParameters {
 }
 
 // useQuery<<IApiResponse<IBanks>, Error>;
+// queryFn: async (): Promise<IGetBankResponsePayload> => {
 
 export default function useGetBanks({ size, pageNumber }: IParameters = {}) {
     const result = useQuery({
         queryKey: [queryKeys.GET_BANKS, { size, pageNumber }],
-        queryFn: async (): Promise<IGetBankResponsePayload> => {
+        queryFn: async () => {
             try {
-                const res = await AuthHTTP.get("/api/banks", {
+                const res = await AuthHTTP.get<IGetBankResponsePayload>("/api/banks", {
                     params: {
                         size,
                         number: pageNumber,

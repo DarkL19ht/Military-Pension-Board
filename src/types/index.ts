@@ -26,21 +26,6 @@ export interface IApiResponse<T> {
     };
 }
 
-export interface IApiRoleResponse<T> {
-    responseCode: string;
-    responseMessage: string;
-    execTime: number;
-    data: {
-        content: T[];
-        page: number;
-        size: number;
-        totalElements: number;
-        totalPages: number;
-        first: boolean;
-        last: boolean;
-    };
-}
-
 export interface IAuthState {
     isAuthenticated: boolean;
     accessToken: string | null;

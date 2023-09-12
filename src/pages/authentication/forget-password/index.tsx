@@ -1,9 +1,7 @@
 import { useState } from "react";
-import { IoIosArrowBack } from "react-icons/io";
-import { AiOutlineMail } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, ChevronLeft, Mail } from "lucide-react";
 import BannerImage from "@/assets/images/logo.png";
 import securityIcon from "../../../../public/cardicons/icon-security.svg";
 import MpbTextField from "@/components/@form/MpbTextField";
@@ -66,17 +64,17 @@ export default function RecoveryMail() {
                     <div className="mx-auto rounded-md bg-[#ffffff] p-4  sm:w-3/5 lg:w-3/5">
                         <div className="mb-[3rem] flex items-center justify-between py-6">
                             <Link to="/">
-                                <IoIosArrowBack />
+                                <ChevronLeft />
                             </Link>
                             <div className="flex-1  text-center text-[1.5rem] font-[600]">
                                 Enter email to recover password
                             </div>
                         </div>
                         {isError && (
-                            <Alert variant="primary" className="my-5">
+                            <Alert variant="secondary" className="my-5">
                                 <AlertCircle className="h-4 w-4" />
                                 <AlertTitle>Error</AlertTitle>
-                                <AlertDescription>{errorMessage} grace</AlertDescription>
+                                <AlertDescription>{errorMessage}</AlertDescription>
                             </Alert>
                         )}
                         <form className="">
@@ -85,7 +83,7 @@ export default function RecoveryMail() {
                                     label="Email Address"
                                     name="email"
                                     type="email"
-                                    icon={<AiOutlineMail size={20} />}
+                                    icon={<Mail />}
                                     className="py-2"
                                     control={control}
                                     rules={{

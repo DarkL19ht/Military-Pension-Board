@@ -27,6 +27,7 @@ interface DataTableProps<TData, TValue> {
     isLoading?: boolean;
     totalRecords: number;
     pageSizeOptions: number[];
+    isFooter?: boolean;
 }
 
 export default function DataTable<TData, TValue>({
@@ -38,6 +39,7 @@ export default function DataTable<TData, TValue>({
     isLoading,
     totalRecords,
     pageSizeOptions,
+    isFooter,
 }: DataTableProps<TData, TValue>) {
     const table = useReactTable({
         data,
@@ -117,27 +119,30 @@ export default function DataTable<TData, TValue>({
                                 </TableRow>
                             )}
                         </TableBody>
-                        <TableFooter className="border-b bg-[#F2FAF5]">
-                            {table?.getHeaderGroups()?.map((headerGroup) => (
-                                <TableRow key={headerGroup.id} className="">
-                                    {headerGroup.headers.map((header) => {
-                                        return (
-                                            <TableHead
-                                                key={header.id}
-                                                className="h-0 whitespace-nowrap px-4 py-2 text-left text-sm font-medium text-gray-500"
-                                            >
-                                                {header.isPlaceholder
-                                                    ? null
-                                                    : flexRender(
-                                                          header.column.columnDef.header,
-                                                          header.getContext()
-                                                      )}
-                                            </TableHead>
-                                        );
-                                    })}
-                                </TableRow>
-                            ))}
-                        </TableFooter>
+                        {isFooter && (
+                            <TableFooter className="border-b bg-[#F2FAF5]">
+                                {table?.getHeaderGroups()?.map((headerGroup) => (
+                                    <TableRow key={headerGroup.id} className="">
+                                        {headerGroup.headers.map((header) => {
+                                            return (
+                                                <TableHead
+                                                    key={header.id}
+                                                    className="h-0 whitespace-nowrap px-4 py-2 text-left text-sm font-medium text-gray-500"
+                                                >
+                                                    {header.isPlaceholder
+                                                        ? null
+                                                        : flexRender(
+                                                              header.column.columnDef
+                                                                  .header,
+                                                              header.getContext()
+                                                          )}
+                                                </TableHead>
+                                            );
+                                        })}
+                                    </TableRow>
+                                ))}
+                            </TableFooter>
+                        )}
                     </>
                 )}
             </Table>
@@ -158,4 +163,5 @@ export default function DataTable<TData, TValue>({
 
 DataTable.defaultProps = {
     isLoading: false,
+    isFooter: true,
 };

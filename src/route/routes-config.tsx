@@ -12,9 +12,7 @@ import AddPensioners from "@/pages/pensioner/onboard-pensioner";
 import PensionersProfile from "@/pages/pensioner/pensioners-profile";
 import ProtectedRoute from "./protected-route";
 import PublicRoute from "./public-route";
-import AddRole from "@/pages/role/create-role";
-import RecoveryMail from "@/pages/authentication/forget-password";
-import NewPassword from "@/@bin/new-password";
+import ForgetPassword from "@/pages/authentication/forget-password";
 
 const routeConfig = [
     {
@@ -26,18 +24,10 @@ const routeConfig = [
         ),
     },
     {
-        path: "/recovery-mail",
+        path: "/forget-password",
         element: (
             <PublicRoute>
-                <RecoveryMail />
-            </PublicRoute>
-        ),
-    },
-    {
-        path: "/new-password",
-        element: (
-            <PublicRoute>
-                <NewPassword />
+                <ForgetPassword />
             </PublicRoute>
         ),
     },
@@ -55,7 +45,8 @@ const routeConfig = [
                 path: "pensioners",
                 children: [
                     {
-                        path: "view-lists",
+                        index: true,
+                        path: "",
                         element: <PensionerTable />,
                     },
                     {
@@ -89,15 +80,6 @@ const routeConfig = [
                         index: true,
                         path: "",
                         element: <RolesManagement />,
-                    },
-                ],
-            },
-            {
-                path: "manage-role",
-                children: [
-                    {
-                        path: "create-role",
-                        element: <AddRole />,
                     },
                 ],
             },

@@ -109,7 +109,7 @@ export default function Login() {
                                         name="rememberMe"
                                     />
                                 </div>
-                                <Link to="/recovery-mail" className="text-sm">
+                                <Link to="/forget-password" className="text-sm">
                                     Forgot password?{" "}
                                     <span className="text-[#00873D]">Reset here</span>
                                 </Link>

@@ -37,15 +37,24 @@ AuthHTTP.interceptors.request.use(
 // Function to refresh the access token
 // eslint-disable-next-line consistent-return
 const refreshAccessToken = async (): Promise<any> => {
-    const refreshToken = store.getState()?.authReducer?.refreshToken;
+    const token = store.getState()?.authReducer?.refreshToken;
 
     try {
         const res = await AuthHTTP.post("/refresh-token-endpoint", {
             // refreshToken: "YOUR_REFRESH_TOKEN",
-            refreshToken,
+            refreshToken: token,
         });
 
-        return res?.data;
+        const { access_token: accessToken, refresh_token: refreshToken } = res.data;
+        const decodedToken = jwtDecode(accessToken);
+        const sendToStore = {
+            decodedToken,
+            accessToken,
+            refreshToken,
+        };
+        store.dispatch(setAuthenticationDetails(sendToStore as IAuthPayload));
+
+        return accessToken;
     } catch (error) {
         store.dispatch(logout());
         // Handle token refresh error (e.g., log the user out)
@@ -63,22 +72,14 @@ AuthHTTP.interceptors.response.use(
         const originalRequest = error.config;
 
         if (error.response && error.response.status === 401 && !originalRequest._retry) {
-            originalRequest._retry = true;
-
             try {
-                const { access_token: accessToken, refresh_token: refreshToken } =
-                    await refreshAccessToken();
-                const decodedToken = jwtDecode(accessToken);
-                const sendToStore = {
-                    decodedToken,
-                    accessToken,
-                    refreshToken,
-                };
-                store.dispatch(setAuthenticationDetails(sendToStore as IAuthPayload));
-                AuthHTTP.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+                originalRequest._retry = true;
+                const accessToken = await refreshAccessToken();
                 // Retry the original request with the new access token
+                originalRequest.headers.Authorization = `Bearer ${accessToken}`;
                 return await AuthHTTP(originalRequest);
             } catch (refreshError) {
+                store.dispatch(logout());
                 return Promise.reject(refreshError);
             }
         }

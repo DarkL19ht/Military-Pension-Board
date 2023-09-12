@@ -26,17 +26,15 @@ export interface IUserDataContent {
     createdBy: number;
     updatedOn: string;
     updatedBy: number;
-    roles: Role[];
+    roles: {
+        id: number;
+        name: string;
+        description: string;
+        authorized: boolean;
+        status: STATUS;
+        createdOn: string;
+        createdBy: number;
+        updatedOn: string;
+        updatedBy: number;
+    }[];
 }
-
-type Role = {
-    id: number;
-    name: string;
-    description: string;
-    authorized: boolean;
-    status: STATUS;
-    createdOn: string;
-    createdBy: number;
-    updatedOn: string;
-    updatedBy: number;
-};

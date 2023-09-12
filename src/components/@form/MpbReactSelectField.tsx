@@ -64,6 +64,7 @@ export default function MpbReactSelectField(props: InputProps) {
                 classNamePrefix="react-select"
                 isClearable
                 isMulti={isMulti}
+                menuPlacement="top"
                 // value={options?.find((c) => c?.value === value)}
                 // onChange={(e) => onChange(e.map((c: any) => c?.value))} = [0, 3, 4,5]
                 {...field}
