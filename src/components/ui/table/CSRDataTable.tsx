@@ -1,11 +1,15 @@
-/* eslint-disable react/require-default-props */
+import { useState } from "react";
 import {
     ColumnDef,
     flexRender,
     getCoreRowModel,
     useReactTable,
-    PaginationState,
-    OnChangeFn,
+    getPaginationRowModel,
+    getSortedRowModel,
+    SortingState,
+    ColumnFiltersState,
+    getFilteredRowModel,
+    VisibilityState,
 } from "@tanstack/react-table";
 import {
     Table,
@@ -22,46 +26,45 @@ import Skeleton from "@/components/ui/skeleton/MpbSkeleton";
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
-    pagination: any;
-    setPagination: OnChangeFn<PaginationState>;
-    setGlobalFilter?: OnChangeFn<any>; // TODO: defaultProps
-    globalFilter?: string; // TODO: defaultProps
-    pageCount: number;
     isLoading?: boolean;
     totalRecords: number;
     pageSizeOptions: number[];
+    globalFilter: string;
     isFooter?: boolean;
 }
 
-export default function SSRDataTable<TData, TValue>({
+export default function CSRDataTable<TData, TValue>({
     columns,
     data,
-    pagination,
-    setPagination,
-    setGlobalFilter,
-    globalFilter,
-    pageCount,
     isLoading,
     totalRecords,
+    globalFilter,
     pageSizeOptions,
     isFooter,
 }: DataTableProps<TData, TValue>) {
+    const [sorting, setSorting] = useState<SortingState>([]);
+    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+    const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+    const [rowSelection, setRowSelection] = useState({});
     const table = useReactTable({
         data,
         columns,
         state: {
-            pagination,
+            sorting,
+            columnFilters,
+            columnVisibility,
+            rowSelection,
             globalFilter,
         },
-        pageCount,
-        onPaginationChange: setPagination,
-        onGlobalFilterChange: setGlobalFilter,
-        manualPagination: true,
-        manualFiltering: true,
+        onSortingChange: setSorting,
+        onColumnFiltersChange: setColumnFilters,
+        onColumnVisibilityChange: setColumnVisibility,
+        onRowSelectionChange: setRowSelection,
         getCoreRowModel: getCoreRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
+        getSortedRowModel: getSortedRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
     });
-    // console.log(table.getState().pagination)
-    // const { rows } = table.getRowModel();
 
     return (
         <div className="rounded-sm border border-gray-300 ">
@@ -169,7 +172,7 @@ export default function SSRDataTable<TData, TValue>({
     );
 }
 
-SSRDataTable.defaultProps = {
+CSRDataTable.defaultProps = {
     isLoading: false,
     isFooter: true,
 };

@@ -19,7 +19,7 @@ export default function useGetPermissions(requestParameter: IParameters = {}) {
                     "api/permissions",
                     {
                         params: {
-                            size: 1000,
+                            size: 1_000,
                             ...requestParameter,
                         },
                     }

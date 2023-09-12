@@ -1,4 +1,3 @@
-
 ```js
 .eslintrc.cjs
 -----
@@ -234,6 +233,7 @@ export default function pagination({ table}: any) {
     );
 }
 ```
+
 ```ts
 const handleTextInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: "changeRole" });
@@ -284,6 +284,9 @@ const logStudent = (student: Student, key: keyof Student): void => {
 };
 
 type setting = string | number | { [key: string]: setting } | setting[];
+
+type UserPartial = Partial<User> & {name:string};
+type UserRequired = Required<User> & {name?:string};
 ```
 
 ```ts
@@ -393,6 +396,7 @@ FormValues >
     </button>
 </div>
 ```
+
 ```jsx
 
 export const useFetchUser = (userID: string | undefined) => {
@@ -414,16 +418,47 @@ export const useFetchUser = (userID: string | undefined) => {
 ```
 
 ```jsx
- <div className="mt-1">
-     <img
-         src={ProfilePics}
-         alt="profile_picture"
-         className="rounded-full border-4 border-[#006C31]"
-     />
- </div>
+<div className="mt-1">
+    <img
+        src={ProfilePics}
+        alt="profile_picture"
+        className="rounded-full border-4 border-[#006C31]"
+    />
+</div>
+```
+
+```jsx
+
+import {useLoaderData, useSearchParams} from "react-router-dom "
+const data = useLoaderData()
+const [searchParams, setSearchParams] = useSearchParams( )
+
+useEffect(()=> {
+    if(globalFilter.length > 0){
+        setSearchParams({search: globalFilters}) // ?search=olayinka
+    } else {
+        setSearchParams((params)=> {
+            const newParams = {...params}
+            delete newParams.search
+            return newParams
+        })
+    }
+},[])
+
+
+ {
+      path: "profile",
+      element: <PensionersProfile />,
+      loader: async ({request})=> {
+          const param = request.url.split("?")[1]
+          const res = await AuthHTTP.get('/')
+          return res
+      }
+  },
 ```
 
 
-// MpbMenu.Button = MenuButton;
-// MpbMenu.Items = MenuItems;
-// MpbMenu.Item = MenuItem;
+```
+https://github.dev/Sridhar-C-25/Tanstack_table/tree/main/src
+
+```

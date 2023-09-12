@@ -2,11 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import { AuthHTTP } from "@/lib";
 import queryKeys from "../queryKeys";
 
-// interface IParameters {
-//     size?: number;
-//     pageNumber?: number;
-// }
-
 interface IParameters {
     [key: string]: any;
 }

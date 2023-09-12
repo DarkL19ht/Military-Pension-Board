@@ -4,9 +4,9 @@ import { useReducer, useMemo, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import _ from "lodash";
 import { CgMoreVertical } from "react-icons/cg";
-import { Search, Trash2, FileEdit, ShieldCheck } from "lucide-react";
-import { PaginationState, ColumnDef } from "@tanstack/react-table";
-import DataTable from "@/components/ui/table/SSRDataTable";
+import { Trash2, FileEdit, ShieldCheck, ArrowUpDown } from "lucide-react";
+import { ColumnDef } from "@tanstack/react-table";
+import CSRDataTable from "@/components/ui/table/CSRDataTable";
 import useUpdateRoles from "@/api/role-controller/useUpdateRoles";
 import useGetRoles from "@/api/role-controller/useGetRoles";
 import queryKeys from "@/api/queryKeys";
@@ -18,10 +18,9 @@ import {
     MenuButton,
     MenuItems,
     MenuItem,
-    // MpbSearchInput,
+    MpbDebounceSearchInput,
 } from "@/components";
 import { reducer, initialState, ReducerActionType } from "./reducer";
-import appConfig from "@/config";
 import { useToast } from "@/components/ui/toast/use-toast";
 import { STATUS, RequestMethod } from "@/types/enum";
 import { IRoleDataContent } from "@/types/role";
@@ -32,28 +31,13 @@ export default function Roles() {
     const { toast } = useToast();
     const queryClient = useQueryClient();
     const [state, runDispatch] = useReducer(reducer, initialState);
+    const [globalFilter, setGlobalFilter] = useState("");
+
     const { isDisableRole, isNewRole, rowData, isEdit } = state;
-    const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
-        pageIndex: 0,
-        pageSize: appConfig.defaultPageSize,
-    });
 
-    const fetchDataOptions = {
-        pageNumber: pageIndex + 1,
-        size: pageSize,
-    };
-
-    const { data, isLoading } = useGetRoles(fetchDataOptions);
+    const { data, isLoading } = useGetRoles({ size: 1_000 });
 
     const defaultData = useMemo(() => [], []);
-
-    const pagination = useMemo(
-        () => ({
-            pageIndex,
-            pageSize,
-        }),
-        [pageIndex, pageSize]
-    );
 
     const { UpdateRole: DisableRole, isUpdatingRole: isDisablingRole } = useUpdateRoles({
         onSuccess: (res: any) => {
@@ -90,22 +74,43 @@ export default function Roles() {
 
     const columns = useMemo<ColumnDef<IRoleDataContent>[]>(
         () => [
+            // {
+            //     accessorKey: "name",
+            //     header: "Name",
+            // },
             {
                 accessorKey: "name",
-                header: "Name",
+                header: ({ column }) => {
+                    return (
+                        <button
+                            onClick={() => {
+                                column.toggleSorting(column.getIsSorted() === "asc");
+                            }}
+                            className="flex items-center gap-1"
+                        >
+                            Name
+                            <ArrowUpDown size={15} />
+                        </button>
+                    );
+                },
             },
             {
                 accessorKey: "description",
                 header: "Description",
+                width: "30%",
             },
             {
                 accessorKey: "permissions",
                 header: "Permission",
                 cell: ({ row }) => {
                     return (
-                        <div className="grid grid-cols-3 gap-4">
+                        <div className="grid w-80 grid-cols-3 gap-1 ">
                             {row?.original?.permissions?.map((item) => (
-                                <Badge key={item.name} variant="info">
+                                <Badge
+                                    key={item.name}
+                                    variant="info"
+                                    className="whitespace-nowrap"
+                                >
                                     {_.toLower(item.name)}
                                 </Badge>
                             ))}
@@ -197,32 +202,18 @@ export default function Roles() {
     );
     return (
         <div className="w-full px-5">
-            {/* Card layout */}
-            {/* <div className="mb-20 overflow-auto rounded-md border border-gray-100  p-5 shadow-md"> */}
-            <div className="mb-20 mt-4 w-[80%] rounded-md border border-gray-100 px-10 py-5 shadow-md">
-                {/* Table UI */}
+            {/* Card layout  */}
+            {/* <div className="mb-20 overflow-auto rounded-md border border-gray-100  p-5 shadow-md">  */}
+            <div className="mb-20 mt-4 w-[100%] rounded-md border border-gray-100 px-10 py-5 shadow-md">
                 <h4 className="mb-2 text-xl font-medium capitalize">role management</h4>
                 <div className="flex justify-between py-5">
                     <div className="w-[30%] max-w-sm">
-                        <div className="group relative">
-                            {/* TODO: Refactor this to a SearchInput components */}
-                            <input
-                                type="text"
-                                id="example9"
-                                className="focus:border-primary-400 focus:ring-primary-200 
-                                block w-full rounded-md border-gray-300 py-2 pr-10 
-                                shadow-sm outline-none transition-all placeholder:text-sm
-                                hover:bg-gray-50
-                                "
-                                placeholder="Search by role name..."
-                            />
-                            <div
-                                className="pointer-events-none absolute inset-y-0 
-                                right-0 flex items-center  px-2.5 text-gray-500"
-                            >
-                                <Search size={20} />
-                            </div>
-                        </div>
+                        <MpbDebounceSearchInput
+                            placeholder="Search by pensioner's name..."
+                            value={globalFilter ?? ""}
+                            onChange={(value) => setGlobalFilter(String(value))}
+                            debounce={1000}
+                        />
                     </div>
                     <MpbButton
                         title="Add New Role"
@@ -233,16 +224,14 @@ export default function Roles() {
                         }
                     />
                 </div>
-                <DataTable
+                <CSRDataTable
                     columns={columns}
                     data={data?.content || defaultData}
-                    pagination={pagination}
-                    setPagination={setPagination}
-                    pageCount={data?.totalPages}
                     totalRecords={data?.totalElements}
                     isLoading={isLoading}
                     pageSizeOptions={[5, 10, 20, 30, 50]}
-                    isFooter={false}
+                    globalFilter={globalFilter}
+                    // isFooter={false}
                 />
             </div>
             {isDisableRole && (

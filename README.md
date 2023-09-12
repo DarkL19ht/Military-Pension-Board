@@ -51,17 +51,11 @@ Military Pensions Board – Admin Portal Management
 -   [x] **_building UI components_**
 -   [x] **_Absolute import_**
 -   [x] Multi-environment setup
--   [ ] Twin.macro setup nb n nm ,
--   [ ] Theming customization & setup **_`special attention`_**
--   [ ] component lazy loading
 -   [x] React Table setup
 -   [x] configure dark mode
 -   [x] lint-stage and husky setup
 -   [X] change the favicon
--   [ ] simple backdrop components
--   [ ] Search Input components with Debounce
--   [ ] restructure the dashboard layout, sidebar menu
--   [ ] Svgr setup for build svg icons
+-   [X] Search Input components with Debounce
 -   [X] setup React Storybook for documentation
 -   [x] **_Login form page UI design_**
 -   [x] **_Login implementation_**
@@ -76,7 +70,7 @@ Military Pensions Board – Admin Portal Management
 -   [x] Create Admin User
 -   [x] Query Admin User
 -   [x] Querying admin table by size, pageNumber
--   [ ] Search on Admin User table 
+-   [X] Search on Admin User table 
 -   [x] Edit Admin User
 -   [x] Disable Admin User
 -   [X] Reset Password on admin user 
@@ -86,11 +80,12 @@ Military Pensions Board – Admin Portal Management
 -   [ ] search pensioner table by name etc
 -   [ ] Filtering pensioner table **_special attention_**
 -   [ ] Csv upload **_`missing endpoint`_**
+-   [ ] Update Pensioner profile page
 <!-- Role management -->
--   [ ] Role management UI
--   [ ] Create role name and description
--   [ ] Map role to permissions
--   [ ] Edit role permissions
+-   [X] Role management UI
+-   [X] Create role name and description
+-   [X] Enable & disable role to permissions
+-   [X] Edit role permissions
 <!-- Verification  -->
 -   [ ] Query verification table
 -   [ ] Search verification table
@@ -100,16 +95,21 @@ Military Pensions Board – Admin Portal Management
 -   [X] Edit profile information 
 -   [X] change password
 
-## Other Task
--   [ ] Form validation for email, empty string etc
--   [ ] change of form icon to reflect the form label
--   [ ] Prefetching pagination
--   [ ] Table virtualization
--   [ ] Refactor dark mode implementation
--   [ ] Restructure the navigation (side & header) bar
--   [ ] Change the profile sidebar icon
--   [ ] Application theming
--   [ ] Ensuring consistency in spacing, fontsize, title etc
+## Other Minor Task
+-   [ ] Form validation for email, empty string etc`⭐️⭐️⭐️⭐️⭐️`
+-   [ ] change of form icon to reflect the form label `⭐️⭐️⭐️⭐️⭐️`
+-   [ ] Prefetching pagination `⭐️`
+-   [ ] Table virtualization `⭐️⭐️⭐️⭐️⭐️`
+-   [ ] Refactor dark mode implementation `⭐️⭐️`
+-   [ ] Restructure the navigation (side & header) bar `⭐️⭐️⭐️⭐️⭐️`
+-   [ ] Change the profile sidebar icon `⭐️⭐️⭐️⭐️⭐️`
+-   [ ] Application theming `⭐️⭐️⭐️⭐️⭐️`
+-   [ ] Ensuring consistency in spacing, fontsize, title etc `⭐️⭐️⭐️⭐️⭐️`
+-   [ ] Twin.macro setup `⭐️`
+-   [ ] restructure the dashboard layout, sidebar menu `⭐️⭐️⭐️⭐️⭐️`
+-   [ ] Svgr setup for build svg icons `⭐️`
+-   [ ] component lazy loading `⭐️⭐️⭐️⭐️⭐️`
+-   [ ] simple backdrop components `⭐️`
   
 
 ## Note

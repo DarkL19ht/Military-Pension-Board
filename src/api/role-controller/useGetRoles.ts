@@ -3,8 +3,7 @@ import { AuthHTTP } from "@/lib";
 import queryKeys from "../queryKeys";
 
 interface IParameters {
-    size?: number | undefined;
-    pageNumber?: number | undefined;
+    [key: string]: any;
 }
 
 export default function useGetRoles(requestParameter: IParameters = {}) {
@@ -14,7 +13,6 @@ export default function useGetRoles(requestParameter: IParameters = {}) {
             try {
                 const res = await AuthHTTP.get("/api/roles", {
                     params: {
-                        size: 1_000,
                         sort: false,
                         sortBy: "id",
                         ...requestParameter,

@@ -1,6 +1,7 @@
 // import { Link } from "react-router-dom";
 import { Tab } from "@headlessui/react";
 import { ChevronLeft, FileEdit, DownloadCloud } from "lucide-react";
+// import { useLoaderData } from "react-router-dom";
 import PensionerPics from "@/assets/images/pensionerpics.png";
 import QrCode from "@/assets/images/QRCode.png";
 import Card1 from "@/assets/images/card1.png";
@@ -8,6 +9,7 @@ import Card2 from "@/assets/images/card2.png";
 import Card3 from "@/assets/images/card3.png";
 
 export default function ViewPensionersProfile() {
+    // const {data} = useLoaderData()
     return (
         <div className="mx-auto w-4/5">
             <div className="mb-5 flex w-full justify-between py-3">

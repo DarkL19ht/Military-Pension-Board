@@ -13,6 +13,7 @@ import PensionersProfile from "@/pages/pensioner/pensioners-profile";
 import ProtectedRoute from "./protected-route";
 import PublicRoute from "./public-route";
 import ForgetPassword from "@/pages/authentication/forget-password";
+// import { AuthHTTP } from "@/lib";
 
 const routeConfig = [
     {
@@ -42,6 +43,14 @@ const routeConfig = [
             { path: "dashboard", index: true, element: <Dashboard /> },
             { path: "settings", element: <Profile /> },
             {
+                path: "admin-management",
+                element: <AdminUsers />,
+            },
+            {
+                path: "roles-management",
+                element: <RolesManagement />,
+            },
+            {
                 path: "pensioners",
                 children: [
                     {
@@ -56,30 +65,14 @@ const routeConfig = [
                     {
                         path: "profile",
                         element: <PensionersProfile />,
+                        // loader: async ()=> {
+                        //     const res = await AuthHTTP.get('/')
+                        //     return res
+                        // }
                     },
                     {
                         path: "verification",
                         element: <PensionerVerification />,
-                    },
-                ],
-            },
-            {
-                path: "admin-management",
-                children: [
-                    {
-                        index: true,
-                        path: "",
-                        element: <AdminUsers />,
-                    },
-                ],
-            },
-            {
-                path: "roles-management",
-                children: [
-                    {
-                        index: true,
-                        path: "",
-                        element: <RolesManagement />,
                     },
                 ],
             },

@@ -1,12 +1,40 @@
 /* eslint-disable react/require-default-props */
+import { useState, useEffect } from "react";
 import { Search } from "lucide-react";
 import { cn } from "@/lib";
 
 type IProps = {
+    value: string | number;
+    onChange: (value: string | number) => void;
+    debounce?: number;
     className?: string;
 } & Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange">;
 
-export default function MpbDebounceSearchInput({ className = "", ...props }: IProps) {
+export default function MpbDebounceSearchInput({
+    value: initialValue,
+    onChange,
+    debounce = 500,
+    className = "",
+    ...props
+}: IProps) {
+    const [value, setValue] = useState<number | string>(initialValue);
+
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setValue(event.target.value);
+    };
+
+    useEffect(() => {
+        setValue(initialValue);
+    }, [initialValue]);
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            onChange(value);
+        }, debounce);
+
+        return () => clearTimeout(timeout);
+    }, [value, debounce, onChange]);
+
     return (
         <div className="group relative">
             <input
@@ -18,7 +46,9 @@ export default function MpbDebounceSearchInput({ className = "", ...props }: IPr
                 hover:bg-gray-50`,
                     className
                 )}
-                placeholder="Search by pensioner's name..."
+                value={value}
+                onChange={handleInputChange}
+                // placeholder="Search by pensioner's name..."
                 {...props}
             />
             <div

@@ -6,7 +6,7 @@ import moment from "moment";
 import _ from "lodash";
 import { PaginationState, ColumnDef } from "@tanstack/react-table";
 import { RadioGroup } from "@headlessui/react";
-import DataTable from "@/components/ui/table/SSRDataTable";
+import SSRDataTable from "@/components/ui/table/SSRDataTable";
 import { MpbMenu, MenuButton, MenuItems, MenuItem, MpbSearchInput } from "@/components";
 import { IPensionerDataContent } from "@/types/pensioner";
 import useGetPensioners, {
@@ -247,7 +247,7 @@ export default function Pensioner() {
                         Filter By:
                     </button>
                 </div>
-                <DataTable
+                <SSRDataTable
                     columns={columns}
                     data={data?.content || defaultData}
                     pagination={pagination}
