@@ -42,10 +42,10 @@ function Header() {
             <div className="relativ flex items-center gap-[15px]">
                 <div className="flex items-center gap-10 border-r pr-[25px]">
                     <Link to="/notifications" className="relative inline-flex">
-                        <Bell size={22} />
+                        <Bell size={22} color="green" fill="green" />
                         <div
                             className="absolute -right-4 -top-2 flex
-                             h-5 w-5 items-center justify-center rounded-full bg-green-600 text-xs text-gray-100 "
+                             h-5 w-5 items-center justify-center rounded-full bg-red-600 text-xs text-gray-100 "
                         >
                             <span>99</span>
                         </div>
