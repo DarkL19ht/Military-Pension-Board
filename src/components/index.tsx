@@ -8,3 +8,4 @@ export { default as MpbSweetAlert } from "./ui/sweetalert/MpbSweetAlert";
 export { MpbMenu, MenuButton, MenuItems, MenuItem } from "./ui/MpbMenu";
 export { default as MpbDebounceSearchInput } from "./ui/search/MpbDebounceSearchInput";
 export { default as MpbSearchInput } from "./ui/search/MpbSearchInput";
+export { default as LoadingSpinner } from "./ui/loading-spinner/LoadingSpinner";

@@ -1,5 +1,8 @@
 // import React from "react";
 import { Navigate } from "react-router-dom";
+import { queryClient } from "@/providers/ReactQueryProvider";
+import { pensionerProfileLoader } from "@/api/pensioner-controller/useGetPensionerById";
+// Page Routes
 import Login from "@/pages/authentication/login";
 import Dashboard from "@/pages/dashboard";
 import Profile from "@/pages/profile";
@@ -13,7 +16,6 @@ import PensionersProfile from "@/pages/pensioner/pensioners-profile";
 import ProtectedRoute from "./protected-route";
 import PublicRoute from "./public-route";
 import ForgetPassword from "@/pages/authentication/forget-password";
-// import { AuthHTTP } from "@/lib";
 
 const routeConfig = [
     {
@@ -40,7 +42,7 @@ const routeConfig = [
             </ProtectedRoute>
         ),
         children: [
-            { path: "dashboard", index: true, element: <Dashboard /> },
+            { index: true, path: "dashboard", element: <Dashboard /> }, // relative path
             { path: "settings", element: <Profile /> },
             {
                 path: "admin-management",
@@ -63,12 +65,10 @@ const routeConfig = [
                         element: <AddPensioners />,
                     },
                     {
-                        path: "profile",
+                        path: "profile/:id",
                         element: <PensionersProfile />,
-                        // loader: async ()=> {
-                        //     const res = await AuthHTTP.get('/')
-                        //     return res
-                        // }
+                        // errorElement: <h1>Error</h1>,
+                        loader: pensionerProfileLoader(queryClient),
                     },
                     {
                         path: "verification",

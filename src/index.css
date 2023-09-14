@@ -46,8 +46,8 @@
     [type="tel"],
     textarea,
     select {
-        @apply block w-full rounded-md border-gray-300
-        pl-5 shadow-sm outline-none 
+        @apply block w-full rounded-lg border-gray-300
+        py-2 pl-5 shadow-sm outline-none
         focus:border focus:border-green-400
         focus:ring-0 focus:ring-green-200
         disabled:cursor-not-allowed 

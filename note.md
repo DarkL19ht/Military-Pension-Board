@@ -238,7 +238,6 @@ export default function pagination({ table}: any) {
 const handleTextInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: "changeRole" });
 };
-
 const [count, setCount] = useState<user[] | null>(null);
 ```
 
@@ -285,8 +284,8 @@ const logStudent = (student: Student, key: keyof Student): void => {
 
 type setting = string | number | { [key: string]: setting } | setting[];
 
-type UserPartial = Partial<User> & {name:string};
-type UserRequired = Required<User> & {name?:string};
+type UserPartial = Partial<User> & { name: string };
+type UserRequired = Required<User> & { name?: string };
 ```
 
 ```ts
@@ -429,10 +428,12 @@ export const useFetchUser = (userID: string | undefined) => {
 
 ```jsx
 
-import {useLoaderData, useSearchParams} from "react-router-dom "
+import { useLoaderData, useSearchParams } from "react-router-dom"
 const data = useLoaderData()
-const [searchParams, setSearchParams] = useSearchParams( )
 
+const [searchParams, setSearchParams] = useSearchParams( )
+const getName = searchParams.get("name")
+console.log(searchParams.toString())
 useEffect(()=> {
     if(globalFilter.length > 0){
         setSearchParams({search: globalFilters}) // ?search=olayinka
@@ -444,8 +445,6 @@ useEffect(()=> {
         })
     }
 },[])
-
-
  {
       path: "profile",
       element: <PensionersProfile />,
@@ -455,8 +454,121 @@ useEffect(()=> {
           return res
       }
   },
+
+  <Link to="?type=Jedi" >Jedi</Link>
+  <Link to="?type=leader" >Leader</Link>
+  <Link to="." >Clear</Link>
+  <button onClick={()=> setSearchParams({type:"jedi"})}>Jedi</button>
+  <button onClick={()=> setSearchParams({type:"leader"})}>Leader</button>
+  <button onClick={()=> setSearchParams("?type=olayinka")}>Leader</button>
+  <button onClick={()=> setSearchParams("")}>Clear</button>
+  <button onClick={()=> setSearchParams({})}>Clear</button>
+    // merge search params
+  const generateNewSearchParamString = (key, value)=> {
+    const sp = new URLSearchParams(searchParams)
+    if(value==null){
+        sp.delete(key)
+    } else {
+        sp.set(key, value)
+    }
+    return `?${sp.toString()}`
+  }
+
+   <button onClick={generateNewSearchParamString("type", "jedi")}>Leader</button>
+   <button onClick={generateNewSearchParamString("type", null)}>Clear</button>
+
+
+   const handleFilterChange = (key, value) => {
+        setSearchParams(prevParams=> {
+            if(value===null){
+                prevParams.delete(key)
+            } else {
+                prevParams.set(key, value)
+            }
+            return prevParams
+        })
+
+   }
+
+   <button onClick={()=>handleFilterChange("type", "jedi")}>Jedi</button>
+   <button onClick={()=>handleFilterChange("type", null)}>Clear</button>
+
+
+// useLoader api call
+const getPensionerProfile = async (id: any) => {
+    const res = await AuthHTTP.get(`/api/pensioners?id=${id}`);
+    return res;
+};
+
+export async function pensionerProfileLoader({ params }: { params: any }) {
+    return getPensionerProfile(params?.id);
+}
+
+
 ```
 
+## useRouteError
+```tsx
+import {useRouteError} from "react-router-dom"
+const error = useRouteError()
+```
+
+## NavLink
+
+```tsx
+import { NavLink } from "react-router-dom";
+const activeStyle = {
+    fontWeight: "40px"
+}
+<NavLink
+to="/about"
+className={({isActive})=> isActive ? "active-class": null}
+style={({isActive})=> isActive ? activeStyle: null}
+>
+    About
+</NavLink>
+```
+
+## useParams
+
+```tsx
+import { useParams } from "react-router-dom";
+const params = useParams();
+const { productId } = useparams();
+<Route path="/productId/:productId" element={<ProductDetails />} />;
+```
+
+## useNavigate & navigate
+
+```tsx
+import { useNavigate } from "react-router-dom";
+const navigate = useNavigate();
+<MenuItem
+    className="flex items-center gap-3 hover:bg-green-50"
+    onClick={() => navigate("/pensioners/profile")}
+>
+    View Detail
+</MenuItem>;
+
+<Link to="/user" state={{searchParams: searchParams.toString()}}></Link>
+```
+
+## useLocation
+```tsx
+import { useLocation } from "react-router-dom";
+const location = useLocation()
+```
+
+## Outlet context
+
+```tsx
+import {useOutletContext} from "react-router-dom
+<Outlet context={currentVal}>
+const {currentVal} = useOutletContext()
+
+<Rout path=*"" element={<NotFound />}>
+
+```
 
 ```
 https://github.dev/Sridhar-C-25/Tanstack_table/tree/main/src

@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import { useReducer, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm, useFieldArray } from "react-hook-form";
 import { ChevronLeft, Plus, Trash2 } from "lucide-react";
@@ -9,19 +9,15 @@ import {
     MpbSweetAlert as RegistraionSuccessModal,
     MpbSweetAlert as MaxLimitManualModal,
     MpbTextField,
+    MpbReactSelectField,
     MpbButton,
 } from "@/components";
-import MpbReactSelectField from "@/components/@form/MpbReactSelectField";
 import appConfig from "@/config";
 import useCreatePensioner from "@/api/pensioner-controller/useCreatePensioner";
 import useGetRanks from "@/api/rank-controller/useGetRanks";
 import useGetBanks from "@/api/bank-controller/useGetBanks";
 import { useToast } from "@/components/ui/toast/use-toast";
-
-// type SelectField = {
-//     label:string;
-//     value: string;
-// }
+import { delay } from "@/lib/helpers";
 
 interface FormValues {
     dataFields: {
@@ -56,6 +52,7 @@ export default function Pensioner() {
     const navigate = useNavigate();
     const [state, runDispatch] = useReducer(reducer, initialState);
     const { isRegSuccess, isUploadCsv, hasReachedLimit } = state;
+    const [successMessage, setSuccessMessage] = useState("");
     const {
         control,
         handleSubmit,
@@ -78,11 +75,11 @@ export default function Pensioner() {
     const { data: banks } = useGetBanks();
 
     const { CreatePensioner, isCreatingPensioner } = useCreatePensioner({
-        onSuccess: (res) => {
-            toast({
-                description: res.data.responseMessage,
-            });
-            navigate("/pensioners/pensioners-details");
+        onSuccess: async (res) => {
+            setSuccessMessage(res.data.responseMessage);
+            runDispatch({ type: ReducerActionType.OPEN_REG_SUCCESS_MODAL });
+            await delay(2);
+            navigate("/pensioners");
             // queryClient.invalidateQueries([queryKeys.GET_USERS]);
         },
         onError: (err) => {
@@ -117,8 +114,11 @@ export default function Pensioner() {
                     </h4>
                     <div className="text-gray-500">
                         <span>
-                            You can add a maximum of three(3) pensioners manually or click
-                            here to{" "}
+                            You can add a maximum of{" "}
+                            <span className="text-base text-green-700">
+                                {appConfig?.maxLimitForManualPensionerForm}
+                            </span>{" "}
+                            pensioners manually or click here to
                             <MpbButton
                                 title="Upload CSV"
                                 variant="link"
@@ -356,11 +356,6 @@ export default function Pensioner() {
                                 variant="outline-primary"
                                 type="submit"
                                 onClick={handleSubmit(handleCreatePensioner)}
-                                // onClick={() =>
-                                //     runDispatch({
-                                //         type: ReducerActionType.OPEN_REG_SUCCESS_MODAL,
-                                //     })
-                                // }
                                 title="Submit"
                                 className="my-5 w-3/5"
                                 isLoading={isCreatingPensioner}
@@ -369,14 +364,13 @@ export default function Pensioner() {
                     </form>
                 </div>
             </div>
-
             <RegistraionSuccessModal
-                onConfirm={() => undefined}
+                onConfirm={() => navigate("/pensioners")}
                 isOpen={isRegSuccess}
                 closeModal={() =>
                     runDispatch({ type: ReducerActionType.CLOSE_REG_SUCCESS_MODAL })
                 }
-                message="Registration Successful"
+                message={successMessage}
                 description="Your registration has been sent to the super admin"
                 icon="success_icon"
                 confirmText="Done"

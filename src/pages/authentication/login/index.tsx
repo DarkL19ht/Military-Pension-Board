@@ -17,8 +17,8 @@ export default function Login() {
     const { control, handleSubmit } = useForm<FormValues>({
         mode: "all",
         defaultValues: {
-            username: "",
-            password: "",
+            username: "linda.agbaka",
+            password: "12345",
         },
     });
 

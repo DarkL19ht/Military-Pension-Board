@@ -1,5 +1,8 @@
 import { useState } from "react";
-import { FiSearch, FiBell } from "react-icons/fi";
+import {
+    // FiSearch,
+    FiBell,
+} from "react-icons/fi";
 // import { FaEnvelope } from "react-icons/fa";
 import { FaUser, FaCog } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
@@ -19,9 +22,9 @@ function Header() {
         <div
             // className="sticky top-0 shadow-lg
             className="bg-header flex h-[70px] min-w-max items-center
-            justify-between px-[25px]"
+            justify-end px-[25px]"
         >
-            <div className="max-w-xs pl-3">
+            {/* <div className="max-w-xs pl-3">
                 <div>
                     <div className="group relative">
                         <input
@@ -37,7 +40,7 @@ function Header() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
             <div className="relativ flex items-center gap-[15px]">
                 <div className="flex items-center gap-[25px] border-r pr-[25px]">
                     <FiBell />

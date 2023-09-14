@@ -16,6 +16,7 @@ export default function Profile() {
     const {
         authState: { user },
     } = useAuth();
+
     const userObj = useMemo(() => {
         return {
             email: user?.email,

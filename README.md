@@ -38,90 +38,58 @@ Military Pensions Board – Admin Portal Management
 -   Demo `http://demo.etranzact.com/mpb`
 -   Production `https://`
 
-## Pending Tasks
-
--   [x] **_Eslint & Prettier setup_**
--   [x] **_`Redux toolkit & Redux persist setup`_**
--   [x] **_`React query setup`_**
--   [x] Vitest setup
--   [x] **_axios instance and interceptor_**
--   [x] `***React router setup***`
--   [x] Proteced route
--   [x] **_`React Hook Form Setup`_**
--   [x] **_building UI components_**
--   [x] **_Absolute import_**
--   [x] Multi-environment setup
--   [x] React Table setup
--   [x] configure dark mode
--   [x] lint-stage and husky setup
--   [X] change the favicon
--   [X] Search Input components with Debounce
--   [X] setup React Storybook for documentation
--   [x] **_Login form page UI design_**
--   [x] **_Login implementation_**
--   [x] **_`Dashboard Layout UI design`_**
 ##  Main Project Tasks
 <!-- User management -->
--   [X] Login implementation
 -   [ ] Refresh token implementation **_missing endpoints/resolved_**
--   [X] Forget password/email
-  
-<!-- Admin Management -->
--   [x] Create Admin User
--   [x] Query Admin User
--   [x] Querying admin table by size, pageNumber
--   [X] Search on Admin User table 
--   [x] Edit Admin User
--   [x] Disable Admin User
--   [X] Reset Password on admin user 
-    <!-- Pensioner Management  -->
--   [X] Create Pensioner `endpoints not working`
--   [X] Query pensioners table by size, pageNumber `endpoint not working`
--   [ ] search pensioner table by name etc
+<!-- Pensioner Management  -->
+-   [ ] search pensioner table by name etc `search key not working`
 -   [ ] Filtering pensioner table **_special attention_**
 -   [ ] Csv upload **_`missing endpoint`_**
--   [ ] Update Pensioner profile page
+-   [ ] Rework on download template, bankcode, rank `In progress`
 <!-- Role management -->
--   [X] Role management UI
--   [X] Create role name and description
--   [X] Enable & disable role to permissions
--   [X] Edit role permissions
+-   [ ] Expand column
 <!-- Verification  -->
--   [ ] Query verification table
+-   [ ] Query verification  table
 -   [ ] Search verification table
 -   [ ] Filtering verication table
-<!-- Profile -->
--   [X] display profile information
--   [X] Edit profile information 
--   [X] change password
+<!-- Dashboard /Notification -->
+-   [ ] Dashboard
+-   [ ] Notification implementation
 
 ## Other Minor Task
+-   [ ] Idle Timer`⭐️⭐️⭐️⭐️⭐️` `In progress`
 -   [ ] Form validation for email, empty string etc`⭐️⭐️⭐️⭐️⭐️`
--   [ ] change of form icon to reflect the form label `⭐️⭐️⭐️⭐️⭐️`
--   [ ] Prefetching pagination `⭐️`
+-   [ ] Format pensioner status column by removing underscore and shorten words`⭐️⭐️⭐️⭐️⭐️`
+-   [ ] change the form icon to reflect the form label `⭐️⭐️⭐️⭐️⭐️`
+-   [ ] component lazy loading `⭐️⭐️⭐️⭐️⭐️`
 -   [ ] Table virtualization `⭐️⭐️⭐️⭐️⭐️`
--   [ ] Refactor dark mode implementation `⭐️⭐️`
+-   [ ] Ensuring consistency in spacing, fontsize, title etc `⭐️⭐️⭐️⭐️⭐️`
+-   [ ] restructure the dashboard layout, sidebar menu `⭐️⭐️⭐️⭐️⭐️`
 -   [ ] Restructure the navigation (side & header) bar `⭐️⭐️⭐️⭐️⭐️`
 -   [ ] Change the profile sidebar icon `⭐️⭐️⭐️⭐️⭐️`
 -   [ ] Application theming `⭐️⭐️⭐️⭐️⭐️`
--   [ ] Ensuring consistency in spacing, fontsize, title etc `⭐️⭐️⭐️⭐️⭐️`
+-   [ ] Refactor dark mode implementation `⭐️`
 -   [ ] Twin.macro setup `⭐️`
--   [ ] restructure the dashboard layout, sidebar menu `⭐️⭐️⭐️⭐️⭐️`
 -   [ ] Svgr setup for build svg icons `⭐️`
--   [ ] component lazy loading `⭐️⭐️⭐️⭐️⭐️`
--   [ ] simple backdrop components `⭐️`
+-   [ ] Reset page number to 1 on pageSize  change
   
 
 ## Note
 
--   createdBy is returning "1" while admin table UI expect "name" to be displayed
--   The getRole endpoints is paginated which is fine but when using the roles in a select
+- [ ] createdBy is returning "1" while admin table UI expect "name" to be displayed
+
+- [X] The getRole endpoints is paginated which is fine but when using the roles in a select
     dropdown field, it is expected that all role should be fetch. The usual convention is to pass "size=0" to get all roles but that's not working. so what is the queryParams to be pass to get all
     roles.
--   After successfully updating a user profile page, there is no way to invalidate the endpoint, to get the updated user information
-- for user profile update, what is expected to be pass as status since there is not status in the token
-- for user profile update, endpoint expect array of roleId, while token contain array of role as string
-- after successful updating a user password, what is the expectation ? logout the user or what ?
+
+- [ ] After successfully updating a user profile page, there is no way to invalidate the endpoint/token, to get the updated user information
+  
+- [ ] Search Key "name" not working for pensioners table
+
+- [ ] Update role, enable and disable role not working
+   
+- [ ] What is the endpoint for GET verification acceptance ?
+
 
 ## Credits
 
