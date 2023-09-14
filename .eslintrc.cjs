@@ -47,6 +47,7 @@ module.exports = {
             },
         ],
         "react/jsx-props-no-spreading": 0,
+        "import/no-extraneous-dependencies":0,
         "func-names": 0,
         "@typescript-eslint/no-explicit-any": 0, // TODO: remove this after fixing issue with "any"
         // "react/prop-types": 0,
