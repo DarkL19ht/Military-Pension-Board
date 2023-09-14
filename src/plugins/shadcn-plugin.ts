@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import plugin from "tailwindcss/plugin";
 
 // eslint-disable-next-line import/prefer-default-export

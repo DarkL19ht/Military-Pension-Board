@@ -15,6 +15,7 @@ import AddPensioners from "@/pages/pensioner/onboard-pensioner";
 import PensionersProfile from "@/pages/pensioner/pensioners-profile";
 import ProtectedRoute from "./protected-route";
 import PublicRoute from "./public-route";
+import Notification from "@/pages/notifications";
 import ForgetPassword from "@/pages/authentication/forget-password";
 
 const routeConfig = [
@@ -51,6 +52,10 @@ const routeConfig = [
             {
                 path: "roles-management",
                 element: <RolesManagement />,
+            },
+            {
+                path: "notifications",
+                element: <Notification />,
             },
             {
                 path: "pensioners",

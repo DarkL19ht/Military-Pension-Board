@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { Decorator } from "@storybook/react";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -12,7 +12,6 @@ import { PaginationState, ColumnDef } from "@tanstack/react-table";
 import useUpdateUser from "@/api/user-controller/useUpdateUser";
 import queryKeys from "@/api/queryKeys";
 import useGetUsers from "@/api/user-controller/useGetUsers";
-import useForgetPassword from "@/api/user-controller/useForgetPassword";
 import SSRDataTable from "@/components/ui/table/SSRDataTable";
 import ManageAdminModal from "./ManageAdminModal";
 import {
@@ -40,11 +39,11 @@ export default function AdminUsersTable() {
     const { isResetPassword, isDisableUser, isNewUser, rowData, isEdit } = state;
     const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
         pageIndex: 0,
-        pageSize: appConfig?.defaultPageSize,
+        pageSize: appConfig.defaultPageSize,
     });
 
     const fetchDataOptions = {
-        page: pageIndex + 1,
+        pageNumber: pageIndex + 1,
         size: pageSize,
         name: globalFilter,
     };
@@ -60,7 +59,7 @@ export default function AdminUsersTable() {
         }),
         [pageIndex, pageSize]
     );
-    /** Enable and disable user action */
+
     const { UpdateUser: DisableUser, isUpdatingUser: isDisablingUser } = useUpdateUser({
         onSuccess: (res: any) => {
             toast({
@@ -96,29 +95,6 @@ export default function AdminUsersTable() {
             status: status === STATUS.ENABLED ? STATUS.DISABLED : STATUS.ENABLED,
         };
         DisableUser({ requestPayload, requestMethod: RequestMethod.PUT, id });
-    };
-
-    /** * Reset Password action  */
-    const { initiateForgetPassword, isInitiatingForgetPassword } = useForgetPassword({
-        onSuccess: async (res) => {
-            toast({
-                description: res?.data?.responseMessage,
-            });
-            runDispatch({ type: ReducerActionType.CLOSE_RESET_MODAL });
-        },
-        onError: (err) => {
-            const { error, message, responseMessage } = err.response.data;
-            toast({
-                title: error,
-                description: message || responseMessage,
-            });
-        },
-    });
-
-    const handlePasswordReset = () => {
-        initiateForgetPassword({
-            email: rowData?.email,
-        });
     };
 
     const columns = useMemo<ColumnDef<IUserDataContent>[]>(
@@ -320,7 +296,7 @@ export default function AdminUsersTable() {
                     pageCount={data?.totalPages}
                     totalRecords={data?.totalElements}
                     isLoading={isLoading}
-                    pageSizeOptions={[5, 10, 20, 30, 50, 100, 300]}
+                    pageSizeOptions={[5, 10, 20, 30, 50]}
                 />
             </div>
             {isResetPassword && (
@@ -330,14 +306,13 @@ export default function AdminUsersTable() {
                         runDispatch({ type: ReducerActionType.CLOSE_RESET_MODAL })
                     }
                     message="Are you sure, you want to reset password ?"
-                    onConfirm={() => handlePasswordReset()}
+                    onConfirm={() => undefined}
                     showCancelButton
                     backdrop={false}
                     confirmText="Reset"
                     icon="success_lock_icon"
                     showDivider={false}
                     className="px-10"
-                    isLoading={isInitiatingForgetPassword}
                 />
             )}
             {isDisableUser && (

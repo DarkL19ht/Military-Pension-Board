@@ -1,13 +1,11 @@
 import { useState } from "react";
-import {
-    // FiSearch,
-    FiBell,
-} from "react-icons/fi";
 // import { FaEnvelope } from "react-icons/fa";
+import { Bell } from "lucide-react";
 import { FaUser, FaCog } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
 import { IoIosArrowDown } from "react-icons/io";
 import { HiOutlineSun, HiOutlineMoon } from "react-icons/hi2";
+import { Link } from "react-router-dom";
 import profileImage from "@/assets/images/ib.png";
 import { useTheme } from "@/providers/ThemeProvider";
 import { MpbMenu, MenuButton, MenuItems, MenuItem } from "@/components";
@@ -42,8 +40,16 @@ function Header() {
                 </div>
             </div> */}
             <div className="relativ flex items-center gap-[15px]">
-                <div className="flex items-center gap-[25px] border-r pr-[25px]">
-                    <FiBell />
+                <div className="flex items-center gap-10 border-r pr-[25px]">
+                    <Link to="/notifications" className="relative inline-flex">
+                        <Bell size={22} />
+                        <div
+                            className="absolute -right-4 -top-2 flex
+                             h-5 w-5 items-center justify-center rounded-full bg-green-600 text-xs text-gray-100 "
+                        >
+                            <span>99</span>
+                        </div>
+                    </Link>
                     <button
                         type="button"
                         className="text-lg"
@@ -54,9 +60,9 @@ function Header() {
                         }
                     >
                         {theme === "dark" ? (
-                            <HiOutlineSun className="dark:text-light-heading mr-5" />
+                            <HiOutlineSun className=" mr-5" />
                         ) : (
-                            <HiOutlineMoon className="text-blue-brand mr-5" />
+                            <HiOutlineMoon className=" mr-5" />
                         )}
                     </button>
                 </div>
