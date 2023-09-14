@@ -78,7 +78,7 @@ export default function Pensioner() {
         onSuccess: async (res) => {
             setSuccessMessage(res.data.responseMessage);
             runDispatch({ type: ReducerActionType.OPEN_REG_SUCCESS_MODAL });
-            await delay(2);
+            await delay(4);
             navigate("/pensioners");
             // queryClient.invalidateQueries([queryKeys.GET_USERS]);
         },

@@ -292,6 +292,22 @@ export default function ViewPensionersProfile() {
                         </div>
                     </section>
                     <section className="flex gap-3">
+                        <div className="w-full md:w-1/2">
+                            <MpbReactSelectField
+                                label="Bank"
+                                control={control}
+                                name="bankCode"
+                                options={bankOptions}
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: "Please select a bank",
+                                    },
+                                }}
+                                asterik={false}
+                                isDisabled={isDisabled}
+                            />
+                        </div>
                         <div className=" w-full md:w-1/2">
                             <MpbTextField
                                 label="Account Number"
@@ -307,22 +323,6 @@ export default function ViewPensionersProfile() {
                                 }}
                                 asterik={false}
                                 disabled={isDisabled}
-                            />
-                        </div>
-                        <div className="w-full md:w-1/2">
-                            <MpbReactSelectField
-                                label="Bank"
-                                control={control}
-                                name="bankCode"
-                                options={bankOptions}
-                                rules={{
-                                    required: {
-                                        value: true,
-                                        message: "Please select a bank",
-                                    },
-                                }}
-                                asterik={false}
-                                isDisabled={isDisabled}
                             />
                         </div>
                     </section>

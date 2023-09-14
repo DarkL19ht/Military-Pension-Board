@@ -6,8 +6,10 @@ import {
     // CSVDownload
 } from "react-csv";
 import MpbModal from "@/components/ui/modal/MpbModal";
-import { sampleCsvHeaders, sampleCsvData, bankCodeHeaders } from "./sample-template";
+import csvSampleReport from "./sample-template";
 import useGetBanks from "@/api/bank-controller/useGetBanks";
+import useGetRanks from "@/api/rank-controller/useGetRanks";
+import downloadToExcel from "@/lib/xlsx";
 
 interface IProps {
     isOpen: boolean;
@@ -65,27 +67,7 @@ export default function UploadCsvFileModal({ isOpen, closeModal }: IProps) {
     });
 
     const { data: banks } = useGetBanks();
-
-    const listOfBankCodes = banks?.reduce((acc: any, items: any) => {
-        return [...acc, { bankName: items.label, bankCode: items.value }];
-    }, []);
-
-    const csvSampleReport = {
-        filename: "sample_csv_upload.csv",
-        headers: sampleCsvHeaders,
-        data: sampleCsvData,
-        target: "_blank",
-        className: "text-green-600",
-    };
-
-    /** TODO: change this to  */
-    const csvBankCodes = {
-        filename: "list_of_bank_codes.csv",
-        headers: bankCodeHeaders,
-        data: listOfBankCodes,
-        target: "_blank",
-        className: "text-green-600",
-    };
+    const { data: ranks } = useGetRanks();
 
     return (
         <MpbModal
@@ -97,13 +79,21 @@ export default function UploadCsvFileModal({ isOpen, closeModal }: IProps) {
         >
             {isProcessing ? null : (
                 <div className="mx-5 flex justify-between bg-green-50 px-5 py-3">
-                    <div className="flex gap-1">
-                        <CSVLink {...csvSampleReport}>Download</CSVLink>
+                    <div className="flex flex-col items-center gap-1">
                         <span>CSV template</span>
+                        <CSVLink {...csvSampleReport}>Download</CSVLink>
                     </div>
-                    <div className="flex gap-1">
-                        <CSVLink {...csvBankCodes}>Download</CSVLink>
-                        <span>Bank Codes</span>
+                    <div className="flex flex-col gap-1">
+                        <span>Bank Codes & Rank </span>
+
+                        <button
+                            type="button"
+                            className="text-green-500"
+                            onClick={() => downloadToExcel({ banks, ranks })}
+                        >
+                            Download
+                            <br />
+                        </button>
                     </div>
                 </div>
             )}

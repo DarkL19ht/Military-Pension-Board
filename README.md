@@ -45,13 +45,13 @@ Military Pensions Board – Admin Portal Management
 -   [ ] search pensioner table by name etc `search key not working`
 -   [ ] Filtering pensioner table **_special attention_**
 -   [ ] Csv upload **_`missing endpoint`_**
--   [ ] Rework on download template, bankcode, rank `In progress`
 <!-- Role management -->
 -   [ ] Expand column
 <!-- Verification  -->
 -   [ ] Query verification  table
 -   [ ] Search verification table
 -   [ ] Filtering verication table
+-   [ ] Accept & Reject Pensioner
 <!-- Dashboard /Notification -->
 -   [ ] Dashboard
 -   [ ] Notification implementation

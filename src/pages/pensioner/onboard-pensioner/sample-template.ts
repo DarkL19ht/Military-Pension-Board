@@ -1,4 +1,7 @@
-export const sampleCsvHeaders = [
+/**
+ * https://www.npmjs.com/package/react-csv
+ */
+const sampleCsvHeaders = [
     { label: "Payee ID", key: "payee_id" },
     { label: "Account Number", key: "account_number" },
     { label: "Amount", key: "amount" },
@@ -9,7 +12,7 @@ export const sampleCsvHeaders = [
     { label: "Beneficiary Phone Number", key: "beneficiary_phone_number" },
 ];
 
-export const sampleCsvData = [
+const sampleCsvData = [
     {
         payee_id: "",
         account_number: "",
@@ -22,7 +25,12 @@ export const sampleCsvData = [
     },
 ];
 
-export const bankCodeHeaders = [
-    { label: "Bank Name", key: "bankName" },
-    { label: "Bank Code", key: "bankCode" },
-];
+const csvSampleReport = {
+    filename: "sample_csv_upload.csv",
+    headers: sampleCsvHeaders,
+    data: sampleCsvData,
+    target: "_blank",
+    className: "text-green-600",
+};
+
+export default csvSampleReport;
