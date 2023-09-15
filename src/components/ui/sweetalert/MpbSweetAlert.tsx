@@ -1,6 +1,6 @@
 /* eslint-disable react/require-default-props */
 import MpbModal from "../modal/MpbModal";
-import { ICON_LIST } from "@/lib";
+import { ICON_LIST, cn } from "@/lib";
 import type { IProps as IModal } from "../modal/MpbModal";
 import { MpbButton } from "../button/MpbButton";
 
@@ -22,6 +22,8 @@ interface ISweetAlert {
     showCloseButton?: boolean;
     showCancelButton?: boolean;
     className?: string;
+    messageClassName?: string;
+    descriptionClassName?: string;
     isLoading?: boolean;
 }
 
@@ -47,6 +49,8 @@ export default function MpbSweetAlert({
     confirmText = "",
     title = "",
     className = "",
+    messageClassName = "",
+    descriptionClassName = "",
 }: IProps) {
     return (
         <MpbModal
@@ -65,8 +69,16 @@ export default function MpbSweetAlert({
                         {ICON_LIST[icon]}
                     </div>
                 )}
-                {message && <h4 className="text-base font-medium">{message}</h4>}
-                {description && <p className="text-gray-500">{description}</p>}
+                {message && (
+                    <h4 className={cn("text-base font-medium", messageClassName)}>
+                        {message}
+                    </h4>
+                )}
+                {description && (
+                    <p className={cn("text-gray-500", descriptionClassName)}>
+                        {description}
+                    </p>
+                )}
                 <div className="my-5 flex gap-5">
                     {showCancelButton && (
                         <MpbButton

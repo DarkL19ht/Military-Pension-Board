@@ -4,21 +4,25 @@ import { useReducer, useState, useMemo } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import moment from "moment";
 import { CgMoreVertical } from "react-icons/cg";
-import { Search, Trash2, RotateCcw, FileEdit, ShieldCheck } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Trash2, RotateCcw, FileEdit, ShieldCheck } from "lucide-react";
+// import { Link } from "react-router-dom";
 import _ from "lodash";
 // React Table
 import { PaginationState, ColumnDef } from "@tanstack/react-table";
 import useUpdateUser from "@/api/user-controller/useUpdateUser";
 import queryKeys from "@/api/queryKeys";
 import useGetUsers from "@/api/user-controller/useGetUsers";
-import DataTable from "@/components/ui/table/SSRDataTable";
+import SSRDataTable from "@/components/ui/table/SSRDataTable";
 import ManageAdminModal from "./ManageAdminModal";
 import {
     MpbSweetAlert as DisableUserModal,
     MpbSweetAlert as ResetPasswordModal,
     MpbButton,
     MpbMenu,
+    MenuButton,
+    MenuItems,
+    MenuItem,
+    MpbDebounceSearchInput,
 } from "@/components";
 import { reducer, initialState, ReducerActionType } from "./reducer";
 import appConfig from "@/config";
@@ -31,6 +35,7 @@ export default function AdminUsersTable() {
     const { toast } = useToast();
     const queryClient = useQueryClient();
     const [state, runDispatch] = useReducer(reducer, initialState);
+    const [globalFilter, setGlobalFilter] = useState("");
     const { isResetPassword, isDisableUser, isNewUser, rowData, isEdit } = state;
     const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
         pageIndex: 0,
@@ -40,6 +45,7 @@ export default function AdminUsersTable() {
     const fetchDataOptions = {
         pageNumber: pageIndex + 1,
         size: pageSize,
+        name: globalFilter,
     };
 
     const { data, isLoading } = useGetUsers(fetchDataOptions);
@@ -97,13 +103,12 @@ export default function AdminUsersTable() {
                 accessorKey: "createdOn",
                 header: "Date Added",
                 cell: ({ row }) => {
+                    const createdDate: string = row.getValue("createdOn");
                     return (
                         <div className="flex flex-col gap-1">
-                            <span>
-                                {moment(row?.original?.createdOn).format("MMMM Do YYYY")}
-                            </span>
+                            <span>{moment(createdDate).format("MMMM Do YYYY")}</span>
                             <span className="text-gray-400">
-                                {moment(row?.original?.createdOn).format("dddd, ha")}
+                                {moment(createdDate).format("dddd, ha")}
                             </span>
                         </div>
                     );
@@ -113,20 +118,19 @@ export default function AdminUsersTable() {
                 accessorKey: "",
                 header: "Admin Name",
                 cell: ({ row }) => {
+                    const { firstName, lastName, status } = row?.original;
                     return (
                         <div className="flex items-center gap-1">
                             <div
                                 className={cn(
                                     `h-2 w-2 rounded-full`,
-                                    STATUS.ENABLED === row?.original?.status &&
-                                        "bg-green-600",
-                                    STATUS.DISABLED === row?.original?.status &&
-                                        "bg-red-600"
+                                    STATUS.ENABLED === status && "bg-green-600",
+                                    STATUS.DISABLED === status && "bg-red-600"
                                 )}
                             />
                             <div className="flex gap-2">
-                                <span>{_.startCase(row?.original?.firstName)}</span>
-                                <span>{_.startCase(row?.original?.lastName)}</span>
+                                <span>{_.startCase(firstName)}</span>
+                                <span>{_.startCase(lastName)}</span>
                             </div>
                         </div>
                     );
@@ -148,16 +152,15 @@ export default function AdminUsersTable() {
                 accessorKey: "status",
                 header: "Status",
                 cell: ({ row }) => {
+                    const rowStatus: string = row.getValue("status");
                     return (
                         <span
                             className={cn(
-                                STATUS.ENABLED === row?.original?.status &&
-                                    "text-green-500",
-                                STATUS.DISABLED === row?.original?.status &&
-                                    "text-red-500"
+                                STATUS.ENABLED === rowStatus && "text-green-500",
+                                STATUS.DISABLED === rowStatus && "text-red-500"
                             )}
                         >
-                            {row?.original?.status}
+                            {rowStatus}
                         </span>
                     );
                 },
@@ -193,11 +196,11 @@ export default function AdminUsersTable() {
                             whitespace-nowrap px-2 py-4 text-center text-xs"
                         >
                             <MpbMenu>
-                                <MpbMenu.Button>
+                                <MenuButton>
                                     <CgMoreVertical />
-                                </MpbMenu.Button>
-                                <MpbMenu.Items className="right-8 top-0 ">
-                                    <MpbMenu.Item
+                                </MenuButton>
+                                <MenuItems className="right-8 top-0 ">
+                                    <MenuItem
                                         onClick={() => {
                                             runDispatch({
                                                 type: ReducerActionType.OPEN_ADD_NEW_USER__MODAL,
@@ -214,8 +217,8 @@ export default function AdminUsersTable() {
                                     >
                                         <FileEdit size={15} color="green" />
                                         <span>Edit User</span>
-                                    </MpbMenu.Item>
-                                    <MpbMenu.Item
+                                    </MenuItem>
+                                    <MenuItem
                                         onClick={() => {
                                             runDispatch({
                                                 type: ReducerActionType.OPEN_RESET_MODAL,
@@ -226,8 +229,8 @@ export default function AdminUsersTable() {
                                     >
                                         <RotateCcw size={15} color="red" />
                                         <span>Reset Password</span>
-                                    </MpbMenu.Item>{" "}
-                                    <MpbMenu.Item
+                                    </MenuItem>{" "}
+                                    <MenuItem
                                         onClick={() => {
                                             runDispatch({
                                                 type: ReducerActionType.OPEN_DISABLE_MODAL,
@@ -248,8 +251,8 @@ export default function AdminUsersTable() {
                                                 <span>Disable User</span>
                                             </>
                                         )}
-                                    </MpbMenu.Item>
-                                </MpbMenu.Items>
+                                    </MenuItem>
+                                </MenuItems>
                             </MpbMenu>
                         </div>
                     );
@@ -261,50 +264,18 @@ export default function AdminUsersTable() {
 
     return (
         <div className="w-full px-5">
-            <div className=" flex w-full items-center justify-between py-3">
-                {/* TODO: refactor this to a breadcrumb components */}
-                <nav aria-label="breadcrumb" className="text-base text-gray-500">
-                    <ol className="inline-flex items-center space-x-2 py-2 text-sm font-medium">
-                        <li className="inline-flex items-center">
-                            <Link to="/" className="">
-                                Dashboard
-                            </Link>
-                        </li>
-                        <li className="inline-flex items-center space-x-2">
-                            <span className="text-secondary-400">/</span>
-                            <Link to="/admin-management" className="">
-                                Admin users
-                            </Link>
-                        </li>
-                    </ol>
-                </nav>
-            </div>
-            {/* Card layout */}
             {/* <div className="mb-20 overflow-auto rounded-md border border-gray-100  p-5 shadow-md"> */}
             <div className="mb-20 mt-4 rounded-md border border-gray-100 px-10 py-5 shadow-md">
                 {/* Table UI */}
                 <h4 className="mb-2 text-xl font-medium capitalize">admin management</h4>
                 <div className="flex justify-between py-5">
                     <div className="w-[30%] max-w-sm">
-                        <div className="group relative">
-                            {/* TODO: Refactor this to a SearchInput components */}
-                            <input
-                                type="text"
-                                id="example9"
-                                className="focus:border-primary-400 focus:ring-primary-200 
-                                block w-full rounded-md border-gray-300 py-2 pr-10 
-                                shadow-sm outline-none transition-all placeholder:text-sm
-                                hover:bg-gray-50
-                                "
-                                placeholder="Search by admin's name..."
-                            />
-                            <div
-                                className="pointer-events-none absolute inset-y-0 
-                                right-0 flex items-center  px-2.5 text-gray-500"
-                            >
-                                <Search size={20} />
-                            </div>
-                        </div>
+                        <MpbDebounceSearchInput
+                            placeholder="Search by pensioner's name..."
+                            value={globalFilter ?? ""}
+                            onChange={(value) => setGlobalFilter(String(value))}
+                            debounce={1000}
+                        />
                     </div>
                     <MpbButton
                         title="Add Admin User"
@@ -315,11 +286,13 @@ export default function AdminUsersTable() {
                         }
                     />
                 </div>
-                <DataTable
+                <SSRDataTable
                     columns={columns}
                     data={data?.content || defaultData}
                     pagination={pagination}
                     setPagination={setPagination}
+                    setGlobalFilter={setGlobalFilter}
+                    globalFilter={globalFilter}
                     pageCount={data?.totalPages}
                     totalRecords={data?.totalElements}
                     isLoading={isLoading}

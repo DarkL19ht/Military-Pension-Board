@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable import/prefer-default-export */
 import type { Config } from "tailwindcss";
 import tailwindDebugScreen from "tailwindcss-debug-screens";

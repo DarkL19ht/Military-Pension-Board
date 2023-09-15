@@ -2,16 +2,17 @@ import { useController, UseControllerProps, Control } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { cn } from "@/lib";
 
-interface InputProps extends UseControllerProps {
+interface InputProps
+    extends UseControllerProps,
+        Omit<React.SelectHTMLAttributes<HTMLSelectElement>, "name" | "defaultValue"> {
     label?: string;
-    type: string;
     asterik?: boolean;
     icon?: any;
     className?: string;
     options: any[];
     optionTitle?: string;
-    optionValue: any;
-    optionLabel: any;
+    optionValue?: string | any;
+    optionLabel?: string | any;
     control: Control<any>;
 }
 
@@ -23,7 +24,6 @@ export default function MpbSelectField(props: InputProps) {
     } = useController(props);
 
     const {
-        type,
         name,
         label,
         asterik,
@@ -87,8 +87,8 @@ export default function MpbSelectField(props: InputProps) {
 
 MpbSelectField.defaultProps = {
     optionTitle: "",
-    // optionValue: "value",
-    // optionLabel: "label",
+    optionValue: "value",
+    optionLabel: "label",
     asterik: true,
     label: "",
     className: "",

@@ -1,10 +1,12 @@
+/* eslint-disable react/require-default-props */
 import { Search } from "lucide-react";
 import { cn } from "@/lib";
 
-interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
+type IProps = {
     className?: string;
-}
-export default function MpbSearchInput({ className, ...props }: IProps) {
+} & Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange">;
+
+export default function MpbDebounceSearchInput({ className = "", ...props }: IProps) {
     return (
         <div className="group relative">
             <input
@@ -16,7 +18,7 @@ export default function MpbSearchInput({ className, ...props }: IProps) {
                 hover:bg-gray-50`,
                     className
                 )}
-                // placeholder="Search by pensioner's name..."
+                placeholder="Search by pensioner's name..."
                 {...props}
             />
             <div
@@ -28,7 +30,3 @@ export default function MpbSearchInput({ className, ...props }: IProps) {
         </div>
     );
 }
-
-MpbSearchInput.defaultProps = {
-    className: "",
-};

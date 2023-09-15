@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { withCentered } from "@/lib/decorators";
-import MpbSearchInput from "./MpbSearchInput";
+import MpbDebounceSearchInput from "./MpbSearchInput";
 
-const meta: Meta<typeof MpbSearchInput> = {
+const meta: Meta<typeof MpbDebounceSearchInput> = {
     title: "Component/MpbSearchInput",
-    component: MpbSearchInput,
+    component: MpbDebounceSearchInput,
     // tags: ["autodocs"],x
     decorators: [
         (Story) => {
@@ -19,7 +19,7 @@ const meta: Meta<typeof MpbSearchInput> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof MpbSearchInput>;
+type Story = StoryObj<typeof MpbDebounceSearchInput>;
 
 export const SearchInput: Story = {
     args: {

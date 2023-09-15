@@ -1,6 +1,6 @@
 import { IApiResponse } from ".";
 
-export interface IGetBankResponsePayload extends IApiResponse {}
+export interface IGetBankResponsePayload extends IApiResponse<IBankDataContent> {}
 
 export interface IBankDataContent {
     code: string;

@@ -76,7 +76,7 @@ export default function MpbModal({
 
     return (
         <Transition appear show={isOpen} as={Fragment}>
-            <Dialog as="div" className="relative z-[9999]" onClose={hasBackdrop}>
+            <Dialog as="div" className="relative z-[1000]" onClose={hasBackdrop}>
                 <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"

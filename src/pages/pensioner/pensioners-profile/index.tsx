@@ -1,301 +1,424 @@
-import { Link } from "react-router-dom";
-import { Tab } from "@headlessui/react";
+import { useEffect, useState, useMemo } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { ChevronLeft, FileEdit, DownloadCloud } from "lucide-react";
+import { useParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { CiUser } from "react-icons/ci";
 import PensionerPics from "@/assets/images/pensionerpics.png";
-import QrCode from "@/assets/images/QRCode.png";
-import Card1 from "@/assets/images/card1.png";
-import Card2 from "@/assets/images/card2.png";
-import Card3 from "@/assets/images/card3.png";
+import {
+    MpbTextField,
+    MpbReactSelectField,
+    MpbSelectField,
+    MpbButton,
+} from "@/components";
+import useGetRanks from "@/api/rank-controller/useGetRanks";
+import useGetBanks from "@/api/bank-controller/useGetBanks";
+import useGetPensionerById from "@/api/pensioner-controller/useGetPensionerById";
+import useUpdatePensioner from "@/api/pensioner-controller/useUpdatePensioner";
+import { STATUS, VerificationStatus } from "@/types/enum";
+import { STATUS_OPTIONS, VERIFICATION_STATUS_OPTIONS } from "./constant";
+import { useToast } from "@/components/ui/toast/use-toast";
+import queryKeys from "@/api/queryKeys";
+
+interface FormValues {
+    accountNo: string;
+    bankCode: string | any;
+    bvn: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    otherName: string;
+    phone: string;
+    rankCode: string | any;
+    serviceNo: string;
+    status: STATUS | "";
+    verificationStatus: VerificationStatus | "";
+}
 
 export default function ViewPensionersProfile() {
+    const params: any = useParams();
+    const { toast } = useToast();
+    const queryClient = useQueryClient();
+    const [isDisabled, setIsDisabled] = useState(true);
+    const {
+        control,
+        handleSubmit,
+        watch,
+        reset,
+        formState: { isDirty },
+    } = useForm<FormValues>({
+        mode: "all",
+        defaultValues: {
+            accountNo: "",
+            bankCode: "",
+            bvn: "",
+            email: "",
+            firstName: "",
+            lastName: "", //
+            otherName: "", //
+            phone: "", //
+            rankCode: "", //
+            serviceNo: "", //
+            status: "",
+            verificationStatus: "",
+        },
+    });
+    /** apiCall for ranks */
+    const { data: rankOptions } = useGetRanks();
+    /** apiCall for banks */
+    const { data: bankOptions } = useGetBanks();
+    /** apiCall to get pensioner by ID */
+    const data = useGetPensionerById(params?.id);
+    const [pensionerDetail] = data.content;
+    const pensionerInfo = useMemo(() => {
+        return {
+            accountNo: pensionerDetail.accountNo,
+            bankCode: {
+                value: pensionerDetail.banks.code,
+                label: pensionerDetail.banks.name,
+            }, //
+            bvn: pensionerDetail.bvn,
+            email: pensionerDetail.email,
+            firstName: pensionerDetail.firstName,
+            lastName: pensionerDetail.lastName,
+            otherName: pensionerDetail.otherName,
+            phone: pensionerDetail.phone,
+            rankCode: {
+                value: pensionerDetail.rank.code,
+                label: pensionerDetail.rank.name,
+            },
+            serviceNo: pensionerDetail.serviceNo,
+            status: pensionerDetail.status,
+            verificationStatus: pensionerDetail.verificationStatus,
+            // ... (rest of the properties)
+        };
+    }, [pensionerDetail]);
+
+    useEffect(() => {
+        reset({
+            ...pensionerInfo,
+        });
+    }, [pensionerInfo, reset]);
+
+    const { UpdatePensioner, isupdatingPensioner } = useUpdatePensioner({
+        onSuccess: (res) => {
+            toast({
+                description: res?.data?.responseMessage,
+            });
+            queryClient.invalidateQueries([queryKeys.GET_PENSIONER, params?.id]);
+            setIsDisabled(true);
+        },
+        onError: (err) => {
+            const { error, message, responseMessage } = err.response.data;
+            toast({
+                title: error,
+                description: message || responseMessage,
+                variant: "error",
+            });
+        },
+    });
+
+    const handleUpdatePensioner = (values: FormValues) => {
+        const requestPayload = {
+            ...values,
+            rankCode: values.rankCode.value,
+            bankCode: values.bankCode.value,
+        };
+        UpdatePensioner({
+            requestPayload,
+            id: params?.id,
+        });
+    };
+
     return (
-        <div className="mx-auto w-4/5">
-            <div className="mb-2 flex w-full justify-between py-3">
+        <div className="mx-auto w-[70%]">
+            <div className="mb-5 flex w-full justify-between py-3">
                 {/* Breacrumb */}
-                <nav aria-label="breadcrumb" className="text-base text-gray-500">
-                    <ol className="inline-flex items-center space-x-2 py-2 text-sm font-medium">
-                        <li className="inline-flex items-center">
-                            <Link
-                                to="/"
-                                className="text-secondary-500 hover:text-secondary-600"
-                            >
-                                Dashboard
-                            </Link>
-                        </li>
-                        <li className="inline-flex items-center space-x-2">
-                            <span className="text-secondary-400">/</span>
-                            <Link
-                                to="/"
-                                className="text-secondary-500 hover:text-secondary-600"
-                            >
-                                View Pensioner&apos;s Profile
-                            </Link>
-                        </li>
-                    </ol>
-                </nav>
+                <button className="flex gap-1">
+                    <ChevronLeft />
+                    <span>Back to Pensioners Verification</span>
+                </button>
+                <div className="flex gap-2 ">
+                    <button
+                        className="flex items-center gap-1 rounded-md 
+                    border border-green-500 px-4 py-1 text-green-500"
+                        onClick={() => setIsDisabled(false)}
+                    >
+                        <span>Edit</span>
+                        <FileEdit size={15} />
+                    </button>
+                    <button className="flex items-center gap-1 rounded-md bg-green-500 px-4 py-1 text-white">
+                        <span>Download report</span>
+                        <DownloadCloud size={15} />
+                    </button>
+                </div>
             </div>
-            <div className="mx-auto w-[55%]">
-                <div className="flex">
-                    <div>
-                        <img
-                            src={PensionerPics}
-                            alt="Pensioner_pics"
-                            className="h-24 w-24 rounded-full border-4"
+            <div className="grid grid-cols-2 gap-4">
+                <div className="flex gap-2  rounded-lg bg-gray-100 p-5 shadow-md">
+                    <img
+                        src={PensionerPics}
+                        alt="Pensioner_pics"
+                        className="h-24 w-24 rounded-full border-4 border-green-400"
+                    />
+                    <div className="mt-3 flex flex-col gap-y-2">
+                        <h4 className="text-green-500">National Identification Number</h4>
+                        <h2 className="font-bold">Ibrahim Olayinka</h2>
+                    </div>
+                </div>
+                <div className="flex gap-2  rounded-lg bg-gray-100 p-5 shadow-md">
+                    <img
+                        src={PensionerPics}
+                        alt="Pensioner_pics"
+                        className="h-24 w-24 rounded-full border-4 border-green-400"
+                    />
+                    <div className="mt-3 flex flex-col gap-y-2">
+                        <h4 className="text-green-500">National Identification Number</h4>
+                        <h2 className="font-bold">Ibrahim Olayinka</h2>
+                    </div>
+                </div>
+            </div>
+            <div className="mt-5">
+                {/* TODO: remove below line */}
+                <pre className="hidden">{JSON.stringify(watch(), null, 2)}</pre>
+                <form action="" className="flex flex-col gap-y-6">
+                    <section className="flex gap-3">
+                        <div className="w-full md:w-1/2">
+                            <MpbTextField
+                                label="First name"
+                                name="firstName"
+                                type="text"
+                                icon={<CiUser size={20} />}
+                                control={control}
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: "First name is required",
+                                    },
+                                }}
+                                asterik={false}
+                                disabled={isDisabled}
+                            />{" "}
+                        </div>
+                        <div className="w-full md:w-1/2">
+                            <MpbTextField
+                                label="Last name"
+                                name="lastName"
+                                type="text"
+                                icon={<CiUser size={20} />}
+                                control={control}
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: "Last name is required",
+                                    },
+                                }}
+                                asterik={false}
+                                disabled={isDisabled}
+                            />
+                        </div>
+                    </section>
+                    <section className="flex gap-3">
+                        <div className=" w-full md:w-1/2">
+                            <MpbTextField
+                                label="Other Name"
+                                name="otherName"
+                                type="text"
+                                icon={<CiUser size={20} />}
+                                control={control}
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: "Other name is required",
+                                    },
+                                }}
+                                asterik={false}
+                                disabled={isDisabled}
+                            />
+                        </div>
+                        <div className="w-full md:w-1/2">
+                            <MpbTextField
+                                label="Phone number"
+                                name="phone"
+                                placeholder="Enter Phone Number"
+                                type="number"
+                                icon={<CiUser size={20} />}
+                                control={control}
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: "Phone number is required",
+                                    },
+                                }}
+                                asterik={false}
+                                disabled={isDisabled}
+                            />
+                        </div>
+                    </section>
+                    <section className="flex gap-3">
+                        <div className=" w-full md:w-1/2">
+                            <MpbTextField
+                                label="Email"
+                                name="email"
+                                type="text"
+                                icon={<CiUser size={20} />}
+                                control={control}
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: "Email address is required",
+                                    },
+                                }}
+                                asterik={false}
+                                disabled={isDisabled}
+                            />
+                        </div>
+                        <div className="w-full md:w-1/2">
+                            <MpbTextField
+                                label="Bank Verification Number (BVN)"
+                                name="bvn"
+                                placeholder="Enter BVN"
+                                type="number"
+                                icon={<CiUser size={20} />}
+                                control={control}
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: "BVN is required",
+                                    },
+                                }}
+                                asterik={false}
+                                disabled={isDisabled}
+                            />
+                        </div>
+                    </section>
+                    <section className="flex gap-3">
+                        <div className="w-full md:w-1/2">
+                            <MpbReactSelectField
+                                label="Bank"
+                                control={control}
+                                name="bankCode"
+                                options={bankOptions}
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: "Please select a bank",
+                                    },
+                                }}
+                                asterik={false}
+                                isDisabled={isDisabled}
+                            />
+                        </div>
+                        <div className=" w-full md:w-1/2">
+                            <MpbTextField
+                                label="Account Number"
+                                name="accountNo"
+                                type="text"
+                                icon={<CiUser size={20} />}
+                                control={control}
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: "Account number is required",
+                                    },
+                                }}
+                                asterik={false}
+                                disabled={isDisabled}
+                            />
+                        </div>
+                    </section>
+                    <section className="flex gap-3">
+                        <div className="w-full md:w-1/2">
+                            <MpbReactSelectField
+                                label="Rank"
+                                control={control}
+                                name="rankCode"
+                                options={rankOptions}
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: "Please select a rank",
+                                    },
+                                }}
+                                asterik={false}
+                                isDisabled={isDisabled}
+                            />
+                        </div>
+                        <div className=" w-full md:w-1/2">
+                            <MpbTextField
+                                label="Service ID"
+                                name="serviceNo"
+                                type="text"
+                                icon={<CiUser size={20} />}
+                                control={control}
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: "Service ID is required",
+                                    },
+                                }}
+                                asterik={false}
+                                disabled={isDisabled}
+                            />
+                        </div>
+                    </section>
+                    <section className="flex gap-3">
+                        <div className="w-full md:w-1/2">
+                            <MpbSelectField
+                                label="Status"
+                                control={control}
+                                name="status"
+                                options={STATUS_OPTIONS}
+                                icon={<CiUser size={20} />}
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: "Please select a status",
+                                    },
+                                }}
+                                asterik={false}
+                                disabled={isDisabled}
+                            />
+                        </div>
+                        <div className=" w-full md:w-1/2">
+                            <MpbSelectField
+                                label="Verification Status"
+                                name="verificationStatus"
+                                icon={<CiUser size={20} />}
+                                control={control}
+                                options={VERIFICATION_STATUS_OPTIONS}
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: "Service ID is required",
+                                    },
+                                }}
+                                asterik={false}
+                                disabled={isDisabled}
+                            />
+                        </div>
+                    </section>
+                    <section className="mt-5 flex items-center justify-center gap-16">
+                        <MpbButton
+                            onClick={(e) => {
+                                e.preventDefault();
+                                setIsDisabled(true);
+                                reset({ ...pensionerInfo });
+                            }}
+                            title="Cancel"
+                            variant="cancel"
+                            className="px-10"
+                            disabled={isDisabled}
                         />
-                        <p className="-mt-6 flex w-36 rounded-lg bg-[#cffce7] p-2.5 opacity-80">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="7"
-                                height="8"
-                                viewBox="0 0 7 8"
-                                fill="none"
-                                className="mt-3 "
-                            >
-                                <circle cx="3.5" cy="4" r="3.5" fill="#00873D" />
-                            </svg>
-                            <span className="ml-2 font-latoBlack text-lg font-normal">
-                                Completed
-                            </span>
-                        </p>
-                    </div>
-                    <div>
-                        <h5 className="mb-4 text-xl font-bold">Josphine Anderson</h5>
-                        <div className="flex">
-                            <div>
-                                <p className="text-sm text-[#535353]">
-                                    Rank:
-                                    <span className="ml-2 font-medium text-black">
-                                        Major General
-                                    </span>
-                                </p>
-                            </div>
-                            <div className="ml-6">
-                                <p className="text-sm text-[#535353]">
-                                    D.O.B:
-                                    <span className=" ml-2 font-medium text-black">
-                                        12th Aug, 1940
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                        <MpbButton
+                            onClick={handleSubmit(handleUpdatePensioner)}
+                            title="Save changes"
+                            isLoading={isupdatingPensioner}
+                            className="px-10"
+                            disabled={!isDirty}
+                        />
+                    </section>
+                </form>
             </div>
-
-            <Tab.Group>
-                <div className="border-b border-gray-200 dark:border-gray-700">
-                    <Tab.List className="flex justify-between text-lg font-semibold text-[#00873D]">
-                        <Tab>Profile Information</Tab>
-                        <Tab>Documents Information</Tab>
-                    </Tab.List>
-                </div>
-                <Tab.Panels>
-                    <Tab.Panel>
-                        <div className="mb-4 mt-3 w-full rounded-md p-5 text-base font-medium text-black ">
-                            <div className=" mb-4 flex w-full flex-wrap justify-between">
-                                <div className="w-full px-3 md:w-1/2">
-                                    <div className="mb-2 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-2 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none">
-                                        <div className="flex flex-row">
-                                            <p className="w-2/4">First Name:</p>
-                                            <p className="w-3/4">Omolola</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="w-full px-3 md:w-1/2">
-                                    <div className="mb-2 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none">
-                                        <div className="flex flex-row">
-                                            <p className="w-2/4">Last Name:</p>
-                                            <p className="w-3/4">Dave</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className=" mb-4 flex w-full flex-wrap justify-between">
-                                <div className="w-full px-3 md:w-1/2">
-                                    <div className="mb-2 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none">
-                                        <div className="flex flex-row">
-                                            <p className="w-2/4">Username:</p>
-                                            <p className="w-3/4">Josephine Anderson</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="w-full px-3 md:w-1/2">
-                                    <div className="mb-2 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none">
-                                        <div className="flex flex-row">
-                                            <p className="w-2/4">Rank:</p>
-                                            <p className="w-3/4">Major General</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className=" mb-4 flex w-full flex-wrap justify-between">
-                                <div className="w-full px-3 md:w-1/2">
-                                    <div className="mb-2 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none">
-                                        <div className="flex flex-row">
-                                            <p className="w-2/4">Phone Number:</p>
-                                            <p className="w-3/4">08096789000</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="w-full px-3 md:w-1/2">
-                                    <div className="mb-2 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none">
-                                        <div className="flex flex-row">
-                                            <p className="w-2/4">Email Address:</p>
-                                            <p className="w-3/4">Josephine@gmail.com</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className=" mb-4 flex w-full flex-wrap justify-between">
-                                <div className="w-full px-3 md:w-1/2">
-                                    <div className="mb-2 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none">
-                                        <div className="flex flex-row">
-                                            <p className="w-2/4">Gender:</p>
-                                            <p className="w-3/4">Female</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="w-full px-3 md:w-1/2">
-                                    <div className="mb-2 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none">
-                                        <div className="flex flex-row">
-                                            <p className="w-2/4">Date of Birth:</p>
-                                            <p className="w-3/4">12/08/1940</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className=" mb-4 flex w-full flex-wrap justify-between">
-                                <div className="w-full px-3 md:w-1/2">
-                                    <div className="mb-2 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none">
-                                        <div className="flex flex-row">
-                                            <p className="w-2/4">Address:</p>
-                                            <p className="w-3/4">
-                                                16, Cole street, Victoria Island
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="w-full px-3 md:w-1/2">
-                                    <div className="mb-2 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none">
-                                        <div className="flex flex-row">
-                                            <p className="w-2/4">Status:</p>
-                                            <p className="w-3/4">Completed</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className=" mb-4 flex w-full flex-wrap justify-between">
-                                <div className="w-full px-3 md:w-1/2">
-                                    <div className="mb-2 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none">
-                                        <div className="flex flex-row">
-                                            <p className="w-2/4">Account Number:</p>
-                                            <p className="w-3/4">00467894329</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="w-full px-3 md:w-1/2">
-                                    <div className="mb-2 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none">
-                                        <div className="flex flex-row">
-                                            <p className="w-2/4">BVN Details:</p>
-                                            <p className="w-3/4">222211456789</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className=" mb-4 flex w-full flex-wrap justify-between">
-                                <div className="w-full px-3 md:w-1/2">
-                                    <div className="mb-2 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none">
-                                        <div className="flex flex-row">
-                                            <p className="w-2/4">Bank Name:</p>
-                                            <p className="w-3/4">Stanbic IBTC</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="w-full px-3 md:w-1/2">
-                                    <div className="mb-2 block w-full appearance-none rounded-[0.8125rem] border border-[#D8D7D7] bg-white px-3 py-3 leading-tight text-[#3D3333] placeholder-[#3D3333] focus:border-gray-500 focus:bg-white focus:outline-none">
-                                        <div className="flex flex-row">
-                                            <p className="w-2/4">NIN</p>
-                                            <p className="w-3/4">4708643210976</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="text-center">
-                            <p className="mb-4">
-                                See below the access QR code to verify Pensioner&apos;s
-                                status and profile completeness
-                            </p>
-                        </div>
-                        <div className="flex justify-center">
-                            <img src={QrCode} alt="qr-code" />
-                        </div>
-                        <div className="text-center">
-                            <p>
-                                <p>Reference ID: 345TH78PK45</p>
-                            </p>
-                        </div>
-                    </Tab.Panel>
-                    <Tab.Panel>
-                        <div className="my-12">
-                            <h5 className="w-fit bg-[#F5FCFC] px-3 py-2.5 text-[#00873D]">
-                                Document Attached <span>(3)</span>
-                            </h5>
-                        </div>
-                        <div className="mb-20 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3">
-                            <div className="mb-10">
-                                <div className="mb-10 w-full flex-1 overflow-hidden rounded border-b-4  bg-white shadow-lg sm:mx-2 sm:w-[80%] md:mx-1 lg:mx-2 lg:pt-0">
-                                    <img src={Card1} alt="Identification_card" />
-                                    <div className="flex justify-between bg-[#E5E7EB] p-2 px-10 md:p-3">
-                                        <div className="cursor-pointer">View</div>
-                                        <div className="cursor-pointer">Download</div>
-                                    </div>
-                                </div>
-                                <div className="flex">
-                                    <div className="mr-10">
-                                        <p className="text-sm font-medium">
-                                            Identification ID Card:
-                                        </p>
-                                        <p className="text-xs">Driver’s License</p>
-                                    </div>
-                                    <div className="text-right">
-                                        <p className="text-sm font-medium">
-                                            ID Card Number:
-                                        </p>
-                                        <p className="text-xs">8656466366</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="mb-10">
-                                <div className="mb-10 w-full flex-1 overflow-hidden rounded border-b-4  bg-white shadow-lg sm:mx-2 sm:w-[80%] md:mx-1 lg:mx-2 lg:pt-0">
-                                    <img src={Card2} alt="utility_bill" />
-                                    <div className="flex justify-between bg-[#E5E7EB] p-2 px-10 md:p-3">
-                                        <div className="cursor-pointer">View</div>
-                                        <div className="cursor-pointer">Download</div>
-                                    </div>
-                                </div>
-                                <div className="text-center">
-                                    <p className="text-sm font-medium">Utility Bill:</p>
-                                    <p className="text-xs">House utility bill.jpg</p>
-                                </div>
-                            </div>
-                            <div className="mb-10">
-                                <div className="mb-10 w-full flex-1 overflow-hidden rounded border-b-4 bg-white shadow-lg sm:mx-2 sm:w-[80%] md:mx-1 lg:mx-2 lg:pt-0">
-                                    <img src={Card3} alt="passport_photo" />
-                                    <div className="flex justify-between bg-[#E5E7EB] p-2 px-10 md:p-3">
-                                        <div className="cursor-pointer">View</div>
-                                        <div className="cursor-pointer">Download</div>
-                                    </div>
-                                </div>
-                                <div className="text-center">
-                                    <p className="text-sm font-medium">Passport Photo:</p>
-                                    <p className="text-xs">Omolola passport.jpg</p>
-                                </div>
-                            </div>
-                        </div>
-                    </Tab.Panel>
-                </Tab.Panels>
-            </Tab.Group>
         </div>
     );
 }

@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { AuthHTTP } from "@/lib";
+import { STATUS, VerificationStatus } from "@/types/enum";
 
 interface IParameters {
     onError?: (err: any) => void;
@@ -15,13 +16,13 @@ interface RequestPayload {
     lastName: string;
     otherName: string;
     phone: string;
-    rank: number;
+    rankCode: string;
     serviceNo: string;
-    status: "ENABLED"; // TODO: change this to enum
-    verificationStatus: "VERIFICATION_NOT_COMPLETED"; // TODO: confirm other verification status
+    status: STATUS | "";
+    verificationStatus: VerificationStatus | "";
 }
 
-export default function useCreatePensioner({ onError, onSuccess }: IParameters = {}) {
+export default function useUpdatePensioner({ onError, onSuccess }: IParameters = {}) {
     const Mutation = useMutation({
         mutationFn: async ({
             requestPayload,
@@ -31,7 +32,7 @@ export default function useCreatePensioner({ onError, onSuccess }: IParameters =
             id: number;
         }) => {
             try {
-                const res = await AuthHTTP.post(`/api/pensioners/${id}`, requestPayload);
+                const res = await AuthHTTP.put(`/api/pensioners/${id}`, requestPayload);
                 return res;
             } catch (error) {
                 return Promise.reject(error);

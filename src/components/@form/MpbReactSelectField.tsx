@@ -10,6 +10,7 @@ interface InputProps extends UseControllerProps {
     options: any[];
     control: Control<any>;
     isMulti?: boolean;
+    isDisabled?: boolean;
 }
 
 export default function MpbReactSelectField(props: InputProps) {
@@ -19,7 +20,8 @@ export default function MpbReactSelectField(props: InputProps) {
         formState: { errors },
     } = useController(props);
 
-    const { name, className, label, asterik, isMulti, options, ...others } = props;
+    const { name, className, label, asterik, isMulti, isDisabled, options, ...others } =
+        props;
 
     // TODO: this has to be review whether to remove it or not for the pensioner dataFields
     const [dataFields, index, inputField] = name.split(".");
@@ -64,6 +66,8 @@ export default function MpbReactSelectField(props: InputProps) {
                 classNamePrefix="react-select"
                 isClearable
                 isMulti={isMulti}
+                isDisabled={isDisabled}
+                menuPlacement="top"
                 // value={options?.find((c) => c?.value === value)}
                 // onChange={(e) => onChange(e.map((c: any) => c?.value))} = [0, 3, 4,5]
                 {...field}
@@ -84,4 +88,5 @@ MpbReactSelectField.defaultProps = {
     className: "",
     asterik: true,
     isMulti: false,
+    isDisabled: false,
 };

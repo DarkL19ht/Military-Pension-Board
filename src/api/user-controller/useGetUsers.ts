@@ -3,20 +3,19 @@ import { AuthHTTP } from "@/lib";
 import queryKeys from "../queryKeys";
 
 interface IParameters {
-    size?: number;
-    pageNumber?: number;
+    [key: string]: any;
 }
 
-export default function useGetUsers({ size, pageNumber }: IParameters = {}) {
+export default function useGetUsers(requestParams: IParameters = {}) {
     const result = useQuery({
-        queryKey: [queryKeys.GET_USERS, { size, pageNumber }],
+        queryKey: [queryKeys.GET_USERS, { ...requestParams }],
         queryFn: async () => {
             try {
                 const res = await AuthHTTP.get("/api/users", {
                     params: {
-                        size,
-                        number: pageNumber,
-                        // sort: true,
+                        sort: false,
+                        sortBy: "id",
+                        ...requestParams,
                     },
                 });
                 return res?.data?.data;

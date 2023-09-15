@@ -46,7 +46,7 @@ const buttonVariants = cva(
             {
                 variant: "primary",
                 disabled: true,
-                class: "disabled:bg-green-500",
+                class: "disabled:bg-green-300",
             },
         ],
         defaultVariants: {

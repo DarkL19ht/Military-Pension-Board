@@ -34,7 +34,7 @@ module.exports = {
         "react/react-in-jsx-scope": 0,
         "no-param-reassign": 0,
         "prettier/prettier": 0,
-        "no-console": "error",
+        // "no-console": 0,
         "import/extensions": 0,
         "react/button-has-type": 0,
         "jsx-a11y/label-has-associated-control": [
@@ -47,6 +47,7 @@ module.exports = {
             },
         ],
         "react/jsx-props-no-spreading": 0,
+        "import/no-extraneous-dependencies":0,
         "func-names": 0,
         "prettier/prettier":0,
         "react/button-has-type":0,

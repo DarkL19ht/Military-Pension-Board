@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { FiSearch, FiBell } from "react-icons/fi";
 // import { FaEnvelope } from "react-icons/fa";
+import { Bell } from "lucide-react";
 import { FaUser, FaCog } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
 import { IoIosArrowDown } from "react-icons/io";
 import { HiOutlineSun, HiOutlineMoon } from "react-icons/hi2";
+import { Link } from "react-router-dom";
 import profileImage from "@/assets/images/ib.png";
 import { useTheme } from "@/providers/ThemeProvider";
-import { MpbMenu } from "@/components";
+import { MpbMenu, MenuButton, MenuItems, MenuItem } from "@/components";
 import { useAuth } from "@/hooks";
 
 function Header() {
@@ -19,9 +20,9 @@ function Header() {
         <div
             // className="sticky top-0 shadow-lg
             className="bg-header flex h-[70px] min-w-max items-center
-            justify-between px-[25px]"
+            justify-end px-[25px]"
         >
-            <div className="max-w-xs pl-3">
+            {/* <div className="max-w-xs pl-3">
                 <div>
                     <div className="group relative">
                         <input
@@ -37,10 +38,18 @@ function Header() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
             <div className="relativ flex items-center gap-[15px]">
-                <div className="flex items-center gap-[25px] border-r pr-[25px]">
-                    <FiBell />
+                <div className="flex items-center gap-10 border-r pr-[25px]">
+                    <Link to="/notifications" className="relative inline-flex">
+                        <Bell size={22} color="green" fill="green" />
+                        <div
+                            className="absolute -right-4 -top-2 flex
+                             h-5 w-5 items-center justify-center rounded-full bg-red-600 text-xs text-gray-100 "
+                        >
+                            <span>99</span>
+                        </div>
+                    </Link>
                     <button
                         type="button"
                         className="text-lg"
@@ -51,9 +60,9 @@ function Header() {
                         }
                     >
                         {theme === "dark" ? (
-                            <HiOutlineSun className="dark:text-light-heading mr-5" />
+                            <HiOutlineSun className=" mr-5" />
                         ) : (
-                            <HiOutlineMoon className="text-blue-brand mr-5" />
+                            <HiOutlineMoon className=" mr-5" />
                         )}
                     </button>
                 </div>
@@ -75,15 +84,15 @@ function Header() {
                         </p>
                     </div>
                     <MpbMenu>
-                        <MpbMenu.Button onClick={() => setProfileOpen(!profileOpen)}>
+                        <MenuButton onClick={() => setProfileOpen(!profileOpen)}>
                             <IoIosArrowDown
                                 className={` ${
                                     profileOpen && "rotate-180"
                                 } duration-200 `}
                             />
-                        </MpbMenu.Button>
-                        <MpbMenu.Items className="right-0 z-50 mt-2">
-                            <MpbMenu.Item
+                        </MenuButton>
+                        <MenuItems className="right-0 z-50 mt-2">
+                            <MenuItem
                                 onClick={() => {
                                     setProfileOpen(!profileOpen);
                                 }}
@@ -91,8 +100,8 @@ function Header() {
                             >
                                 <FaUser className="mr-2" />
                                 <span>Profile</span>
-                            </MpbMenu.Item>
-                            <MpbMenu.Item
+                            </MenuItem>
+                            <MenuItem
                                 onClick={() => {
                                     setProfileOpen(!profileOpen);
                                 }}
@@ -100,8 +109,8 @@ function Header() {
                             >
                                 <FaCog />
                                 <span>Settings</span>
-                            </MpbMenu.Item>{" "}
-                            <MpbMenu.Item
+                            </MenuItem>{" "}
+                            <MenuItem
                                 onClick={() => {
                                     setProfileOpen(!profileOpen);
                                     dispatch(logout());
@@ -110,8 +119,8 @@ function Header() {
                             >
                                 <MdLogout />
                                 <span>Logout</span>
-                            </MpbMenu.Item>
-                        </MpbMenu.Items>
+                            </MenuItem>
+                        </MenuItems>
                     </MpbMenu>
                 </div>
             </div>

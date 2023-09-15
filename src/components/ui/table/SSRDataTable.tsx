@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import {
     ColumnDef,
     flexRender,
@@ -23,34 +24,45 @@ interface DataTableProps<TData, TValue> {
     data: TData[];
     pagination: any;
     setPagination: OnChangeFn<PaginationState>;
+    setGlobalFilter?: OnChangeFn<any>; // TODO: defaultProps
+    globalFilter?: string; // TODO: defaultProps
     pageCount: number;
     isLoading?: boolean;
     totalRecords: number;
     pageSizeOptions: number[];
+    isFooter?: boolean;
 }
 
-export default function DataTable<TData, TValue>({
+export default function SSRDataTable<TData, TValue>({
     columns,
     data,
     pagination,
     setPagination,
+    setGlobalFilter,
+    globalFilter,
     pageCount,
     isLoading,
     totalRecords,
     pageSizeOptions,
+    isFooter,
 }: DataTableProps<TData, TValue>) {
     const table = useReactTable({
         data,
         columns,
         state: {
             pagination,
+            globalFilter,
         },
         pageCount,
         onPaginationChange: setPagination,
+        onGlobalFilterChange: setGlobalFilter,
         manualPagination: true,
+        manualFiltering: true,
         getCoreRowModel: getCoreRowModel(),
+        // autoResetPageIndex:true,
     });
     // console.log(table.getState().pagination)
+    // const { rows } = table.getRowModel();
     return (
         <div className="rounded-sm border border-gray-300 ">
             <Table className="w-full text-left font-light">
@@ -115,27 +127,30 @@ export default function DataTable<TData, TValue>({
                                 </TableRow>
                             )}
                         </TableBody>
-                        <TableFooter className="border-b bg-[#F2FAF5]">
-                            {table?.getHeaderGroups()?.map((headerGroup) => (
-                                <TableRow key={headerGroup.id} className="">
-                                    {headerGroup.headers.map((header) => {
-                                        return (
-                                            <TableHead
-                                                key={header.id}
-                                                className="h-0 whitespace-nowrap px-4 py-2 text-left text-sm font-medium text-gray-500"
-                                            >
-                                                {header.isPlaceholder
-                                                    ? null
-                                                    : flexRender(
-                                                          header.column.columnDef.header,
-                                                          header.getContext()
-                                                      )}
-                                            </TableHead>
-                                        );
-                                    })}
-                                </TableRow>
-                            ))}
-                        </TableFooter>
+                        {isFooter && (
+                            <TableFooter className="border-b bg-[#F2FAF5]">
+                                {table?.getFooterGroups()?.map((footerGroup) => (
+                                    <TableRow key={footerGroup.id} className="">
+                                        {footerGroup.headers.map((header) => {
+                                            return (
+                                                <TableHead
+                                                    key={header.id}
+                                                    className="h-0 whitespace-nowrap px-4 py-2 text-left text-sm font-medium text-gray-500"
+                                                >
+                                                    {header.isPlaceholder
+                                                        ? null
+                                                        : flexRender(
+                                                              header.column.columnDef
+                                                                  .header,
+                                                              header.getContext()
+                                                          )}
+                                                </TableHead>
+                                            );
+                                        })}
+                                    </TableRow>
+                                ))}
+                            </TableFooter>
+                        )}
                     </>
                 )}
             </Table>
@@ -154,6 +169,7 @@ export default function DataTable<TData, TValue>({
     );
 }
 
-DataTable.defaultProps = {
+SSRDataTable.defaultProps = {
     isLoading: false,
+    isFooter: true,
 };
